@@ -21,3 +21,8 @@ src/main/webapp/dist/*
 # Fronend dependency
 src/web/app/node_modules/*
 
+# .java-version
+.java-version
+
+# application-local.properties
+src/main/resources/application-local.properties
