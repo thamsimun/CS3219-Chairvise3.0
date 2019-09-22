@@ -7,15 +7,16 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class UserProfile {
 
     @Id
-    @GenericGenerator(name = "UseExistingIdOtherwiseGenerateUsingIdentity", strategy = "sg.edu.nus.comp.cs3219.viz.common.entity.UseExistingIdOtherwiseGenerateUsingIdentity")
-    @GeneratedValue(generator = "UseExistingIdOtherwiseGenerateUsingIdentity")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "UUID")
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+    private UUID userId;
 
     private String userName;
 
@@ -29,12 +30,20 @@ public class UserProfile {
         this.userEmail = userEmail;
     }
 
-    public Long getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(UUID id) {
+        this.userId = id;
+    }
+
+    /**
+     * Auxillary method to provide more consistent data type usages
+     * @return user's id in string format
+     */
+    public String getUserIdInString() {
+        return getUserId().toString();
     }
 
     public String getUserName() {
@@ -43,6 +52,10 @@ public class UserProfile {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public boolean isSameUser(UserProfile otherUser) {
+        return this.userId.equals(otherUser.getUserId());
     }
 
 }
