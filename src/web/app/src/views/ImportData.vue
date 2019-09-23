@@ -142,7 +142,10 @@
           skipEmptyLines: true,
           complete: function (result) {
           var res=result;
-          var res2=res.data;
+          var fileName = [file.name];
+          var res2= fileName.concat(res.data);
+          /* eslint-disable no-console */
+          console.log(res2);
           //console.log((res.data)[0]);
           //console.log(res.data);
           //console.log(this.$store.state.dataMapping.data.tableType)

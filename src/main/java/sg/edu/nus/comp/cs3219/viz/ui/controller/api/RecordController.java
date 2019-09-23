@@ -31,6 +31,11 @@ public class RecordController extends BaseRestController {
     public ResponseEntity<?> importAuthorRecord(@RequestBody List<AuthorRecord> authorRecordList) throws URISyntaxException {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
 
+        String fileName = getFileNameIfExist(authorRecordList.get(0));
+        //if successfully gotten the file name, then remove the string from the list
+        if (!fileName.equals("")) {
+            authorRecordList.remove(0);
+        }
         this.recordLogic.removeAndPersistAuthorRecordForDataSet(userInfo.getUserEmail(), authorRecordList);
 
         return ResponseEntity.created(new URI("/record/author")).build();
@@ -40,6 +45,11 @@ public class RecordController extends BaseRestController {
     public ResponseEntity<?> importReviewRecord(@RequestBody List<ReviewRecord> reviewRecordList) throws URISyntaxException {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
 
+        String fileName = getFileNameIfExist(reviewRecordList.get(0));
+        //if successfully gotten the file name, then remove the string from the list
+        if (!fileName.equals("")) {
+            reviewRecordList.remove(0);
+        }
         this.recordLogic.removeAndPersistReviewRecordForDataSet(userInfo.getUserEmail(), reviewRecordList);
 
         return ResponseEntity.created(new URI("/record/review")).build();
@@ -49,8 +59,25 @@ public class RecordController extends BaseRestController {
     public ResponseEntity<?> importSubmissionRecord(@RequestBody List<SubmissionRecord> submissionRecords) throws URISyntaxException {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
 
+        String fileName = getFileNameIfExist(submissionRecords.get(0));
+        //if successfully gotten the file name, then remove the string from the list
+        if (!fileName.equals("")) {
+            submissionRecords.remove(0);
+        }
         this.recordLogic.removeAndPersistSubmissionRecordForDataSet(userInfo.getUserEmail(), submissionRecords);
 
         return ResponseEntity.created(new URI("/record/review")).build();
+    }
+
+    /**
+     * Get the file name
+     * @param r
+     * @return file name as a string if exist, else returns empty string
+     */
+    private String getFileNameIfExist(Object r) {
+        if (r instanceof String) {
+           return (String) r;
+        }
+        return "";
     }
 }
