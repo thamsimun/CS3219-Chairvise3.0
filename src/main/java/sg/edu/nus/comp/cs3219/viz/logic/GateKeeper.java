@@ -15,6 +15,7 @@ import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationAccessControlRe
 import sg.edu.nus.comp.cs3219.viz.storage.repository.UserProfileRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class GateKeeper {
@@ -112,14 +113,14 @@ public class GateKeeper {
         throw new UnauthorisedException();
     }
 
-    public String getUserIdIfExistElseCreate(User user) {
+    public UUID getUserIdIfExistElseCreate(User user) {
         Optional<UserProfile> userProfile = userProfileRepository.findByUserEmail(user.getEmail());
         if (userProfile.isPresent()) {
-            return userProfile.get().getUserIdInString();
+            return userProfile.get().getUserId();
         } else {
             //creates a new user profile
             UserProfile newUser = signUpLogic.createNewUser(user);
-            return newUser.getUserIdInString();
+            return newUser.getUserId();
         }
     }
 

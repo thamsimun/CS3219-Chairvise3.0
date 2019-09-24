@@ -1,7 +1,5 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +9,7 @@ import java.util.UUID;
 
 @Exportable(name = "File Record", nameInDB = "file_record")
 @Entity
-@IdClass(FilePrimaryKey.class)
+@IdClass(FileId.class)
 public class FileRecord implements Serializable {
 
     @Id
@@ -25,10 +23,15 @@ public class FileRecord implements Serializable {
     @Column(name = "file_name")
     private String fileName;
 
+
     public FileRecord(UUID userId, String fileId, String fileName) {
         this.userId = userId;
         this.fileId = fileId;
         this.fileName = fileName;
+    }
+
+    //JPA expects a default constructor
+    protected FileRecord() {
     }
 
     public UUID getUserId() {

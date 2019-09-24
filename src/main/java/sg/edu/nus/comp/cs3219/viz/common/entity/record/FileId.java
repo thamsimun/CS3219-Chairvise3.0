@@ -2,14 +2,19 @@ package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
-public class FilePrimaryKey implements Serializable {
+public class FileId implements Serializable {
     private String fileId;
-    private String userId;
+    private UUID userId;
 
-    public FilePrimaryKey(String userId, String fileId) {
+    public FileId(UUID userId, String fileId) {
         this.fileId = fileId;
         this.userId = userId;
+    }
+
+    //JPA expects a default constructor
+    protected FileId() {
     }
 
     public String getFile_id() {
@@ -20,11 +25,11 @@ public class FilePrimaryKey implements Serializable {
         this.fileId = fileId;
     }
 
-    public String getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
@@ -32,7 +37,7 @@ public class FilePrimaryKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FilePrimaryKey that = (FilePrimaryKey) o;
+        FileId that = (FileId) o;
         return fileId.equals(that.fileId) &&
                 userId.equals(that.userId);
     }
