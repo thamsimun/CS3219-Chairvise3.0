@@ -261,6 +261,7 @@
            }
           // console.log(res2);
             this.$store.commit("setUploadedFile",res2);
+          this.$store.commit("setUploadFileName", file.name);
             this.$store.commit("setPageLoadingStatus", false);
           }.bind(this)
         });
