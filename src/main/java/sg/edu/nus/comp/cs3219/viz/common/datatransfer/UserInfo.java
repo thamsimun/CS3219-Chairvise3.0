@@ -1,20 +1,18 @@
 package sg.edu.nus.comp.cs3219.viz.common.datatransfer;
 
-import java.util.UUID;
-
 public class UserInfo {
 
     private String userEmail;
 
     private String userNickname;
 
-    private UUID userId;
+    private long userId;
 
-    public UUID getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

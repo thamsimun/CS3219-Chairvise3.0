@@ -1,35 +1,41 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
+@Embeddable
 public class FileId implements Serializable {
-    private String fileId;
-    private UUID userId;
 
-    public FileId(UUID userId, String fileId) {
-        this.fileId = fileId;
+    @Column(name = "file_number")
+    private String fileNumber;
+
+    @Column(name = "user_id")
+    private long userId;
+
+    public FileId(long userId, String fileNumber) {
         this.userId = userId;
+        this.fileNumber = fileNumber;
     }
 
     //JPA expects a default constructor
     protected FileId() {
     }
 
-    public String getFile_id() {
-        return fileId;
+    public String getFileNumber() {
+        return fileNumber;
     }
 
-    public void setFile_id(String fileId) {
-        this.fileId = fileId;
+    public void setFileNumber(String fileId) {
+        this.fileNumber = fileId;
     }
 
-    public UUID getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -38,12 +44,12 @@ public class FileId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileId that = (FileId) o;
-        return fileId.equals(that.fileId) &&
-                userId.equals(that.userId);
+        return fileNumber.equals(that.fileNumber) &&
+                userId == that.userId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fileId, userId);
+        return Objects.hash(fileNumber, userId);
     }
 }

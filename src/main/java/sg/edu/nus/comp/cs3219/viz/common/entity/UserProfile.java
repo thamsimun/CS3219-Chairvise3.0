@@ -4,22 +4,25 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.UUID;
 
 @Entity
 public class UserProfile {
 
     @Id
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UseExistingIdOtherwiseGenerateUsingIdentity", strategy = "sg.edu.nus.comp.cs3219.viz.common.entity.UseExistingIdOtherwiseGenerateUsingIdentity")
+    @GeneratedValue(generator = "UseExistingIdOtherwiseGenerateUsingIdentity")
     @JsonSerialize(using = ToStringSerializer.class)
-    private UUID userId;
+    @Column(name = "user_id")
+    private long userId;
 
+    @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "user_email")
     private String userEmail;
 
     public String getUserEmail() {
@@ -30,20 +33,12 @@ public class UserProfile {
         this.userEmail = userEmail;
     }
 
-    public UUID getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.userId = id;
-    }
-
-    /**
-     * Auxillary method to provide more consistent data type usages
-     * @return user's id in string format
-     */
-    public String getUserIdInString() {
-        return getUserId().toString();
     }
 
     public String getUserName() {
@@ -55,7 +50,7 @@ public class UserProfile {
     }
 
     public boolean isSameUser(UserProfile otherUser) {
-        return this.userId.equals(otherUser.getUserId());
+        return this.userId == otherUser.getUserId();
     }
 
 }

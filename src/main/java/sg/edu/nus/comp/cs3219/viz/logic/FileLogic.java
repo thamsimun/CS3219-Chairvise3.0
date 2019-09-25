@@ -7,7 +7,6 @@ import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class FileLogic {
@@ -17,19 +16,22 @@ public class FileLogic {
         this.fileRecordRepository = fileRecordRepository;
     }
 
-    public void addNewFileRecordForUser(UUID userId, String fileName) {
-        String fileId = findNextUnusedFileId(userId);
-        fileRecordRepository.save(new FileRecord(userId, fileId, fileName));
+    public void addNewFileRecordForUser(long userId, String fileName) {
+        String fileNumber = findNextUnusedFileId(userId);
+        fileRecordRepository.save(new FileRecord(userId, fileNumber, fileName));
     }
 
-    private String findNextUnusedFileId(UUID uuid) {
-        List<FileRecord> fileRecords = fileRecordRepository.findAllByUserIdEquals(uuid);
+    private String findNextUnusedFileId(long userId) {
+        List<FileRecord> fileRecords = fileRecordRepository.findAllByFileIdUserIdEquals(userId);
+        System.out.println("Size =" + fileRecords.size());
         //return the first integer not used by file ids
         List<Integer> fileIds = new ArrayList<>();
         fileRecords.forEach(x -> {
-            fileIds.add(Integer.parseInt(x.getFileId()));
+            fileIds.add(Integer.parseInt(x.getFileNumber()));
         });
-        Collections.sort(fileIds);
+        if (fileIds.size() > 0) {
+            Collections.sort(fileIds);
+        }
         return String.valueOf(findSmallestUnusedId(fileIds));
     }
 
@@ -53,7 +55,7 @@ public class FileLogic {
 
         //if the difference between 2 consecutive fileIds is larger than 1, then there is a empty space
         for (int i = 0; i < fileIds.size() - 1; i++) {
-            if (fileIds.get(i + 1) - fileIds.get(i) > 1) {
+            if ((fileIds.get(i + 1) - fileIds.get(i)) > 1) {
                 return fileIds.get(i) + 1;
             }
         }

@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +9,7 @@ import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.AuthorRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
+import sg.edu.nus.comp.cs3219.viz.logic.FileLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import sg.edu.nus.comp.cs3219.viz.logic.RecordLogic;
 
@@ -22,62 +24,88 @@ public class RecordController extends BaseRestController {
 
     private RecordLogic recordLogic;
 
-    public RecordController(GateKeeper gateKeeper, RecordLogic recordLogic) {
+    private FileLogic fileLogic;
+
+    public RecordController(GateKeeper gateKeeper, RecordLogic recordLogic, FileLogic fileLogic) {
         this.gateKeeper = gateKeeper;
         this.recordLogic = recordLogic;
+        this.fileLogic = fileLogic;
     }
 
-    @PostMapping("/record/author")
-    public ResponseEntity<?> importAuthorRecord(@RequestBody List<AuthorRecord> authorRecordList) throws URISyntaxException {
-        UserInfo userInfo = gateKeeper.verifyLoginAccess();
 
-        String fileName = getFileNameIfExist(authorRecordList.get(0));
-        //if successfully gotten the file name, then remove the string from the list
-        if (!fileName.equals("")) {
-            authorRecordList.remove(0);
-        }
+    @PostMapping(value = "/record/author", consumes = "application/json")
+    public ResponseEntity<?> importAuthorRecord(@RequestBody FileWithAuthorRecordData fileWithAuthorData)
+            throws URISyntaxException {
+
+        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+        List<AuthorRecord> authorRecordList = fileWithAuthorData.records;
+        String fileName = getFileNameIfExist(fileWithAuthorData.fileName);
+
         this.recordLogic.removeAndPersistAuthorRecordForDataSet(userInfo.getUserEmail(), authorRecordList);
+        this.fileLogic.addNewFileRecordForUser(userInfo.getUserId(), fileName);
 
         return ResponseEntity.created(new URI("/record/author")).build();
     }
 
-    @PostMapping("/record/review")
-    public ResponseEntity<?> importReviewRecord(@RequestBody List<ReviewRecord> reviewRecordList) throws URISyntaxException {
-        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+    @PostMapping(value = "/record/review", consumes = "application/json")
+    public ResponseEntity<?> importReviewRecord(@RequestBody FileWithReviewRecordData fileWithReviewRecordData)
+            throws URISyntaxException {
 
-        String fileName = getFileNameIfExist(reviewRecordList.get(0));
-        //if successfully gotten the file name, then remove the string from the list
-        if (!fileName.equals("")) {
-            reviewRecordList.remove(0);
-        }
+        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+        List<ReviewRecord> reviewRecordList = fileWithReviewRecordData.records;
+        String fileName = getFileNameIfExist(fileWithReviewRecordData.fileName);
+
         this.recordLogic.removeAndPersistReviewRecordForDataSet(userInfo.getUserEmail(), reviewRecordList);
+        this.fileLogic.addNewFileRecordForUser(userInfo.getUserId(), fileName);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }
 
-    @PostMapping("/record/submission")
-    public ResponseEntity<?> importSubmissionRecord(@RequestBody List<SubmissionRecord> submissionRecords) throws URISyntaxException {
-        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+    @PostMapping(value = "/record/submission", consumes = "application/json")
+    public ResponseEntity<?> importSubmissionRecord(
+            @RequestBody FileWithSubmissionRecordData fileWithSubmissionRecordData) throws URISyntaxException {
 
-        String fileName = getFileNameIfExist(submissionRecords.get(0));
-        //if successfully gotten the file name, then remove the string from the list
-        if (!fileName.equals("")) {
-            submissionRecords.remove(0);
-        }
-        this.recordLogic.removeAndPersistSubmissionRecordForDataSet(userInfo.getUserEmail(), submissionRecords);
+        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+        List<SubmissionRecord> submissionRecordList = fileWithSubmissionRecordData.records;
+        String fileName = getFileNameIfExist(fileWithSubmissionRecordData.fileName);
+
+        this.recordLogic.removeAndPersistSubmissionRecordForDataSet(userInfo.getUserEmail(), submissionRecordList);
+        this.fileLogic.addNewFileRecordForUser(userInfo.getUserId(), fileName);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }
 
     /**
      * Get the file name
-     * @param r
-     * @return file name as a string if exist, else returns empty string
+     * @param string file name
+     * @return file name as a string if exist, else returns default name
      */
-    private String getFileNameIfExist(Object r) {
-        if (r instanceof String) {
-           return (String) r;
+    private String getFileNameIfExist(String string) {
+        if (string != null && !string.equals("")) {
+           return (String) string;
         }
-        return "";
+        return "untitled";
+    }
+
+    //wrapper classes to parse file data
+    public static class FileWithAuthorRecordData {
+        @JsonProperty("fileName")
+        public String fileName;
+        @JsonProperty("records")
+        public List<AuthorRecord> records;
+    }
+
+    public static class FileWithReviewRecordData {
+        @JsonProperty("fileName")
+        public String fileName;
+        @JsonProperty("records")
+        public List<ReviewRecord> records;
+    }
+
+    public static class FileWithSubmissionRecordData {
+        @JsonProperty("fileName")
+        public String fileName;
+        @JsonProperty("records")
+        public List<SubmissionRecord> records;
     }
 }
