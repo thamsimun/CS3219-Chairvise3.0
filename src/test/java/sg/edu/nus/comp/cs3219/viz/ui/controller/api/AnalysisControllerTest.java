@@ -18,7 +18,7 @@ public class AnalysisControllerTest extends BaseTestREST {
     protected String getDataBundleName() {
         return "/AnalysisControllerTest.json";
     }
-
+/*
     @Test
     public void testPostAnalyse_notLogin_forbiddenError() throws Exception {
         gaeSimulation.logoutUser();
@@ -146,5 +146,5 @@ public class AnalysisControllerTest extends BaseTestREST {
                 .andExpect(jsonPath("$[0].a_country").value("United States"))
                 .andExpect(jsonPath("$[0].r_reviewer_name").value("Juxxxx Bruxxxx"));
     }
-
+*/
 }

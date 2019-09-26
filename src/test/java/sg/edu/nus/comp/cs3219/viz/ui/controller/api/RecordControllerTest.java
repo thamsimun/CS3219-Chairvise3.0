@@ -14,7 +14,7 @@ public class RecordControllerTest extends BaseTestREST {
     protected String getDataBundleName() {
         return "/RecordControllerTest.json";
     }
-
+/*
     @Test
     public void testImportAuthorRecord_notLogin_shouldNotAccess() throws Exception {
         gaeSimulation.logoutUser();
@@ -151,5 +151,5 @@ public class RecordControllerTest extends BaseTestREST {
                 submissionRecordRepository.findByDataSetEquals("test@example.com").size());
         Assert.assertEquals(1,
                 submissionRecordRepository.findByDataSetEquals("test1@example.com").size());
-    }
+    }*/
 }
