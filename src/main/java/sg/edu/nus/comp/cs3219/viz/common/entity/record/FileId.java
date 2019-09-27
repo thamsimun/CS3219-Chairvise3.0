@@ -13,15 +13,6 @@ public class FileId implements Serializable {
 
     @Column(name = "user_id")
     private long userId;
-/*
-    public FileId(long userId, String fileNumber) {
-        this.userId = userId;
-        this.fileNumber = fileNumber;
-    }
-
-    //JPA expects a default constructor
-    protected FileId() {
-    }*/
 
     public String getFileNumber() {
         return fileNumber;

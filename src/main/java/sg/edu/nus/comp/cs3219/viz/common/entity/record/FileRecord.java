@@ -18,15 +18,7 @@ public class FileRecord {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserProfile userProfile;
-/*
-    public FileRecord(long userId, String fileNumber, String fileName) {
-        this.fileName = fileName;
-        this.fileId = new FileId(userId, fileNumber);
-    }
 
-    //JPA expects a default constructor
-    protected FileRecord() {
-    }*/
     public FileRecord() {
         this.fileId = new FileId();
     }
