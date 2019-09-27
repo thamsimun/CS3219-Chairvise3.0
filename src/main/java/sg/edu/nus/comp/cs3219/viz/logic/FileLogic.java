@@ -22,7 +22,7 @@ public class FileLogic {
         this.userProfileRepository = userProfileRepository;
     }
 
-    public void createAndSaveFileRecord(long userId, String fileName) {
+    public FileRecord createAndSaveFileRecord(long userId, String fileName) {
 
         UserProfile userProfile = retrieveUserProfileUsingUserId(userId);
         int fileNumber = findNextUnusedFileId(userProfile.getUserId());
@@ -32,6 +32,7 @@ public class FileLogic {
         fileRecord.setUserProfile(userProfile);
         fileRecord.setFileNumber(fileNumber);
         fileRecordRepository.save(fileRecord);
+        return fileRecord;
     }
 
     private UserProfile retrieveUserProfileUsingUserId (long userId) throws UserNotFoundException {
