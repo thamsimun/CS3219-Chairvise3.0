@@ -1,29 +1,52 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
+import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.UserProfileRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FileLogic {
     private FileRecordRepository fileRecordRepository;
+    private UserProfileRepository userProfileRepository;
 
-    public FileLogic(FileRecordRepository fileRecordRepository) {
+    public FileLogic(FileRecordRepository fileRecordRepository, UserProfileRepository userProfileRepository) {
         this.fileRecordRepository = fileRecordRepository;
+        this.userProfileRepository = userProfileRepository;
     }
 
-    public void addNewFileRecordForUser(long userId, String fileName) {
-        String fileNumber = findNextUnusedFileId(userId);
-        fileRecordRepository.save(new FileRecord(userId, fileNumber, fileName));
+    public void createAndSaveFileRecord(long userId, String fileName) {
+
+        UserProfile userProfile = retrieveUserProfileUsingUserId(userId);
+        String fileNumber = findNextUnusedFileId(userProfile.getUserId());
+
+        FileRecord fileRecord = new FileRecord();
+        fileRecord.setFileName(fileName);
+        fileRecord.setUserProfile(userProfile);
+        fileRecord.setFileNumber(fileNumber);
+        fileRecordRepository.save(fileRecord);
+    }
+
+    private UserProfile retrieveUserProfileUsingUserId (long userId) throws UserNotFoundException {
+        Optional<UserProfile> profile = userProfileRepository.findByUserId(userId);
+        if (!profile.isPresent()) {
+            throw new UserNotFoundException(userId);
+        }
+        return profile.get();
     }
 
     private String findNextUnusedFileId(long userId) {
         List<FileRecord> fileRecords = fileRecordRepository.findAllByFileIdUserIdEquals(userId);
-        System.out.println("Size =" + fileRecords.size());
+        if (fileRecords.size() == 0) {
+            return String.valueOf(0);
+        }
         //return the first integer not used by file ids
         List<Integer> fileIds = new ArrayList<>();
         fileRecords.forEach(x -> {
