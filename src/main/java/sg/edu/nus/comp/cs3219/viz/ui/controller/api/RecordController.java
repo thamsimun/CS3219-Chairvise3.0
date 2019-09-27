@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.AuthorRecord;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
-import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.*;
 import sg.edu.nus.comp.cs3219.viz.logic.FileLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import sg.edu.nus.comp.cs3219.viz.logic.RecordLogic;
@@ -40,9 +38,9 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<AuthorRecord> authorRecordList = fileWithAuthorData.records;
         String fileName = getFileNameIfExist(fileWithAuthorData.fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistAuthorRecordForDataSet(userInfo.getUserEmail(), authorRecordList);
-        this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        this.recordLogic.removeAndPersistAuthorRecordForDataSet(fileRecord, authorRecordList);
 
         return ResponseEntity.created(new URI("/record/author")).build();
     }
@@ -54,9 +52,9 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<ReviewRecord> reviewRecordList = fileWithReviewRecordData.records;
         String fileName = getFileNameIfExist(fileWithReviewRecordData.fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistReviewRecordForDataSet(userInfo.getUserEmail(), reviewRecordList);
-        this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        this.recordLogic.removeAndPersistReviewRecordForDataSet(fileRecord, reviewRecordList);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }
@@ -68,9 +66,9 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<SubmissionRecord> submissionRecordList = fileWithSubmissionRecordData.records;
         String fileName = getFileNameIfExist(fileWithSubmissionRecordData.fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistSubmissionRecordForDataSet(userInfo.getUserEmail(), submissionRecordList);
-        this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        this.recordLogic.removeAndPersistSubmissionRecordForDataSet(fileRecord, submissionRecordList);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }

@@ -22,8 +22,12 @@ public class SubmissionRecord {
     @Column(name = "s_id")
     private Long id;
 
-    // each record will be imported by each user, dataSet is used to distinguished records submitted by different user
-    private String dataSet;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    @JoinColumns({
+            @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    })
+    private FileRecord fileRecord;
 
     @Exportable(name = "Submission Id", nameInDB = "s_submission_id")
     @Column(name = "s_submission_id")
@@ -102,12 +106,12 @@ public class SubmissionRecord {
         this.id = id;
     }
 
-    public String getDataSet() {
-        return dataSet;
+    public FileRecord getFileRecord() {
+        return fileRecord;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setFileRecord(FileRecord fileRecord) {
+        this.fileRecord = fileRecord;
     }
 
     public String getSubmissionId() {
