@@ -6,6 +6,16 @@ public class UserInfo {
 
     private String userNickname;
 
+    private long userId;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
