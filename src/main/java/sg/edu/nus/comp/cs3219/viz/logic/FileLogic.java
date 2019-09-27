@@ -25,7 +25,7 @@ public class FileLogic {
     public void createAndSaveFileRecord(long userId, String fileName) {
 
         UserProfile userProfile = retrieveUserProfileUsingUserId(userId);
-        String fileNumber = findNextUnusedFileId(userProfile.getUserId());
+        int fileNumber = findNextUnusedFileId(userProfile.getUserId());
 
         FileRecord fileRecord = new FileRecord();
         fileRecord.setFileName(fileName);
@@ -42,20 +42,21 @@ public class FileLogic {
         return profile.get();
     }
 
-    private String findNextUnusedFileId(long userId) {
+    private int findNextUnusedFileId(long userId) {
         List<FileRecord> fileRecords = fileRecordRepository.findAllByFileIdUserIdEquals(userId);
+        //if no records, means first file
         if (fileRecords.size() == 0) {
-            return String.valueOf(0);
+            return 0;
         }
         //return the first integer not used by file ids
         List<Integer> fileIds = new ArrayList<>();
         fileRecords.forEach(x -> {
-            fileIds.add(Integer.parseInt(x.getFileNumber()));
+            fileIds.add(x.getFileNumber());
         });
         if (fileIds.size() > 0) {
             Collections.sort(fileIds);
         }
-        return String.valueOf(findSmallestUnusedId(fileIds));
+        return findSmallestUnusedId(fileIds);
     }
 
     /**

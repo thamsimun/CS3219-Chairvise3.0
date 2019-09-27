@@ -31,11 +31,11 @@ public class FileRecord {
         this.userProfile = userProfile;
     }
 
-    public String getFileNumber() {
+    public int getFileNumber() {
         return this.fileId.getFileNumber();
     }
 
-    public void setFileNumber(String fileNumber) {
+    public void setFileNumber(int fileNumber) {
         this.fileId.setFileNumber(fileNumber);
     }
 
