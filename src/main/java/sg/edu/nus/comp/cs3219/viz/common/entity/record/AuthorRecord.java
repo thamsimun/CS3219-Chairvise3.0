@@ -18,7 +18,7 @@ public class AuthorRecord {
     @Column(name = "a_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
             @JoinColumn(name = "user_id", referencedColumnName = "user_id")

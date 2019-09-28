@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.Date;
 
 @Exportable(name = "Review Record", nameInDB = "review_record")
@@ -19,7 +20,7 @@ public class ReviewRecord {
     @Column(name = "r_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
     @JoinColumns({
             @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
             @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -70,6 +71,14 @@ public class ReviewRecord {
     @Column(name = "r_has_recommended_for_best_paper")
     private String hasRecommendedForBestPaper;
 
+    public FileRecord getFileRecord() {
+        return fileRecord;
+    }
+
+    public void setFileRecord(FileRecord fileRecord) {
+        this.fileRecord = fileRecord;
+    }
+
     public Long getId() {
         return id;
     }
@@ -78,12 +87,12 @@ public class ReviewRecord {
         this.id = id;
     }
 
-    public FileRecord getFileRecord() {
-        return fileRecord;
+    public FileId getFileId() {
+        return this.fileRecord.getFileId();
     }
 
-    public void setFileRecord(FileRecord fileRecord) {
-        this.fileRecord = fileRecord;
+    public void setFileId(FileId fileId) {
+        this.fileRecord.setFileId(fileId);
     }
 
     public String getSubmissionId() {

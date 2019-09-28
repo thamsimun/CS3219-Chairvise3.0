@@ -22,6 +22,12 @@ public abstract class BaseTestWithDBAccess {
     protected DataBundle dataBundle;
 
     @Autowired
+    protected UserProfileRepository userProfileRepository;
+
+    @Autowired
+    protected FileRecordRepository fileRecordRepository;
+
+    @Autowired
     protected PresentationRepository presentationRepository;
 
     @Autowired
@@ -47,6 +53,8 @@ public abstract class BaseTestWithDBAccess {
     @Before
     public void injectDataBundle() {
         dataBundle = loadDataBundle(getDataBundleName());
+        userProfileRepository.saveAll(dataBundle.userProfiles.values());
+        fileRecordRepository.saveAll(dataBundle.fileRecords.values());
         presentationRepository.saveAll(dataBundle.presentations.values());
         presentationAccessControlRepository.saveAll(dataBundle.presentationAccessControls.values());
         presentationSectionRepository.saveAll(dataBundle.presentationSections.values());
@@ -60,9 +68,11 @@ public abstract class BaseTestWithDBAccess {
         presentationAccessControlRepository.deleteAll();
         presentationSectionRepository.deleteAll();
         presentationRepository.deleteAll();
-        authorRecordRepository.deleteAll();
+        authorRecordRepository.deleteAllInBatch();
         reviewRecordRepository.deleteAll();
         submissionRecordRepository.deleteAll();
+        fileRecordRepository.deleteAll();
+        userProfileRepository.deleteAll();
     }
 
     protected static DataBundle loadDataBundle(String pathToJsonFileParam) {

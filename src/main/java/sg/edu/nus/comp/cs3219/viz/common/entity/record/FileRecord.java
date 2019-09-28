@@ -1,5 +1,8 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.Cascade;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
 
@@ -13,11 +16,12 @@ public class FileRecord {
     private FileId fileId;
 
     @Column(name = "file_name")
+    @Exportable(name = "fileName", nameInDB = "file_name")
     private String fileName;
 
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserProfile userProfile;
 
     public FileRecord() {

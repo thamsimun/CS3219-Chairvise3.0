@@ -1,9 +1,12 @@
 package sg.edu.nus.comp.cs3219.viz.testhelper;
 
+import com.sun.javafx.collections.MappingChange;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationAccessControl;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.AuthorRecord;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
 
@@ -11,6 +14,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DataBundle {
+
+    public Map<String, UserProfile> userProfiles = new LinkedHashMap<>();
+    public Map<String, FileRecord> fileRecords = new LinkedHashMap<>();
+
     public Map<String, Presentation> presentations = new LinkedHashMap<>();
     public Map<String, PresentationAccessControl> presentationAccessControls = new LinkedHashMap<>();
     public Map<String, PresentationSection> presentationSections = new LinkedHashMap<>();

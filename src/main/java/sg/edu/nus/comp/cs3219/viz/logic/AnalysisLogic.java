@@ -47,7 +47,7 @@ public class AnalysisLogic {
 
     public List<Map<String, Object>> analyse(AnalysisRequest analysisRequest) {
         String sql = generateSQL(analysisRequest);
-
+        System.out.println(sql);
         log.info("Analysis Query: " + sql);
         return jdbcTemplate.queryForList(sql);
     }
@@ -72,9 +72,14 @@ public class AnalysisLogic {
                 .map(f -> String.format("%s %s %s", f.getField(), f.getComparator(), wrapValue(f.getField(), f.getValue())))
                 .collect(Collectors.joining(" AND "));
 
-        String dataSetFilter = analysisRequest.getInvolvedRecords().stream()
+        String userIdFilter = analysisRequest.getInvolvedRecords().stream()
                 .filter(r -> !r.isCustomized())
-                .map(t -> String.format("%s.data_set = '%s'", t.getName(), analysisRequest.getDataSet()))
+                .map(t -> String.format("%s.user_id = '%s'", t.getName(), analysisRequest.getUserId()))
+                .collect(Collectors.joining(" AND "));
+
+        String fileNumberFilter = analysisRequest.getInvolvedRecords().stream()
+                .filter(r -> !r.isCustomized())
+                .map(t -> String.format("%s.file_number = '%s'", t.getName(), analysisRequest.getFileNumber()))
                 .collect(Collectors.joining(" AND "));
 
         String groupersStr = analysisRequest.getGroupers().stream()
@@ -87,10 +92,14 @@ public class AnalysisLogic {
 
         String baseSQL = String.format("SELECT %s FROM %s", selectionsStr, tablesStr);
 
-        if (!dataSetFilter.isEmpty()) {
-            baseSQL += String.format(" WHERE %s", dataSetFilter);
+        if (!userIdFilter.isEmpty()) {
+            baseSQL += String.format(" WHERE %s", userIdFilter);
         } else {
             baseSQL += " WHERE true";
+        }
+
+        if (!fileNumberFilter.isEmpty()) {
+            baseSQL += String.format(" AND %s", fileNumberFilter);
         }
 
         if (!joinersStr.isEmpty()) {

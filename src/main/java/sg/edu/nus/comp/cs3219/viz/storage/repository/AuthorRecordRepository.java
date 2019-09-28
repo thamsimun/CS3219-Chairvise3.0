@@ -10,6 +10,8 @@ public interface AuthorRecordRepository extends JpaRepository<AuthorRecord, Long
 
     List<AuthorRecord> findAllByFileRecordFileIdUserIdEquals(long userId);
 
+    List<AuthorRecord> findAllByFileRecordFileIdEquals(FileId fileId);
+
     //delete all by a user id
     void deleteAllByFileRecordFileIdUserIdEquals(long userId);
 

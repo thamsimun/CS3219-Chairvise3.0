@@ -7,6 +7,7 @@ import sg.edu.nus.comp.cs3219.viz.BaseTestWithDBAccess;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AnalysisRequest;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
+import sg.edu.nus.comp.cs3219.viz.logic.testutil.FileRecordUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,13 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
     @Test
     public void testAnalyse_queryOnlySubmissionRecord_shouldQueryCorrectly() {
-        Assert.assertEquals(1, submissionRecordRepository.findByDataSetEquals("test@example.com").size());
+        Assert.assertEquals(2, submissionRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
@@ -35,16 +38,18 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
 
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(2, result.size());
     }
 
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithSelectionSpecified_shouldQueryCorrectly() {
-        Assert.assertEquals(1, submissionRecordRepository.findByDataSetEquals("test@example.com").size());
+        Assert.assertEquals(2, submissionRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
@@ -57,7 +62,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
 
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(2, result.size());
         Assert.assertEquals(1, result.get(0).keySet().size());
         // should rename
         Assert.assertNull(result.get(0).get("s_track_name"));
@@ -66,11 +71,13 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithSomeSelectionsSpecified_shouldQueryCorrectly() {
-        Assert.assertEquals(1, submissionRecordRepository.findByDataSetEquals("test@example.com").size());
+        Assert.assertEquals(2, submissionRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
@@ -87,7 +94,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
 
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(2, result.size());
         Assert.assertEquals(2, result.get(0).keySet().size());
         Assert.assertNull(result.get(0).get("s_track_name"));
         Assert.assertEquals("Posters and Demos", result.get(0).get("trackName"));
@@ -97,11 +104,13 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
     @Test
     public void testAnalyse_queryOnlyAuthorRecord_shouldQueryCorrectly() {
-        Assert.assertEquals(2, authorRecordRepository.findByDataSetEquals("test1@example.com").size());
+        Assert.assertEquals(2, authorRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 2)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test1@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(2);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("author_record");
@@ -114,11 +123,13 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
     @Test
     public void testAnalyse_queryOnlyReviewRecord_shouldQueryCorrectly() {
-        Assert.assertEquals(2, reviewRecordRepository.findByDataSetEquals("test@example.com").size());
+        Assert.assertEquals(2, reviewRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("review_record");
@@ -131,11 +142,13 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithStringFilter_shouldQueryCorrectly() {
-        Assert.assertTrue(1 < submissionRecordRepository.findByDataSetEquals("test1@example.com").size());
+        Assert.assertTrue(1 < submissionRecordRepository
+                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test1@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
@@ -157,14 +170,16 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_queryOnlyReviewRecordWithNumberFilter_shouldQueryCorrectly() {
         Assert.assertNotEquals(
                 0,
-                reviewRecordRepository.findByDataSetEquals("test@example.com").stream()
+                reviewRecordRepository
+                        .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                         .filter(s -> s.getNumReviewAssignment() == 47)
                         .count()
         );
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("review_record");
@@ -186,7 +201,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_queryOnlyReviewRecordWithMixedFilters_shouldQueryCorrectly() {
         Assert.assertNotEquals(
                 0,
-                reviewRecordRepository.findByDataSetEquals("test@example.com").stream()
+                reviewRecordRepository.findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                         .filter(s -> s.getNumReviewAssignment() == 47)
                         .filter(s -> s.getHasRecommendedForBestPaper().equals("no"))
                         .filter(s -> s.getReviewerName().equals("Juxxxx Bruxxxx"))
@@ -195,7 +210,8 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("review_record");
@@ -228,11 +244,14 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_querySubmissionReviewRecordJoin_shouldQueryCorrectly() {
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
         analysisRequest.getInvolvedRecords().add(submissionRecord);
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
         submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("review_record");
         analysisRequest.getInvolvedRecords().add(submissionRecord);
@@ -260,7 +279,8 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_querySubmissionAuthorRecordJoin_shouldQueryCorrectly() {
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test1@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(1);
 
         PresentationSection.Record submissionRecord = new PresentationSection.Record();
         submissionRecord.setName("submission_record");
@@ -284,7 +304,8 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_queryReviewWithSorting_shouldQueryCorrectly() {
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record reviewRecord = new PresentationSection.Record();
         reviewRecord.setName("review_record");
@@ -305,7 +326,8 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_queryReviewWithAggregation_shouldQueryCorrectly() {
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record reviewRecord = new PresentationSection.Record();
         reviewRecord.setName("review_record");
@@ -322,7 +344,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
 
-        long totalSum = reviewRecordRepository.findByDataSetEquals("test@example.com").stream()
+        long totalSum = reviewRecordRepository.findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                 .mapToLong(ReviewRecord::getNumReviewAssignment)
                 .sum();
 
@@ -333,15 +355,16 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_withCustomizedInvolvedRecord_shouldQueryCorrectly() {
         Assert.assertNotEquals(0,
                 reviewRecordRepository.findAll().stream()
-                        .filter(r -> !r.getDataSet().equals("test@example.com"))
+                        .filter(r -> !r.getFileId().equals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
                         .count());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record reviewRecord = new PresentationSection.Record();
-        reviewRecord.setName("(SELECT * FROM review_record WHERE review_record.data_set = 'test@example.com') AS `tmp`");
+        reviewRecord.setName("(SELECT * FROM review_record WHERE review_record.user_id = '1' AND review_record.file_number = '3') AS `tmp`");
         reviewRecord.setCustomized(true);
         analysisRequest.getInvolvedRecords().add(reviewRecord);
 
@@ -354,15 +377,16 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_withCustomizedInvolvedRecordAndFilter_shouldQueryCorrectly() {
         Assert.assertNotEquals(0,
                 reviewRecordRepository.findAll().stream()
-                        .filter(r -> !r.getDataSet().equals("test@example.com"))
+                        .filter(r -> !r.getFileId().equals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
                         .count());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
-        analysisRequest.setDataSet("test@example.com");
+        analysisRequest.setUserId(1);
+        analysisRequest.setFileNumber(3);
 
         PresentationSection.Record reviewRecord = new PresentationSection.Record();
-        reviewRecord.setName("(SELECT * FROM review_record WHERE review_record.data_set = 'test@example.com') AS `tmp`");
+        reviewRecord.setName("(SELECT * FROM review_record WHERE review_record.user_id = '1' AND review_record.file_number = '3') AS `tmp`");
         reviewRecord.setCustomized(true);
         analysisRequest.getInvolvedRecords().add(reviewRecord);
 

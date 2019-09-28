@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import sg.edu.nus.comp.cs3219.viz.BaseTestWithDBAccess;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionAuthorRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
+import sg.edu.nus.comp.cs3219.viz.logic.testutil.FileRecordUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class RecordLogicTest extends BaseTestWithDBAccess {
         SubmissionRecord typicalSubmissionRecord2 = new SubmissionRecord();
         typicalSubmissionRecord2.setAuthors(Arrays.asList("XP", "HY"));
 
-        recordLogic.removeAndPersistSubmissionRecordForDataSet("test",
+        recordLogic.removeAndPersistSubmissionRecordForDataSet(FileRecordUtil.generateFileRecordWithUserIdAndFileId(1, 1, "test"),
                 Arrays.asList(typicalSubmissionRecord, typicalSubmissionRecord2));
 
         List<SubmissionAuthorRecord> submissionAuthorRecordList =

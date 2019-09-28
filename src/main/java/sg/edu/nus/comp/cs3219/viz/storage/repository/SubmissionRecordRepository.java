@@ -10,6 +10,8 @@ public interface SubmissionRecordRepository extends JpaRepository<SubmissionReco
 
     List<SubmissionRecord> findAllByFileRecordFileIdUserIdEquals(long userId);
 
+    List<SubmissionRecord> findAllByFileRecordFileIdEquals(FileId fileId);
+
     //delete all records by a user id
     void deleteAllByFileRecordFileIdUserIdEquals(long userId);
 

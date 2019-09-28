@@ -10,6 +10,8 @@ public interface ReviewRecordRepository extends JpaRepository<ReviewRecord, Long
 
     List<ReviewRecord> findAllByFileRecordFileIdUserIdEquals(long userId);
 
+    List<ReviewRecord> findAllByFileRecordFileIdEquals(FileId fileId);
+
     //delete all records by a user id
     void deleteAllByFileRecordFileIdUserIdEquals(long userId);
 

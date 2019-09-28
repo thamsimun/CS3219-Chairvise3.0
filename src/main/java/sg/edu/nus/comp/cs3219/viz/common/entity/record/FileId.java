@@ -9,9 +9,11 @@ import java.util.Objects;
 public class FileId implements Serializable {
 
     @Column(name = "file_number")
+    @Exportable(name = "fileNumber", nameInDB = "file_number")
     private int fileNumber;
 
     @Column(name = "user_id")
+    @Exportable(name = "userId", nameInDB = "user_id")
     private long userId;
 
     public int getFileNumber() {

@@ -9,7 +9,13 @@ import java.util.List;
 public class AnalysisRequest {
 
     @NotEmpty
-    private String dataSet;
+    private long userId;
+
+    private int submissionFileNumber;
+
+    private int reviewFileNumber;
+
+    private int authorFileNumber;
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 
@@ -24,12 +30,36 @@ public class AnalysisRequest {
 
     private List<PresentationSection.Sorter> sorters = new ArrayList<>();
 
-    public String getDataSet() {
-        return dataSet;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public int getSubmissionFileNumber() {
+        return submissionFileNumber;
+    }
+
+    public void setSubmissionFileNumber(int submissionFileNumber) {
+        this.submissionFileNumber = submissionFileNumber;
+    }
+
+    public int getReviewFileNumber() {
+        return reviewFileNumber;
+    }
+
+    public void setReviewFileNumber(int reviewFileNumber) {
+        this.reviewFileNumber = reviewFileNumber;
+    }
+
+    public int getAuthorFileNumber() {
+        return authorFileNumber;
+    }
+
+    public void setAuthorFileNumber(int authorFileNumber) {
+        this.authorFileNumber = authorFileNumber;
     }
 
     public List<PresentationSection.Selection> getSelections() {
