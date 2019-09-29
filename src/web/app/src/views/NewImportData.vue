@@ -43,11 +43,15 @@
         this.$router.replace("/home");
       },
       populateTable(data) {
-        new Tabulator("#table", {
+        const table = new Tabulator("#table", {
           height: "300px",
 	        autoColumns: true,
+          movableColumns: true,
           data: data
-        })
+        });
+        table.setColumns(table.getColumnDefinitions().map(obj =>
+          Object.assign({headerClick: (e, column) => column.hide()}, obj)
+        ))
       },
       fileUploadHandler(file) {
         this.$store.commit("setPageLoadingStatus", true);
