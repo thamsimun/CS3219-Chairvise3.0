@@ -17,10 +17,23 @@
         <i class="el-icon-upload" />
         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
         <div class="el-upload__tip" slot="tip">Please upload .csv files with filed names.></div>
-
       </el-upload>
+	    <p>Please make sure your upload follows this template:</p>
+      <p>(for authorRecord)</p>
+      <ol>
+        <li>Submission Id</li>
+        <li>first name</li>
+        <li>last name</li>
+        <li>email</li>
+        <li>country</li>
+        <li>organisation</li>
+        <li>webpage</li>
+        <li>personId</li>
+        <li>isCorresponding</li>
+      </ol>
     </div>
     <div id="table" />
+    <el-button v-on:click="uploadClicked">Upload</el-button>
   </div>
 </template>
 
@@ -30,6 +43,11 @@
   export default {
     /* eslint-disable */
     name: "NewImportData",
+    data: function() {
+      return {
+        table: undefined
+      }
+    },
     computed: {
       isLogin() {
         return this.$store.state.userInfo.isLogin;
@@ -43,13 +61,13 @@
         this.$router.replace("/home");
       },
       populateTable(data) {
-        const table = new Tabulator("#table", {
+        this.table = new Tabulator("#table", {
           height: "300px",
 	        autoColumns: true,
           movableColumns: true,
           data: data
         });
-        table.setColumns(table.getColumnDefinitions().map(obj =>
+        this.table.setColumns(this.table.getColumnDefinitions().map(obj =>
           Object.assign({headerClick: (e, column) => column.hide()}, obj)
         ))
       },
@@ -65,7 +83,15 @@
           }
         })
       },
+      uploadClicked() {
+        let toUpload = [];
+        let tableData = this.table.getData();
 
+        for (var i = 0; i < tableData.length; i++) {
+          toUpload.push(Object.values(tableData[i]));
+        }
+        this.$store.commit("setUploadedFile", toUpload);
+      }
     }
   }
 </script>
