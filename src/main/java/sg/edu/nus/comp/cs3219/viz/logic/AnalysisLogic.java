@@ -98,9 +98,6 @@ public class AnalysisLogic {
             baseSQL += " WHERE true";
         }
 
-        if (!fileNumberFilter.isEmpty()) {
-            baseSQL += String.format(" AND %s", fileNumberFilter);
-        }
 
         if (!joinersStr.isEmpty()) {
             baseSQL += String.format(" AND %s", joinersStr);

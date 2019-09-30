@@ -241,7 +241,7 @@
         editForm: {
           title: '',
           description: '',
-          dataSet: '',
+          userId: '',
           selections: [],
           involvedRecords: [],
           filters: [],
@@ -309,7 +309,7 @@
       syncDataWithProps() {
         this.editForm.title = this.sectionDetail.title;
         this.editForm.description = this.sectionDetail.description;
-        this.editForm.dataSet = this.sectionDetail.dataSet;
+        this.editForm.userId = this.sectionDetail.userId;
         this.editForm.selections = deepCopy(this.sectionDetail.selections); // deep copy
         this.editForm.involvedRecords = this.sectionDetail.involvedRecords.map(r => r.name);
         this.editForm.filters = this.sectionDetail.filters.map(f => Object.assign({}, f));
@@ -376,7 +376,7 @@
               presentationId: this.presentationId,
               title: this.editForm.title,
               description: this.editForm.description,
-              dataSet: this.sectionDetail.dataSet,
+              userId: this.sectionDetail.userId,
               selections: this.editForm.selections,
               involvedRecords: deepCopy(this.editFormInvolvedRecords),
               filters: this.editForm.filters.map(f => Object.assign({}, f)),
@@ -416,7 +416,7 @@
           this.$store.dispatch('sendPreviewAnalysisRequest', {
             presentationId: this.presentationId,
             id: this.sectionDetail.id,
-            dataSet: this.sectionDetail.dataSet,
+            userId: this.sectionDetail.userId,
             selections: this.editForm.selections,
             involvedRecords: this.editFormInvolvedRecords,
             filters: this.editForm.filters,

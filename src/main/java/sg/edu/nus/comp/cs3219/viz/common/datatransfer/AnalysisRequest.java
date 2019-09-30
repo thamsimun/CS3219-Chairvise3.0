@@ -8,14 +8,9 @@ import java.util.List;
 
 public class AnalysisRequest {
 
-    @NotEmpty
     private long userId;
 
-    private int submissionFileNumber;
-
-    private int reviewFileNumber;
-
-    private int authorFileNumber;
+    private int fileNumber;
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 
@@ -38,28 +33,12 @@ public class AnalysisRequest {
         this.userId = userId;
     }
 
-    public int getSubmissionFileNumber() {
-        return submissionFileNumber;
+    public int getFileNumber() {
+        return fileNumber;
     }
 
-    public void setSubmissionFileNumber(int submissionFileNumber) {
-        this.submissionFileNumber = submissionFileNumber;
-    }
-
-    public int getReviewFileNumber() {
-        return reviewFileNumber;
-    }
-
-    public void setReviewFileNumber(int reviewFileNumber) {
-        this.reviewFileNumber = reviewFileNumber;
-    }
-
-    public int getAuthorFileNumber() {
-        return authorFileNumber;
-    }
-
-    public void setAuthorFileNumber(int authorFileNumber) {
-        this.authorFileNumber = authorFileNumber;
+    public void setFileNumber(int fileNumber) {
+        this.fileNumber = fileNumber;
     }
 
     public List<PresentationSection.Selection> getSelections() {
