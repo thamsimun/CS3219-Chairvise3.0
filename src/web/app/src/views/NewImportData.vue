@@ -45,7 +45,8 @@
     name: "NewImportData",
     data: function() {
       return {
-        table: undefined
+        table: undefined,
+        selectedColumns: new Set([])
       }
     },
     computed: {
@@ -63,12 +64,18 @@
       populateTable(data) {
         this.table = new Tabulator("#table", {
           height: "300px",
-	        autoColumns: true,
-          movableColumns: true,
+          autoColumns: true,
           data: data
         });
+
         this.table.setColumns(this.table.getColumnDefinitions().map(obj =>
-          Object.assign({headerClick: (e, column) => column.hide()}, obj)
+          Object.assign({
+            headerClick: (e, column) => {
+              this.selectedColumns.add(column.getDefinition().title)
+              console.log("selectedColumns", this.selectedColumns)
+            },
+            headerSort: false
+          }, obj)
         ))
       },
       fileUploadHandler(file) {
@@ -77,7 +84,7 @@
           skipEmptyLines: true,
           header: true,
           complete: result => {
-            console.log(result);
+            console.log("result", result);
             this.populateTable(result.data);
             this.$store.commit("setPageLoadingStatus", false);
           }
@@ -85,11 +92,14 @@
       },
       uploadClicked() {
         let toUpload = [];
-        let tableData = this.table.getData();
+        let tableData = this.table.getData(true);
+        let sc = Array.from(this.selectedColumns)
 
         for (var i = 0; i < tableData.length; i++) {
-          toUpload.push(Object.values(tableData[i]));
+          toUpload.push(Object.values(_.pick(tableData[i], sc)));
         }
+
+        console.log("toUpload", toUpload)
         this.$store.commit("setUploadedFile", toUpload);
       }
     }
