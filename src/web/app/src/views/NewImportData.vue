@@ -34,19 +34,34 @@
     </div>
     <div id="table" />
     <el-button v-on:click="uploadClicked">Upload</el-button>
+    <div>
+      <draggable class="list-group" :list="selectedColumns" group="people">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in selectedColumns"
+          :key="element"
+          >
+          {{element}}
+        </div>
+      </draggable>
+    </div>
   </div>
 </template>
 
 <script>
   import Papa from "papaparse";
+  import draggable from "vuedraggable";
 
   export default {
     /* eslint-disable */
     name: "NewImportData",
+    components: {
+      draggable
+    },
     data: function() {
       return {
         table: undefined,
-        selectedColumns: new Set([])
+        selectedColumns: []
       }
     },
     computed: {
@@ -71,7 +86,7 @@
         this.table.setColumns(this.table.getColumnDefinitions().map(obj =>
           Object.assign({
             headerClick: (e, column) => {
-              this.selectedColumns.add(column.getDefinition().title)
+              this.selectedColumns.push(column.getDefinition().title)
               console.log("selectedColumns", this.selectedColumns)
             },
             headerSort: false
@@ -102,6 +117,9 @@
         console.log("toUpload", toUpload)
         this.$store.commit("setUploadedFile", toUpload);
       }
+    },
+    log(event) {
+      console.log(event)
     }
   }
 </script>
