@@ -37,7 +37,7 @@
             "title": "my section title",
             "description": "my section description",
             "type": "word_cloud",
-            "dataSet": "test@viz.test",
+            "userId": "1",
             "selections": [
                 {
                     "expression": "selection1",
