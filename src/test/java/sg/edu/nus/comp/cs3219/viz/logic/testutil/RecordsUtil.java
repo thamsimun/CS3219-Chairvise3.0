@@ -6,7 +6,7 @@ import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 /**
  * Utility class which contains convenient methods to generate dummy file records
  */
-public class FileRecordUtil {
+public class RecordsUtil {
 
     public static FileRecord generateFileRecordWithUserIdAndFileId(long userId, int fileNumber, String fileName) {
         FileRecord record = new FileRecord();

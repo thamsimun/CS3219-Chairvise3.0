@@ -33,7 +33,7 @@ public class RecordLogic {
     }
 
     @Transactional
-    public void removeAndPersistAuthorRecordForDataSet(FileRecord fileRecord, List<AuthorRecord> authorRecordList) {
+    public void removeAndPersistAuthorRecordForUserId(FileRecord fileRecord, List<AuthorRecord> authorRecordList) {
         //authorRecordRepository.deleteAllByDataSetEquals(dataSet);
         authorRecordRepository.saveAll(authorRecordList.stream().peek(r -> {
             // should not set ID when creating records
@@ -45,7 +45,7 @@ public class RecordLogic {
     }
 
     @Transactional
-    public void removeAndPersistReviewRecordForDataSet(FileRecord fileRecord, List<ReviewRecord> reviewRecordList) {
+    public void removeAndPersistReviewRecordForUserId(FileRecord fileRecord, List<ReviewRecord> reviewRecordList) {
         //reviewRecordRepository.deleteAllByDataSetEquals(dataSet);
         reviewRecordRepository.saveAll(reviewRecordList.stream().peek(r -> {
             // should not set ID when creating records
@@ -57,7 +57,7 @@ public class RecordLogic {
     }
 
     @Transactional
-    public void removeAndPersistSubmissionRecordForDataSet(FileRecord fileRecord, List<SubmissionRecord> submissionRecordList) {
+    public void removeAndPersistSubmissionRecordForUserId(FileRecord fileRecord, List<SubmissionRecord> submissionRecordList) {
         //submissionRecordRepository.deleteAllByDataSetEquals(dataSet);
         //submissionAuthorRecordRepository.deleteAllByDataSetEquals(dataSet);
         submissionRecordRepository.saveAll(submissionRecordList.stream().peek(s -> {

@@ -40,7 +40,7 @@ public class RecordController extends BaseRestController {
         String fileName = getFileNameIfExist(fileWithAuthorData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistAuthorRecordForDataSet(fileRecord, authorRecordList);
+        this.recordLogic.removeAndPersistAuthorRecordForUserId(fileRecord, authorRecordList);
 
         return ResponseEntity.created(new URI("/record/author")).build();
     }
@@ -54,7 +54,7 @@ public class RecordController extends BaseRestController {
         String fileName = getFileNameIfExist(fileWithReviewRecordData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistReviewRecordForDataSet(fileRecord, reviewRecordList);
+        this.recordLogic.removeAndPersistReviewRecordForUserId(fileRecord, reviewRecordList);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }
@@ -68,7 +68,7 @@ public class RecordController extends BaseRestController {
         String fileName = getFileNameIfExist(fileWithSubmissionRecordData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
 
-        this.recordLogic.removeAndPersistSubmissionRecordForDataSet(fileRecord, submissionRecordList);
+        this.recordLogic.removeAndPersistSubmissionRecordForUserId(fileRecord, submissionRecordList);
 
         return ResponseEntity.created(new URI("/record/review")).build();
     }

@@ -5,7 +5,7 @@ export default {
     data: {
       type: 'word_cloud',
       title: 'Word Cloud for All Submissions',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This word cloud shows a list of key words found under the abstract section for all the submitted papers.',
       selections: [
         {
@@ -35,7 +35,7 @@ export default {
     data: {
       type: 'word_cloud',
       title: 'Word Cloud for Accepted Submissions Keywords',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This word cloud shows a list of key words found under the abstract section for all the accepted papers.',
       selections: [
         {
@@ -71,7 +71,7 @@ export default {
       data: {
         type: 'word_cloud',
         title: 'Word Cloud for Rejected Submissions Keywords',
-        userId: '${PLACEHOLDER_DATA_SET}',
+        userId: '${PLACEHOLDER_USER_ID}',
         description: 'This word cloud shows a list of key words found under the abstract section for all the rejected papers.',
         selections: [
           {
@@ -107,7 +107,7 @@ export default {
     data: {
       type: 'word_cloud',
       title: 'Word Cloud for All Full Papers Submissions Keywords',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This word cloud shows a list of key words found under the abstract section for all the submitted papers in Full Papers Track.',
       selections: [
         {
@@ -143,7 +143,7 @@ export default {
       data: {
         type: 'word_cloud',
         title: 'Word Cloud for All Posters and Demos Submissions Keywords',
-        userId: '${PLACEHOLDER_DATA_SET}',
+        userId: '${PLACEHOLDER_USER_ID}',
         description: 'This word cloud shows a list of key words found under the abstract section for all the submitted papers in Posters and Demos Track.',
         selections: [
           {
@@ -179,7 +179,7 @@ export default {
     data: {
       type: 'word_cloud',
       title: 'Word Cloud for All Short Papers Submissions Keywords',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This word cloud shows a list of key words found under the abstract section for all the submitted papers in Short Papers Track.',
       selections: [
         {
@@ -215,7 +215,7 @@ export default {
       data: {
         type: 'word_cloud',
         title: 'Word Cloud for All Workshop Submissions Keywords',
-        userId: '${PLACEHOLDER_DATA_SET}',
+        userId: '${PLACEHOLDER_USER_ID}',
         description: 'This word cloud shows a list of key words found under the abstract section for all the submitted papers in Workshop Track.',
         selections: [
           {
@@ -251,7 +251,7 @@ export default {
     data: {
       type: 'word_cloud',
       title: 'Word Cloud for Reviewer Comment',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This word cloud shows a list of key words found under the reviewer\'s comments for all the reviewed papers.',
       selections: [
         {
@@ -283,7 +283,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of papers submitted by each author in descending order. This tells us which author has more submissions than other authors.',
       selections: [
         {
@@ -355,7 +355,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Paper Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of papers submitted by each author in descending order. This tells us which authors submitted more papers than other authors. As this is not an absolute number, it is calculated by splitting the authors field in each submission into individual authors and aggregate the number of submissions for each author.',
       selections: [
         {
@@ -370,7 +370,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_author_name FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}') AS `tmp`",
           customized: true,
         }
       ],
@@ -409,7 +409,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Paper Author in Full Papers',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the top accepted papers in the Full Papers track. This tells us the ranking of the authors in each individual track. Users can use the filter function to change to different tracks to view the top accepted authors in that track.',
       selections: [
         {
@@ -424,7 +424,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_author_name, s_track_name FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}') AS `tmp`",
           customized: true,
         }
       ],
@@ -468,7 +468,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Rank Paper Author',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the percentage of acceptance rate of each author\'s papers in descending order. This tells us which authors has higher acceptance rate than other authors. We have split the authors field in each submission into individual authors and calculate the acceptance rate for each author.',
       selections: [
         {
@@ -495,7 +495,7 @@ export default {
             "ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`, " +
             "s_author_name FROM " +
               "(SELECT s_author_name, s_is_accepted FROM submission_record, submission_record_author_set, submission_author_record " +
-              "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp1` " +
+              "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}') AS `tmp1` " +
             "GROUP BY s_author_name) AS `tmp2`",
           customized: true,
         }
@@ -538,7 +538,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Accepted Rank Paper Author',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of accepted papers submitted by each author in descending order. This tells us which authors has more accepted papers than other authors. We have split the authors field in each submission into individual authors and aggregate the accepted submissions for each author.',
       selections: [
         {
@@ -561,7 +561,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_author_name, s_is_accepted FROM submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp`",
+            "WHERE s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}') AS `tmp`",
           customized: true,
         }
       ],
@@ -607,7 +607,7 @@ export default {
     data: {
       type: 'pie_chart',
       title: 'Submission Rank Country',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the percentage and number of papers submitted from each country. This tells us which country has more submissions than other countries. We have included others to account for all countries involved.',
       selections: [
         {
@@ -651,7 +651,7 @@ export default {
     data: {
       type: 'pie_chart',
       title: 'Submission Rank Organization',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the percentage and number of papers submitted from each organization. This tells us which organization has more submissions than other organizations. We have included others to account for all organizations involved.',
       selections: [
         {
@@ -695,7 +695,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Review Weighted Score Distribution',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the weighted review score for all papers. This is calculated by retrieving the overall reviewed score and reviewer\'s confidence score in order to obtain a weighted average of all the scores. This gives us an insight on how the weighted score ranges for each submission in general.',
       selections: [
         {
@@ -760,7 +760,7 @@ export default {
             "  WHEN weighted_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN weighted_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `weighted_score_interval` FROM (SELECT SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id " +
+            "FROM review_record WHERE review_record.USER_ID = '${PLACEHOLDER_USER_ID}' GROUP BY r_submission_id " +
             "UNION ALL SELECT -2.75\n" +
             "UNION ALL SELECT -2.50\n" +
             "UNION ALL SELECT -2.25\n" +
@@ -817,7 +817,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Review Weighted Evaluation Score Statistic Summary',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the weighted evaluation score statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on the evaluation score given by each reviewer in their review.',
       selections: [
         {
@@ -848,7 +848,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Reviewer Expertise Level Statistic Summary',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the reviewer expertise level statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on how specialized the reviewers are in their review.',
       selections: [
         {
@@ -879,7 +879,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Reviewer Confidence Level Statistic Summary',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the reviewer confidence level statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on how confident the reviewers are in their review.',
       selections: [
         {
@@ -912,7 +912,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Track',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of papers submitted in each track. This tells us which track is more popular than other tracks.',
       selections: [
         {
@@ -959,7 +959,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Acceptance Ratio Track',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the acceptance rate of each paper based on tracks. This tells us which track has higher acceptance rate than others.',
       selections: [
         {
@@ -1006,7 +1006,7 @@ export default {
     data: {
       type: 'line_chart',
       title: 'Acceptance Ratio by Year',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This area under line graph shows the acceptance rate of all submitted papers based on different years. This tells us which year has more papers getting accepted than other years.',
       selections: [
         {
@@ -1051,7 +1051,7 @@ export default {
       type: 'pie_chart',
       title: 'Recommendation for Best Paper Distribution',
 
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the number and percentage of papers recommended and not recommended for best paper. This tells us how many papers are worthy to be submitted for the best paper. We have plotted into a pie chart as it is clearer to show a binary value.',
       selections: [
         {
@@ -1090,7 +1090,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Review Count Summary for Each Submission',
-      dataSet: '${PLACEHOLDER_DATA_SET}',
+      dataSet: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows a statistic of the number of reviews for each submission based on  the minimum, maximum value, the average and median score. This gives us an insight to how many reviews are provided for each submission.',
       selections: [
         {
@@ -1123,7 +1123,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Author in Full Papers',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, This bar chart shows the top accepted papers in the Full Papers track. This tells us the ranking of the authors in each individual track. Users can use the filter function to change to different tracks to view the top accepted authors in that track.',
       selections: [
         {
@@ -1195,7 +1195,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Rank Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, this bar chart shows the percentage of acceptance rate of each author\'s papers in descending order. This tells us which authors has higher acceptance rate than other authors.',
       selections: [
         {
@@ -1227,7 +1227,7 @@ export default {
             'COUNT(*) AS `submitted`,' +
             "SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END) AS `accepted` " +
             'FROM author_record, submission_record WHERE ' +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.USER_ID = '${PLACEHOLDER_USER_ID}' AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}' " +
             'AND a_submission_id = s_submission_id GROUP BY a_email, a_first_name, a_last_name) AS `tmp`',
           customized: true,
         },
@@ -1274,7 +1274,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Author Distribution',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, this bar chart shows the distribution of acceptance rate for all authors. This tells us the capability of researchers who choose to submit in the conference.',
       selections: [
         {
@@ -1313,7 +1313,7 @@ export default {
             "END AS `acceptance_rate_interval` FROM " +
             "(SELECT ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`" +
             'FROM author_record, submission_record WHERE ' +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.USER_ID = '${PLACEHOLDER_USER_ID}' AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}' " +
             'AND a_submission_id = s_submission_id GROUP BY a_email, a_first_name, a_last_name ' +
             'UNION ALL SELECT 0.1 ' +
             'UNION ALL SELECT 0.2 ' +
@@ -1360,7 +1360,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Accepted Rank Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, this bar chart shows the number of accepted papers submitted by each author in descending order. This tells us which authors has more accepted papers than other authors.',
       selections: [
         {
@@ -1451,7 +1451,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Rank Organization',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission, this bar chart shows the percentage of acceptance rate of each organization\'s papers in descending order. This tells us which organizations has higher acceptance rate than other organizations.',
       selections: [
         {
@@ -1476,7 +1476,7 @@ export default {
           name: "(SELECT ROUND(SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END)/COUNT(*), 2) AS `acceptance_rate`," +
             "a_organisation, COUNT(*) AS `submitted`, SUM(CASE WHEN s_is_accepted = 'accept' THEN 1 ELSE 0 END) AS `accepted` FROM " +
             "author_record, submission_record WHERE " +
-            "author_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "author_record.USER_ID = '${PLACEHOLDER_USER_ID}' AND submission_record.USER_ID = '${PLACEHOLDER_USER_ID}' " +
             "AND a_submission_id = s_submission_id GROUP BY a_organisation) AS `tmp`",
           customized: true,
         },
@@ -1519,7 +1519,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Accepted Rank Organization',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, this bar chart shows the number of accepted papers submitted by each organization in descending order. This tells us which organizations has more accepted papers than other organizations.',
       selections: [
         {
@@ -1596,7 +1596,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Rank Country',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission, this bar chart shows the percentage of acceptance rate of each country\'s papers in descending order. This tells us which countries has higher acceptance rate than other countries.',
       selections: [
         {
@@ -1673,7 +1673,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Accepted Rank Country',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and submission data, this bar chart shows the number of accepted papers submitted by each country in descending order. This tells us which countries has more accepted papers than other countries.',
       selections: [
         {
@@ -1750,7 +1750,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Assignment Rank',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of fields each reviewer is assigned to in descending order. A high number shows that the author is knowledgeable as he or she reviewed in multiple fields.',
       selections: [
         {
@@ -1801,7 +1801,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Expertise Level Rank',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the average expertise level for each reviewer in descending order. This tells us how skilled each reviewer is in reviewer the papers.',
       selections: [
         {
@@ -1869,7 +1869,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Confidence Level Rank',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the average confidence level for each reviewer in descending order. This tells us how confident each reviewer is in giving their review for other papers.',
       selections: [
         {
@@ -1937,7 +1937,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Evaluation Score Rank',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the average evaluation score given by each reviewer in descending order. This gives us an insight of how generous the reviewer grade other papers in general.',
       selections: [
         {
@@ -2005,7 +2005,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Number of Review Distribution',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the number of reviews for each submitted paper. This gives us an insight on how many reviews are made for each submission.',
       selections: [
         {
@@ -2019,7 +2019,7 @@ export default {
       ],
       involvedRecords: [{
         name: "(SELECT IF(COUNT(*)<10, CONVERT(COUNT(*), char), '>=10') AS `num_of_review` FROM review_record WHERE " +
-          "review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND review_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+          "review_record.USER_ID = '${PLACEHOLDER_USER_ID}' AND review_record.USER_ID = '${PLACEHOLDER_USER_ID}' " +
           "GROUP BY r_submission_id " +
           "UNION ALL SELECT '0'" +
           "UNION ALL SELECT '1'" +
@@ -2061,7 +2061,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Expertise Level Distribution',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the expertise level of each reviewer in reviewing all the papers. This gives us an insight of how specialized each reviewer is in giving the review.',
       selections: [
         {
@@ -2126,7 +2126,7 @@ export default {
             "  WHEN avg_expertise_level <= 4.75 THEN '4.50 ~ 4.75'\n" +
             "  WHEN avg_expertise_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_expertise_level_interval`, avg_evaluation_score, avg_confidence_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.USER_ID = '${PLACEHOLDER_USER_ID}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0, 0, 0.25\n" +
             "UNION ALL SELECT 0, 0, 0.50\n" +
             "UNION ALL SELECT 0, 0, 0.75\n" +
@@ -2191,7 +2191,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Confidence Level Distribution',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the confidence level of each reviewer in reviewing all the papers. This gives us an insight of how confident each reviewer is in giving the review.',
       selections: [
         {
@@ -2256,7 +2256,7 @@ export default {
             "  WHEN avg_confidence_level <= 4.75 THEN '4.50 ~ 4.75'\n" +
             "  WHEN avg_confidence_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_confidence_level_interval`, avg_evaluation_score, avg_expertise_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0.25, 0, 0\n" +
             "UNION ALL SELECT 0.50, 0, 0\n" +
             "UNION ALL SELECT 0.75, 0, 0\n" +
@@ -2321,7 +2321,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Reviewer Average Evaluation Score Distribution',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the evaluation level of each reviewer in reviewing all the papers. This gives us an insight of the evaluation score given by each reviewer.',
       selections: [
         {
@@ -2394,7 +2394,7 @@ export default {
             "  WHEN avg_evaluation_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN avg_evaluation_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `avg_evaluation_score_interval`, avg_confidence_level, avg_expertise_level FROM (SELECT AVG(r_confidence_level) AS `avg_confidence_level`, AVG(r_overall_evaluation_score) AS `avg_evaluation_score`, AVG(r_expertise_level) AS `avg_expertise_level` " +
-            "FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_reviewer_name " +
+            "FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' GROUP BY r_reviewer_name " +
             "UNION ALL SELECT 0, -2.75, 0\n" +
             "UNION ALL SELECT 0, -2.50, 0\n" +
             "UNION ALL SELECT 0, -2.25, 0\n" +
@@ -2464,7 +2464,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Acceptance Rate and Weighted Score',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining review and submission, this bar chart shows the percentage of acceptance rate of based on the weighted score of the submissions. This gives us an insight on what percentage of the papers will be accepted given a review score.',
       selections: [
         {
@@ -2537,7 +2537,7 @@ export default {
             "  WHEN weighted_score <= 2.75 THEN '2.50 ~ 2.75'\n" +
             "  WHEN weighted_score <= 3.00 THEN '2.75 ~ 3.00'\n" +
             "END AS `weighted_score_interval`, s_is_accepted FROM (SELECT SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score`, s_is_accepted " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND submission_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_is_accepted " +
             "UNION ALL SELECT -2.75, 'no'\n" +
             "UNION ALL SELECT -2.50, 'no'\n" +
@@ -2604,7 +2604,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Weighted Score By Track',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining review and submission, this bar chart shows the average weighted score for papers in each track. This gives us an insight on which track has been weighted scores than other tracks.',
       selections: [
         {
@@ -2619,7 +2619,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_track_name, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND submission_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_track_name) AS `tmp`",
           customized: true,
         }
@@ -2651,7 +2651,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Earliest Review in Days For Submission',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining review and submission, this bar chart shows the number of days taken for submissions to be reviews. This gives us an insight on the efficiency of the reviewers.',
       selections: [
         {
@@ -2670,7 +2670,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT IF(DATEDIFF(MIN(r_review_submission_time), s_submission_time) < 21, DATEDIFF(MIN(r_review_submission_time), s_submission_time), 21)  AS `duration_get_reviewed` " +
-            "FROM review_record, submission_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "FROM review_record, submission_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND submission_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = submission_record.s_submission_id GROUP BY r_submission_id, s_submission_time " +
             "UNION ALL SELECT 0 " +
             "UNION ALL SELECT 1 " +
@@ -2724,7 +2724,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Expert Level For Submission',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of submissions for different average expertise level. This gives us an insight on the average expertise level for a range of different submissions.',
       selections: [
         {
@@ -2782,7 +2782,7 @@ export default {
             "  WHEN avg_expertise_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_expertise_level_interval` FROM " +
             "(SELECT AVG(r_expertise_level) AS `avg_expertise_level` FROM review_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}'" +
+            "WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}'" +
             "GROUP BY r_submission_id " +
             "UNION ALL SELECT 0.25\n" +
             "UNION ALL SELECT 0.50\n" +
@@ -2836,7 +2836,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Confidence Level For Submission',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of submissions for different average confidence level. This gives us an insight on how confident, from a range of 1 to 5, the reviewers are in reviewing all the submitted papers. If a large number of submissions have a confident level of 4 to 5, it means that most reviewers are confident in their reviews.',
       selections: [
         {
@@ -2894,7 +2894,7 @@ export default {
             "  WHEN avg_confidence_level <= 5.00 THEN '4.75 ~ 5.00'\n" +
             "END AS `avg_confidence_level_interval` FROM " +
             "(SELECT AVG(r_confidence_level) AS `avg_confidence_level` FROM review_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}'" +
+            "WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}'" +
             "GROUP BY r_submission_id " +
             "UNION ALL SELECT 0.25\n" +
             "UNION ALL SELECT 0.50\n" +
@@ -2948,7 +2948,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Weighted Score Rank Paper Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining review and submission, this bar chart shows the average weighted score of all the submissions for each author. This gives us an insight on which author performs better with his or her submissions than other authors.',
       selections: [
         {
@@ -2963,8 +2963,8 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT s_author_name, weighted_score FROM " +
-            "(SELECT r_submission_id, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' GROUP BY r_submission_id) AS `tmp1`, submission_record, submission_record_author_set, submission_author_record " +
-            "WHERE r_submission_id = s_submission_id AND s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.data_set = '${PLACEHOLDER_DATA_SET}') AS `tmp2`",
+            "(SELECT r_submission_id, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' GROUP BY r_submission_id) AS `tmp1`, submission_record, submission_record_author_set, submission_author_record " +
+            "WHERE r_submission_id = s_submission_id AND s_id = submission_record_s_id AND author_set_s_author_id = s_author_id AND submission_record.user_id = '${PLACEHOLDER_USER_ID}') AS `tmp2`",
           customized: true,
         }
       ],
@@ -3002,7 +3002,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Weighted Score Rank Author',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and review, this bar chart shows the average weighted score of all the submissions for each author. This gives us an insight on which author performs better with his or her submissions than other authors.',
       selections: [
         {
@@ -3025,7 +3025,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT a_first_name, a_last_name, a_email, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND author_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_first_name, a_last_name, a_email) AS `tmp`",
           customized: true,
         }
@@ -3079,7 +3079,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Weighted Score Rank Organization',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and review, this bar chart shows the average weighted score of all the submissions for each organization. This gives us an insight on which organization performs better with than other organizations.',
       selections: [
         {
@@ -3098,7 +3098,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT a_organisation, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND author_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_organisation) AS `tmp`",
           customized: true,
         }
@@ -3142,7 +3142,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Average Weighted Score Rank Country',
-      userId: '${PLACEHOLDER_DATA_SET}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'By combining author and review, this bar chart shows the average weighted score of all the submissions for each country. This gives us an insight on which country performs better with than other countries.',
       selections: [
         {
@@ -3161,7 +3161,7 @@ export default {
       involvedRecords: [
         {
           name: "(SELECT a_country, SUM(r_confidence_level * r_overall_evaluation_score) / SUM(r_confidence_level) AS `weighted_score` FROM review_record, author_record " +
-            "WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}' AND author_record.data_set = '${PLACEHOLDER_DATA_SET}' " +
+            "WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}' AND author_record.user_id = '${PLACEHOLDER_USER_ID}' " +
             "AND review_record.r_submission_id = author_record.a_submission_id GROUP BY a_submission_id, a_country) AS `tmp`",
           customized: true,
         }
@@ -3201,7 +3201,7 @@ export default {
   },
 
 /*
-// visualization for gender distribution.  
+// visualization for gender distribution.
   "author_gender_ratio": {
         name: "Author Gender Distribution", // define the name of the chart
         group: 'Author Record', // classify the group of record (author/submission/review)
@@ -3209,7 +3209,7 @@ export default {
           // set the variables for bar chart
           type: 'bar_chart',
           title: 'Author Gender Distribution',
-          userId: '${PLACEHOLDER_DATA_SET}',
+          userId: '${PLACEHOLDER_USER_ID}',
           description: 'This bar chart shows the number of male and female authors. This tells us about the gender distribution of the authors.',
           //determine the selections for select query
           selections: [
@@ -3260,7 +3260,7 @@ export default {
           // set the variables for bar chart
           type: 'bar_chart',
           title: 'Reviewer Confidence vs Score',
-          userId: '${PLACEHOLDER_DATA_SET}',
+          userId: '${PLACEHOLDER_USER_ID}',
           description: 'This bar chart shows percentage of high/low scores for all confidence values. By default, it shows the percentage of high scores per confidence. You may toggle to high score percentage using advanced features',
           //determine the selections for select query
           selections: [
@@ -3286,19 +3286,19 @@ export default {
               name: "(select A.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
                      " from (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
                      " from (select r_confidence_level,case when r_overall_evaluation_score<"+
-                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
+                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
                      " LEFT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
                      " from (select r_confidence_level,case when r_overall_evaluation_score<"+
-                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
+                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
                      " ON A.r_confidence_level=B.r_confidence_level" +
                      " union" +
                      " select B.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
                      " from (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
                      " from (select r_confidence_level,case when r_overall_evaluation_score<"+
-                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
+                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
                      " RIGHT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
                      " from (select r_confidence_level,case when r_overall_evaluation_score<"+
-                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.data_set = '${PLACEHOLDER_DATA_SET}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
+                     "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
                      " ON A.r_confidence_level=B.r_confidence_level)as temp",
               customized: true,
             }

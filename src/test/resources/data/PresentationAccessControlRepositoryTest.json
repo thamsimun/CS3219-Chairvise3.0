@@ -4,7 +4,7 @@
             "id": "1",
             "name": "testA1",
             "description": "test description 1",
-            "creatorIdentifier": "test@viz.test"
+            "creatorIdentifier": "1"
         }
     },
     "presentationAccessControls": {
@@ -12,14 +12,14 @@
             "presentation": {
                 "id": "1"
             },
-            "userIdentifier": "test1@viz.test",
+            "userIdentifier": "1",
             "accessLevel": "CAN_READ"
         },
         "AC2": {
             "presentation": {
                 "id": "1"
             },
-            "userIdentifier": "test2@viz.test",
+            "userIdentifier": "2",
             "accessLevel": "CAN_WRITE"
         }
     }

@@ -7,7 +7,7 @@ import sg.edu.nus.comp.cs3219.viz.BaseTestWithDBAccess;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AnalysisRequest;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
-import sg.edu.nus.comp.cs3219.viz.logic.testutil.FileRecordUtil;
+import sg.edu.nus.comp.cs3219.viz.logic.testutil.RecordsUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlySubmissionRecord_shouldQueryCorrectly() {
         Assert.assertEquals(2, submissionRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -44,7 +44,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithSelectionSpecified_shouldQueryCorrectly() {
         Assert.assertEquals(2, submissionRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -72,7 +72,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithSomeSelectionsSpecified_shouldQueryCorrectly() {
         Assert.assertEquals(2, submissionRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -105,7 +105,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlyAuthorRecord_shouldQueryCorrectly() {
         Assert.assertEquals(2, authorRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 2)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 2)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -124,7 +124,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlyReviewRecord_shouldQueryCorrectly() {
         Assert.assertEquals(2, reviewRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -143,7 +143,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     @Test
     public void testAnalyse_queryOnlySubmissionRecordWithStringFilter_shouldQueryCorrectly() {
         Assert.assertTrue(1 < submissionRecordRepository
-                .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
+                .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 1)).size());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
 
@@ -171,7 +171,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
         Assert.assertNotEquals(
                 0,
                 reviewRecordRepository
-                        .findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
+                        .findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                         .filter(s -> s.getNumReviewAssignment() == 47)
                         .count()
         );
@@ -201,7 +201,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_queryOnlyReviewRecordWithMixedFilters_shouldQueryCorrectly() {
         Assert.assertNotEquals(
                 0,
-                reviewRecordRepository.findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
+                reviewRecordRepository.findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                         .filter(s -> s.getNumReviewAssignment() == 47)
                         .filter(s -> s.getHasRecommendedForBestPaper().equals("no"))
                         .filter(s -> s.getReviewerName().equals("Juxxxx Bruxxxx"))
@@ -344,7 +344,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
 
-        long totalSum = reviewRecordRepository.findAllByFileRecordFileIdEquals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
+        long totalSum = reviewRecordRepository.findAllByFileRecordFileIdEquals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)).stream()
                 .mapToLong(ReviewRecord::getNumReviewAssignment)
                 .sum();
 
@@ -355,7 +355,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_withCustomizedInvolvedRecord_shouldQueryCorrectly() {
         Assert.assertNotEquals(0,
                 reviewRecordRepository.findAll().stream()
-                        .filter(r -> !r.getFileId().equals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
+                        .filter(r -> !r.getFileId().equals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
                         .count());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();
@@ -377,7 +377,7 @@ public class AnalysisLogicTest extends BaseTestWithDBAccess {
     public void testAnalyse_withCustomizedInvolvedRecordAndFilter_shouldQueryCorrectly() {
         Assert.assertNotEquals(0,
                 reviewRecordRepository.findAll().stream()
-                        .filter(r -> !r.getFileId().equals(FileRecordUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
+                        .filter(r -> !r.getFileId().equals(RecordsUtil.generateFileIdWithUserIdAndFileNumber(1, 3)))
                         .count());
 
         AnalysisRequest analysisRequest = new AnalysisRequest();

@@ -108,7 +108,7 @@ export default {
       commit('setSectionListLoading', true);
 
       let newSection = PredefinedQueries[selectedNewSection].data;
-      newSection = JSON.parse(JSON.stringify(newSection).replace(/\${PLACEHOLDER_DATA_SET}/g, userId));
+      newSection = JSON.parse(JSON.stringify(newSection).replace(/\${PLACEHOLDER_USER_ID}/g, userId));
 
       await axios.post(`/api/presentations/${presentationId}/sections`, newSection)
         .then(response => {
