@@ -1,10 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.hibernate.annotations.Cascade;
-import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 
 import javax.persistence.*;
 
@@ -22,18 +18,18 @@ public class FileRecord {
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfile;
+    private UserDetails userDetails;
 
     public FileRecord() {
         this.fileId = new FileId();
     }
 
-    public UserProfile getUserProfile() {
-        return this.userProfile;
+    public UserDetails getUserDetails() {
+        return this.userDetails;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
     public int getFileNumber() {

@@ -1,11 +1,11 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
-import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
-import sg.edu.nus.comp.cs3219.viz.storage.repository.UserProfileRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,28 +15,37 @@ import java.util.Optional;
 @Component
 public class FileLogic {
     private FileRecordRepository fileRecordRepository;
-    private UserProfileRepository userProfileRepository;
+    private UserDetailsRepository userDetailsRepository;
 
-    public FileLogic(FileRecordRepository fileRecordRepository, UserProfileRepository userProfileRepository) {
+    public FileLogic(FileRecordRepository fileRecordRepository, UserDetailsRepository userDetailsRepository) {
         this.fileRecordRepository = fileRecordRepository;
-        this.userProfileRepository = userProfileRepository;
+        this.userDetailsRepository = userDetailsRepository;
     }
 
-    public FileRecord createAndSaveFileRecord(long userId, String fileName) {
+    public FileRecord createFileRecord(long userId, String fileName) {
 
-        UserProfile userProfile = retrieveUserProfileUsingUserId(userId);
-        int fileNumber = findNextUnusedFileId(userProfile.getUserId());
-
+        UserDetails userDetails = retrieveUserProfileUsingUserId(userId);
+        int fileNumber = findNextUnusedFileId(userDetails.getUserId());
         FileRecord fileRecord = new FileRecord();
         fileRecord.setFileName(fileName);
-        fileRecord.setUserProfile(userProfile);
+        fileRecord.setUserDetails(userDetails);
         fileRecord.setFileNumber(fileNumber);
-        fileRecordRepository.save(fileRecord);
+
         return fileRecord;
     }
 
-    private UserProfile retrieveUserProfileUsingUserId (long userId) throws UserNotFoundException {
-        Optional<UserProfile> profile = userProfileRepository.findByUserId(userId);
+    public void saveFileRecord(FileRecord fileRecord) {
+        fileRecordRepository.save(fileRecord);
+    }
+
+    public FileRecord createAndSaveFileRecord(long userId, String fileName) {
+        FileRecord fileRecord = createFileRecord(userId, fileName);
+        saveFileRecord(fileRecord);
+        return fileRecord;
+    }
+
+    private UserDetails retrieveUserProfileUsingUserId (long userId) throws UserNotFoundException {
+        Optional<UserDetails> profile = userDetailsRepository.findByUserId(userId);
         if (!profile.isPresent()) {
             throw new UserNotFoundException(userId);
         }

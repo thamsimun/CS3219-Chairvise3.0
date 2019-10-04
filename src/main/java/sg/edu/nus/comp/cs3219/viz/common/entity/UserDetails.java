@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class UserProfile {
+public class UserDetails {
 
     @Id
     @GenericGenerator(name = "UseExistingIdOtherwiseGenerateUsingIdentity", strategy = "sg.edu.nus.comp.cs3219.viz.common.entity.UseExistingIdOtherwiseGenerateUsingIdentity")
@@ -53,7 +53,7 @@ public class UserProfile {
         this.userName = userName;
     }
 
-    public boolean isSameUser(UserProfile otherUser) {
+    public boolean isSameUser(UserDetails otherUser) {
         return this.userId == otherUser.getUserId();
     }
 
