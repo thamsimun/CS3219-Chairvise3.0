@@ -36,6 +36,7 @@ public class PresentationLogic {
         newPresentation.setDescription(presentation.getDescription());
         UserDetails userDetails = getUserDetails(userInfo.getUserId());
         newPresentation.setUserDetails(userDetails);
+        newPresentation.setCreatorIdentifier(userInfo.getUserEmail());
 
         return presentationRepository.save(newPresentation);
     }

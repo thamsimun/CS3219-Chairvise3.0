@@ -94,7 +94,7 @@ public class GateKeeper {
                 .orElseThrow(UnauthorisedException::new);
 
         // creator can always access their own presentation
-        if (presentation.getUserId() == currentUser.getUserId()) {
+        if (presentation.getCreatorIdentifier().equals(currentUser.getUserEmail())) {
             return;
         }
 

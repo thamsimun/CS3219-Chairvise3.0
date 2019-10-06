@@ -23,6 +23,8 @@ public class Presentation {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserDetails userDetails;
 
+    private String creatorIdentifier;
+
     public Long getId() {
         return id;
     }
@@ -53,5 +55,13 @@ public class Presentation {
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
+    }
+
+    public String getCreatorIdentifier() {
+        return creatorIdentifier;
+    }
+
+    public void setCreatorIdentifier(String creatorIdentifier) {
+        this.creatorIdentifier = creatorIdentifier;
     }
 }
