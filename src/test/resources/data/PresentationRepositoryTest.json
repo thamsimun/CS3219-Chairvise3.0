@@ -4,19 +4,19 @@
             "id": "1",
             "name": "testA1",
             "description": "test description 1",
-            "creatorIdentifier": "test1@viz.test"
+            "creatorIdentifier": "1"
         },
         "presentationB": {
             "id": "2",
             "name": "testA2",
             "description": "test description 2",
-            "creatorIdentifier": "test1@viz.test"
+            "creatorIdentifier": "1"
         },
         "presentationC": {
             "id": "3",
             "name": "testB",
             "description": "test description 3",
-            "creatorIdentifier": "test2@viz.test"
+            "creatorIdentifier": "2"
         }
     },
     "presentationAccessControls": {
@@ -24,7 +24,7 @@
             "presentation": {
                 "id": "1"
             },
-            "userIdentifier": "test1@viz.test",
+            "userIdentifier": "1",
             "accessLevel": "CAN_READ"
         }
     },
@@ -37,7 +37,7 @@
             "title": "my section title",
             "description": "my section description",
             "type": "word_cloud",
-            "dataSet": "test@viz.test",
+            "userId": "1",
             "selections": [
                 {
                     "expression": "selection1",

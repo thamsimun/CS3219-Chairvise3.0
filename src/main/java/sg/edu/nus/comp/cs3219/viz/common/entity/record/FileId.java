@@ -9,25 +9,18 @@ import java.util.Objects;
 public class FileId implements Serializable {
 
     @Column(name = "file_number")
-    private String fileNumber;
+    @Exportable(name = "fileNumber", nameInDB = "file_number")
+    private int fileNumber;
 
     @Column(name = "user_id")
+    @Exportable(name = "userId", nameInDB = "user_id")
     private long userId;
-/*
-    public FileId(long userId, String fileNumber) {
-        this.userId = userId;
-        this.fileNumber = fileNumber;
-    }
 
-    //JPA expects a default constructor
-    protected FileId() {
-    }*/
-
-    public String getFileNumber() {
+    public int getFileNumber() {
         return fileNumber;
     }
 
-    public void setFileNumber(String fileNumber) {
+    public void setFileNumber(int fileNumber) {
         this.fileNumber = fileNumber;
     }
 
@@ -44,7 +37,7 @@ public class FileId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileId that = (FileId) o;
-        return fileNumber.equals(that.fileNumber) &&
+        return fileNumber == that.fileNumber &&
                 userId == that.userId;
     }
 

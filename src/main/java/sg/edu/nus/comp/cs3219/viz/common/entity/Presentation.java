@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Presentation {
@@ -21,7 +19,9 @@ public class Presentation {
 
     private String description;
 
-    private String creatorIdentifier;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserDetails userDetails;
 
     public Long getId() {
         return id;
@@ -47,11 +47,11 @@ public class Presentation {
         this.description = description;
     }
 
-    public String getCreatorIdentifier() {
-        return creatorIdentifier;
+    public long getUserId() {
+        return this.userDetails.getUserId();
     }
 
-    public void setCreatorIdentifier(String creatorIdentifier) {
-        this.creatorIdentifier = creatorIdentifier;
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 }

@@ -21,28 +21,28 @@ public class PresentationAccessControlRepositoryTest extends BaseTestWithDBAcces
         Assert.assertTrue(presentationAccessControlRepository
                 .existsByPresentationAndUserIdentifierEqualsAndAccessLevelEquals(
                         dataBundle.presentations.get("presentationA"),
-                        "test1@viz.test",
+                        "1",
                         AccessLevel.CAN_READ
                 ));
 
         Assert.assertFalse(presentationAccessControlRepository
                 .existsByPresentationAndUserIdentifierEqualsAndAccessLevelEquals(
                         dataBundle.presentations.get("presentationA"),
-                        "test1@viz.test",
+                        "1",
                         AccessLevel.CAN_WRITE
                 ));
 
         Assert.assertFalse(presentationAccessControlRepository
                 .existsByPresentationAndUserIdentifierEqualsAndAccessLevelEquals(
                         dataBundle.presentations.get("presentationA"),
-                        "test2@viz.test",
+                        "2",
                         AccessLevel.CAN_READ
                 ));
 
         Assert.assertTrue(presentationAccessControlRepository
                 .existsByPresentationAndUserIdentifierEqualsAndAccessLevelEquals(
                         dataBundle.presentations.get("presentationA"),
-                        "test2@viz.test",
+                        "2",
                         AccessLevel.CAN_WRITE
                 ));
     }

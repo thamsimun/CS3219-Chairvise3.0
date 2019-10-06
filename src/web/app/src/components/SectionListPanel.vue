@@ -137,7 +137,7 @@
         this.$store.dispatch('addSectionDetail', {
           presentationId: this.presentationId,
           selectedNewSection: this.selectedNewSection,
-          dataSet: this.$store.state.userInfo.userEmail,
+          userId: this.$store.state.userInfo.userId,
         }).then(() => {
           this.selectedNewSection = ''
         })
