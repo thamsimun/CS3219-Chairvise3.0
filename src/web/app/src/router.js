@@ -44,6 +44,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "importData" */ './views/NewImportData.vue')
     },
     {
+      path:'/test',
+      name: 'test',
+      meta: {
+        title: 'test'
+      },
+      component: () => import('./components/newImportDataComponents/ImportDataNew.vue')
+    },
+    {
       path: '/',
       redirect: '/home'
     }
