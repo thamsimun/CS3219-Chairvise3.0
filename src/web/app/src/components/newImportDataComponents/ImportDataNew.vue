@@ -89,7 +89,7 @@
 				})
 			},
 			nextClicked: function() {
-				this.$store.commit('setSelectedFields', this.selected);
+				this.$store.commit('setSelectedFields', _.cloneDeep(this.selected));
 			}
 		}
 	}
