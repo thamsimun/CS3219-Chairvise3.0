@@ -42,11 +42,12 @@
       </ul>
     </div>
     <el-button v-on:click='nextClicked'>Next</el-button>
-    <el-button v-on:click='submitClicked'>Submit</el-button>
+    <mapping-tool-new v-if='isReady' ref='mapTool'></mapping-tool-new>
   </div>
 </template>
 
 <script>
+  import MappingToolNew from '@/components/MappingToolNew.vue';
   import Papa from "papaparse";
 
   export default {
@@ -58,7 +59,8 @@
       return {
         pool: [],
         selected: [],
-        rawData: []
+        rawData: [],
+        isReady: false
       }
     },
     computed: {
@@ -98,10 +100,12 @@
         this.$store.commit('setSelectedFields', _.cloneDeep(this.selected));
 
         this.$store.commit('processData');
-      },
-      submitClicked: function () {
-        this.$store.dispatch('persistData');
+
+        this.isReady = true;
       }
+    },
+    components: {
+      MappingToolNew
     }
   }
 </script>
