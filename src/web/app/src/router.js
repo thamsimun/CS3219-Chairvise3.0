@@ -44,7 +44,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "importData" */ './views/NewImportData.vue')
     },
     {
-      path:'/test',
+      path: '/test',
       name: 'test',
       meta: {
         title: 'test'

@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-alert
-            title="You need to log in to view the page"
-            type="error"
-            v-if="!isLogin && !isAppLoading"
+      title="You need to log in to view the page"
+      type="error"
+      v-if="!isLogin && !isAppLoading"
     >
       <el-button type="warning" plain size="mini" @click="navigateToHomePage">Return to the Home Page</el-button>
     </el-alert>
@@ -14,11 +14,11 @@
                  :show-file-list="false"
                  :multiple="false"
                  :on-change="fileUploadHandler">
-        <i class="el-icon-upload" />
+        <i class="el-icon-upload"/>
         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
         <div class="el-upload__tip" slot="tip">Please upload .csv files with filed names.></div>
       </el-upload>
-	    <p>Please make sure your upload follows this template:</p>
+      <p>Please make sure your upload follows this template:</p>
       <p>(for authorRecord)</p>
       <ol>
         <li>Submission Id</li>
@@ -32,7 +32,7 @@
         <li>isCorresponding</li>
       </ol>
     </div>
-    <div id="table" />
+    <div id="table"/>
     <el-button v-on:click="uploadClicked">Upload</el-button>
     <div>
       <draggable class="list-group" :list="selectedColumns" group="people">
@@ -40,7 +40,7 @@
           class="list-group-item"
           v-for="(element, index) in selectedColumns"
           :key="element"
-          >
+        >
           {{element}}
         </div>
       </draggable>
@@ -58,7 +58,7 @@
     components: {
       draggable
     },
-    data: function() {
+    data: function () {
       return {
         table: undefined,
         selectedColumns: []

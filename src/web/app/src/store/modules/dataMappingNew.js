@@ -2,51 +2,51 @@ import {processMapping} from '@/store/helpers/processorNew.js';
 import axios from 'axios';
 
 export default {
-	state: {
-		hasDbSchemaSet: false,
-		hasFileUploaded: false,
-		hasChosenTemplate: false,
-		data: {
-		  dbSchemaName: '',
+  state: {
+    hasDbSchemaSet: false,
+    hasFileUploaded: false,
+    hasChosenTemplate: false,
+    data: {
+      dbSchemaName: '',
       fieldMetaData: [],
-			uploadedData: [],
-			selectedFields: [],
+      uploadedData: [],
+      selectedFields: [],
       processedResult: []
-		},
-		error :[]
-	},
+    },
+    error: []
+  },
 
-	mutations: {
-		setDbSchema(state, {name, fieldMetaDataList}) {
-			state.data.dbSchemaName = name;
+  mutations: {
+    setDbSchema(state, {name, fieldMetaDataList}) {
+      state.data.dbSchemaName = name;
       state.data.fieldMetaData = fieldMetaDataList;
-			state.hasDbSchemaSet = true;
-		},
-		setUploadedData(state, data) {
-			state.data.uploadedData = data;
-			state.hasFileUploaded = true;
-		},
-		setSelectedFields(state, fields) {
-			state.data.selectedFields = fields;
-		},
+      state.hasDbSchemaSet = true;
+    },
+    setUploadedData(state, data) {
+      state.data.uploadedData = data;
+      state.hasFileUploaded = true;
+    },
+    setSelectedFields(state, fields) {
+      state.data.selectedFields = fields;
+    },
     processData(state) {
-		  try {
-		    state.error = [];
-		    state.data.processedResult = processMapping(this.state.dataMappingNew.data.uploadedData,
+      try {
+        state.error = [];
+        state.data.processedResult = processMapping(this.state.dataMappingNew.data.uploadedData,
           this.state.dataMappingNew.data.fieldMetaData);
       } catch (err) {
-		    state.error.push(err);
-		    state.data.processedResult = [];
+        state.error.push(err);
+        state.data.processedResult = [];
       }
     }
-	},
+  },
 
   actions: {
-	  async persistData({commit, state}) {
-	    commit('setPageLoadingStatus', true);
-	    let endpoint;
+    async persistData({commit, state}) {
+      commit('setPageLoadingStatus', true);
+      let endpoint;
 
-	    switch (state.data.dbSchemaName) {
+      switch (state.data.dbSchemaName) {
         case 'Author Record':
           endpoint = 'author';
           break;

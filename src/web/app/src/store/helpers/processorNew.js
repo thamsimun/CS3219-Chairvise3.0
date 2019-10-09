@@ -5,7 +5,7 @@ function processDouble(raw) {
     return parseFloat(raw);
   }
   // if not even string, return default value 0
-  if (typeof(raw) !== "string") {
+  if (typeof (raw) !== "string") {
     return 0;
   }
 
@@ -43,7 +43,7 @@ function processAuthors(raw) {
   (sanity check) there will be one less column after the resulting function acts on the row.
  */
 function processDate(idx) {
-  return function(row) {
+  return function (row) {
     let before = row.slice(0, idx);
     let after = row.slice(idx + 2); // time must be immediately after date; both (2) are not included
     let date = row[idx];
