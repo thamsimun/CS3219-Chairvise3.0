@@ -36,6 +36,27 @@ function processAuthors(raw) {
 }
 
 /*
+  takes in an index that specifies the date and time column index in the row.
+  idx is the index for date, and idx + 1 must be the index for time.
+  returns a new function that replaces both columns with just 1 column of date time.
+  the final date time column will have index idx.
+  (sanity check) there will be one less column after the resulting function acts on the row.
+ */
+function processDate(idx) {
+  return function(row) {
+    let before = row.slice(0, idx);
+    let after = row.slice(idx + 2); // time must be immediately after date; both (2) are not included
+    let date = row[idx];
+    let time = row[idx + 1]; // time must be immediately after date
+
+    let datetime = moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+
+    before.push(datetime);
+    return before.concat(after);
+  }
+}
+
+/*
   data should be clear of unwanted fields.
   data fields should be ordered as in dbFields.
   dbSchema is the chosen dbSchema.
