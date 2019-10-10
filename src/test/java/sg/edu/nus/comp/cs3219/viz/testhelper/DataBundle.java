@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DataBundle {
 
-    public Map<String, UserDetails> userProfiles = new LinkedHashMap<>();
+    public Map<String, UserDetails> userDetails = new LinkedHashMap<>();
     public Map<String, FileRecord> fileRecords = new LinkedHashMap<>();
 
     public Map<String, Presentation> presentations = new LinkedHashMap<>();

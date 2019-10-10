@@ -53,7 +53,7 @@ public abstract class BaseTestWithDBAccess {
     @Before
     public void injectDataBundle() {
         dataBundle = loadDataBundle(getDataBundleName());
-        userDetailsRepository.saveAll(dataBundle.userProfiles.values());
+        userDetailsRepository.saveAll(dataBundle.userDetails.values());
         fileRecordRepository.saveAll(dataBundle.fileRecords.values());
         presentationRepository.saveAll(dataBundle.presentations.values());
         presentationAccessControlRepository.saveAll(dataBundle.presentationAccessControls.values());

@@ -24,7 +24,7 @@ public class FileLogic {
 
     public FileRecord createFileRecord(long userId, String fileName) {
 
-        UserDetails userDetails = retrieveUserProfileUsingUserId(userId);
+        UserDetails userDetails = retrieveUserDetailsUsingUserId(userId);
         int fileNumber = findNextUnusedFileId(userDetails.getUserId());
         FileRecord fileRecord = new FileRecord();
         fileRecord.setFileName(fileName);
@@ -44,7 +44,7 @@ public class FileLogic {
         return fileRecord;
     }
 
-    private UserDetails retrieveUserProfileUsingUserId (long userId) throws UserNotFoundException {
+    private UserDetails retrieveUserDetailsUsingUserId(long userId) throws UserNotFoundException {
         Optional<UserDetails> profile = userDetailsRepository.findByUserId(userId);
         if (!profile.isPresent()) {
             throw new UserNotFoundException(userId);
