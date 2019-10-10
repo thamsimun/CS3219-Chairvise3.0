@@ -3,16 +3,15 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
-import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UnauthorisedException;
 import sg.edu.nus.comp.cs3219.viz.common.util.Const;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationAccessControlRepository;
-import sg.edu.nus.comp.cs3219.viz.storage.repository.UserProfileRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.Optional;
 
@@ -20,13 +19,13 @@ import java.util.Optional;
 public class GateKeeper {
 
     private PresentationAccessControlRepository presentationAccessControlRepository;
-    private UserProfileRepository userProfileRepository;
+    private UserDetailsRepository userDetailsRepository;
     private SignUpLogic signUpLogic;
 
     public GateKeeper(PresentationAccessControlRepository presentationAccessControlRepository,
-                      UserProfileRepository userProfileRepository, SignUpLogic signUpLogic) {
+                      UserDetailsRepository userDetailsRepository, SignUpLogic signUpLogic) {
         this.presentationAccessControlRepository = presentationAccessControlRepository;
-        this.userProfileRepository = userProfileRepository;
+        this.userDetailsRepository = userDetailsRepository;
         this.signUpLogic = signUpLogic;
     }
 
@@ -71,7 +70,7 @@ public class GateKeeper {
         UserInfo currentUser = getCurrentLoginUser()
                 .orElseThrow(UnauthorisedException::new);
 
-        if (!currentUser.getUserEmail().equals(presentation.getCreatorIdentifier())) {
+        if (!(currentUser.getUserId() == presentation.getUserId())) {
             throw new UnauthorisedException();
         }
     }
@@ -113,12 +112,12 @@ public class GateKeeper {
     }
 
     public long getUserIdIfExistElseCreate(User user) {
-        Optional<UserProfile> userProfile = userProfileRepository.findByUserEmail(user.getEmail());
+        Optional<UserDetails> userProfile = userDetailsRepository.findByUserEmail(user.getEmail());
         if (userProfile.isPresent()) {
             return userProfile.get().getUserId();
         } else {
             //creates a new user profile
-            UserProfile newUser = signUpLogic.createNewUser(user);
+            UserDetails newUser = signUpLogic.createNewUser(user);
             return newUser.getUserId();
         }
     }

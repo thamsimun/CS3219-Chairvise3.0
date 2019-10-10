@@ -28,7 +28,7 @@ public class PresentationSectionLogic {
         newPresentationSection.setTitle(presentationSection.getTitle());
         newPresentationSection.setDescription(presentationSection.getDescription());
         newPresentationSection.setType(presentationSection.getType());
-        newPresentationSection.setDataSet(presentationSection.getDataSet());
+        newPresentationSection.setUserId(presentationSection.getUserId());
         newPresentationSection.setSelections(presentationSection.getSelections());
         newPresentationSection.setInvolvedRecords(presentationSection.getInvolvedRecords());
         newPresentationSection.setFilters(presentationSection.getFilters());
@@ -47,7 +47,7 @@ public class PresentationSectionLogic {
     public PresentationSection updatePresentation(PresentationSection oldPresentationSection, PresentationSection newPresentationSection) {
         oldPresentationSection.setTitle(newPresentationSection.getTitle());
         oldPresentationSection.setDescription(newPresentationSection.getDescription());
-        oldPresentationSection.setDataSet(newPresentationSection.getDataSet());
+        oldPresentationSection.setUserId(newPresentationSection.getUserId());
         oldPresentationSection.setSelections(newPresentationSection.getSelections());
         oldPresentationSection.setInvolvedRecords(newPresentationSection.getInvolvedRecords());
         oldPresentationSection.setFilters(newPresentationSection.getFilters());

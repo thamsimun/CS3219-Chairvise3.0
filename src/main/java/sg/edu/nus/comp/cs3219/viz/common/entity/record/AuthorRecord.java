@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Exportable(name = "Author Record", nameInDB = "author_record")
 @Entity
@@ -21,8 +18,12 @@ public class AuthorRecord {
     @Column(name = "a_id")
     private Long id;
 
-    // each record will be imported by each user, dataSet is used to distinguished records submitted by different user
-    private String dataSet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    })
+    private FileRecord fileRecord;
 
     @Exportable(name = "Submission Id", nameInDB = "a_submission_id")
     @Column(name = "a_submission_id")
@@ -71,12 +72,12 @@ public class AuthorRecord {
         this.id = id;
     }
 
-    public String getDataSet() {
-        return dataSet;
+    public FileRecord getFileRecord() {
+        return fileRecord;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setFileRecord(FileRecord fileRecord) {
+        this.fileRecord = fileRecord;
     }
 
     public String getSubmissionId() {

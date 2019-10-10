@@ -9,6 +9,7 @@ export default {
     logoutUrl: '',
     userEmail: '',
     userNickname: '',
+    userId: ''
   },
   mutations: {
     setAuthInfoApiRequestFail(state, payload) {
@@ -24,6 +25,7 @@ export default {
       if (payload.isLogin) {
         state.userEmail = payload.userInfo.userEmail;
         state.userNickname = payload.userInfo.userNickname;
+        state.userId = payload.userInfo.userId;
       }
     }
   },
