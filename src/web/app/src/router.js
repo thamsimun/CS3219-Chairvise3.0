@@ -52,6 +52,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "home" */ './views/Landing.vue')
     },
     {
+      path: '/guide',
+      name: 'guide',
+      meta: {
+        title: 'Guide Page'
+      },
+      component: () => import(/* webpackChunkName: "home" */ './views/Guide.vue')
+    },
+    {
       path: '/',
       redirect: '/landing'
     }

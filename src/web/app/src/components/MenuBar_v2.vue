@@ -14,20 +14,24 @@
 <!--    <el-menu-loginEmail :disabled="!isLogin"></el-menu-loginEmail>-->
 <!--    <el-menu-loginPassword :disabled="!isLogin"></el-menu-loginPassword>-->
 
-    <el-menu-item index="/logout" v-if="isLogin" @click="logout" v-loading.fullscreen.lock="isFullscreenLoading">
+    <el-menu-item class="no_click" style="float:right" v-if="isLogin" :disabled="!isLogin">
+      <el-avatar id="avatar" :size="50" :src="userLogo" style="background-color: white" > </el-avatar>
+    </el-menu-item>
+
+    <el-menu-item class="no_click" index="/logout" style="float: right" v-if="isLogin" @click="logout"
+                  v-loading.fullscreen.lock="isFullscreenLoading">
       <el-button type="success" plain>Logout ({{ userNickname }})</el-button>
     </el-menu-item>
-    <el-menu-item index="/importData" :disabled="!isLogin">My Data</el-menu-item>
 
-    <el-menu-item style="float:right" v-if="isLogin" :disabled="!isLogin">
-      <el-avatar :size="50" :src="userLogo" style="background-color: white" > </el-avatar>
-    </el-menu-item>
+    <el-menu-item index="/userHome" :disabled="!isLogin">My Profile</el-menu-item>
 
-    <el-menu-item index="/login" style="float:right" v-if="!isLogin" :disabled="isApiError"
+    <el-menu-item class="no_click" index="/login" style="float:right" v-if="!isLogin" :disabled="isApiError"
                   @click="login"
                   v-loading.fullscreen.lock="isFullscreenLoading">
       <el-button round type="success" plain :disabled="isApiError">Login</el-button>
     </el-menu-item>
+
+
   </el-menu>
 
 </template>
@@ -76,3 +80,9 @@
     }
   }
 </script>
+
+<style>
+  .no_click:hover {
+    cursor: default;
+  }
+</style>
