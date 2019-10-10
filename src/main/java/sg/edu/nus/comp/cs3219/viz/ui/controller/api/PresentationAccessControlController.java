@@ -14,6 +14,7 @@ import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class PresentationAccessControlController extends BaseRestController {
@@ -38,6 +39,14 @@ public class PresentationAccessControlController extends BaseRestController {
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
 
         return presentationAccessControlLogic.findAllByPresentation(presentation);
+    }
+
+    @GetMapping("/presentations/shared")
+    public List<Long> sharedPresentations() {
+        String userIdentifier = gateKeeper.verifyLoginAccess().getUserEmail();
+        List<PresentationAccessControl> accessControls = presentationAccessControlLogic
+            .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
+        return accessControls.stream().map(PresentationAccessControl::getId).collect(Collectors.toList());
     }
 
     @PostMapping("/presentations/{presentationId}/accessControl")

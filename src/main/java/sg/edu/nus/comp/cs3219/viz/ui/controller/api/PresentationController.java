@@ -6,12 +6,16 @@ import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.exception.PresentationNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class PresentationController extends BaseRestController {
@@ -52,6 +56,13 @@ public class PresentationController extends BaseRestController {
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
 
         return presentation;
+    }
+
+    @GetMapping("/presentations/created")
+    public List<Long> createdPresentation() {
+        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+        List<Presentation> presentations = presentationLogic.findAllForUser(userInfo);
+        return presentations.stream().map(Presentation::getId).collect(Collectors.toList());
     }
 
     @PutMapping("/presentations/{id}")
