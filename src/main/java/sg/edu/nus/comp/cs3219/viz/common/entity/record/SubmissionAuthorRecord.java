@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class SubmissionAuthorRecord {
@@ -19,7 +16,12 @@ public class SubmissionAuthorRecord {
     @Column(name = "s_author_id")
     private Long id;
 
-    private String dataSet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    })
+    private FileRecord fileRecord;
 
     @Column(name = "s_author_name")
     private String name;
@@ -32,12 +34,12 @@ public class SubmissionAuthorRecord {
         this.id = id;
     }
 
-    public String getDataSet() {
-        return dataSet;
+    public FileRecord getFileRecord() {
+        return fileRecord;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setFileRecord(FileRecord fileRecord) {
+        this.fileRecord = fileRecord;
     }
 
     public String getName() {

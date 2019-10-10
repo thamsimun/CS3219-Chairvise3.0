@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.File;
 import java.util.Date;
 
 @Exportable(name = "Review Record", nameInDB = "review_record")
@@ -22,8 +20,12 @@ public class ReviewRecord {
     @Column(name = "r_id")
     private Long id;
 
-    // each record will be imported by each user, dataSet is used to distinguished records submitted by different user
-    private String dataSet;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    @JoinColumns({
+            @JoinColumn(name = "file_number", referencedColumnName = "file_number"),
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    })
+    private FileRecord fileRecord;
 
     @Exportable(name = "Submission Id", nameInDB = "r_submission_id")
     @Column(name = "r_submission_id")
@@ -69,6 +71,14 @@ public class ReviewRecord {
     @Column(name = "r_has_recommended_for_best_paper")
     private String hasRecommendedForBestPaper;
 
+    public FileRecord getFileRecord() {
+        return fileRecord;
+    }
+
+    public void setFileRecord(FileRecord fileRecord) {
+        this.fileRecord = fileRecord;
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,12 +87,12 @@ public class ReviewRecord {
         this.id = id;
     }
 
-    public String getDataSet() {
-        return dataSet;
+    public FileId getFileId() {
+        return this.fileRecord.getFileId();
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setFileId(FileId fileId) {
+        this.fileRecord.setFileId(fileId);
     }
 
     public String getSubmissionId() {

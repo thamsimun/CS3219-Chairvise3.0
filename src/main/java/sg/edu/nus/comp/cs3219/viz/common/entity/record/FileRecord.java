@@ -1,6 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 
-import sg.edu.nus.comp.cs3219.viz.common.entity.UserProfile;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 
 import javax.persistence.*;
 
@@ -12,38 +12,31 @@ public class FileRecord {
     private FileId fileId;
 
     @Column(name = "file_name")
+    @Exportable(name = "fileName", nameInDB = "file_name")
     private String fileName;
 
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserProfile userProfile;
-/*
-    public FileRecord(long userId, String fileNumber, String fileName) {
-        this.fileName = fileName;
-        this.fileId = new FileId(userId, fileNumber);
-    }
+    private UserDetails userDetails;
 
-    //JPA expects a default constructor
-    protected FileRecord() {
-    }*/
     public FileRecord() {
         this.fileId = new FileId();
     }
 
-    public UserProfile getUserProfile() {
-        return this.userProfile;
+    public UserDetails getUserDetails() {
+        return this.userDetails;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
-    public String getFileNumber() {
+    public int getFileNumber() {
         return this.fileId.getFileNumber();
     }
 
-    public void setFileNumber(String fileNumber) {
+    public void setFileNumber(int fileNumber) {
         this.fileId.setFileNumber(fileNumber);
     }
 
@@ -53,5 +46,13 @@ public class FileRecord {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public FileId getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(FileId fileId) {
+        this.fileId = fileId;
     }
 }
