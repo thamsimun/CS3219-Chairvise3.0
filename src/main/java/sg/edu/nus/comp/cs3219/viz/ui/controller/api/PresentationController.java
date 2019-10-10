@@ -6,12 +6,15 @@ import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.exception.PresentationNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class PresentationController extends BaseRestController {
@@ -53,6 +56,16 @@ public class PresentationController extends BaseRestController {
 
         return presentation;
     }
+
+    @GetMapping("/presentations/created")
+    public List<Long> createdPresentation() {
+        Optional<UserInfo> userInfo = gateKeeper.getCurrentLoginUser();
+        long userId = userInfo.get().getUserId();
+        return new ArrayList<>();
+    }
+
+
+
 
     @PutMapping("/presentations/{id}")
     public ResponseEntity<?> updatePresentation(@RequestBody Presentation newPresentation, @PathVariable Long id) throws URISyntaxException {
