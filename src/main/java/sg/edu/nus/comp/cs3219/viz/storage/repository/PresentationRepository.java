@@ -8,4 +8,6 @@ import java.util.List;
 public interface PresentationRepository extends JpaRepository<Presentation, Long> {
 
     List<Presentation> findByUserDetailsUserId(long userId);
+
+    List<Presentation> findByCreatorIdentifier(String creatorIdentifier);
 }
