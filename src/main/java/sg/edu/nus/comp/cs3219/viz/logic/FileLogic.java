@@ -1,6 +1,7 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
+import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
@@ -32,6 +33,20 @@ public class FileLogic {
         fileRecord.setFileNumber(fileNumber);
 
         return fileRecord;
+    }
+
+    public List<FileInfo> retrieveFileRecordsUsingUserId(long userId) {
+        List<FileRecord> fileRecords = fileRecordRepository.findAllByFileIdUserIdEquals(userId);
+        List<FileInfo> fileInfo = new ArrayList<>();
+        fileRecords.forEach(x -> fileInfo.add(createFileInfoFromFileRecord(x)));
+        return fileInfo;
+    }
+
+    private FileInfo createFileInfoFromFileRecord(FileRecord fileRecord) {
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.setFileName(fileRecord.getFileName());
+        fileInfo.setFileNumber(fileRecord.getFileNumber());
+        return fileInfo;
     }
 
     public void saveFileRecord(FileRecord fileRecord) {
