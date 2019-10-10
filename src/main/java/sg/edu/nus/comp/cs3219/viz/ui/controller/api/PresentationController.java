@@ -65,8 +65,6 @@ public class PresentationController extends BaseRestController {
         return presentations.stream().map(Presentation::getId).collect(Collectors.toList());
     }
 
-
-
     @PutMapping("/presentations/{id}")
     public ResponseEntity<?> updatePresentation(@RequestBody Presentation newPresentation, @PathVariable Long id) throws URISyntaxException {
 
