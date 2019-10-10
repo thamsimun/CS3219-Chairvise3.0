@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import MenuBar from '@/components/MenuBar.vue'
+  import MenuBar from '@/components/MenuBar_v2.vue'
 
   export default {
     watch: {
