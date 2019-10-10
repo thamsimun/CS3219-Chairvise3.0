@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class PresentationController extends BaseRestController {
@@ -59,11 +60,10 @@ public class PresentationController extends BaseRestController {
 
     @GetMapping("/presentations/created")
     public List<Long> createdPresentation() {
-        Optional<UserInfo> userInfo = gateKeeper.getCurrentLoginUser();
-        long userId = userInfo.get().getUserId();
-        return new ArrayList<>();
+        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+        List<Presentation> presentations = presentationLogic.findAllForUser(userInfo);
+        return presentations.stream().map(Presentation::getId).collect(Collectors.toList());
     }
-
 
 
 
