@@ -59,7 +59,6 @@
       return {
         pool: [],
         selected: [],
-        rawData: [],
         isReady: false
       }
     },
@@ -87,19 +86,13 @@
           header: true, // we take it as there are headers present for now
           complete: result => {
             this.pool = result.meta.fields;
-            this.rawData = result.data;
+            this.$store.commit('setRawData', result.data);
             this.$store.commit('setPageLoadingStatus', false);
           }
         })
       },
       nextClicked: function () {
-        let toUpload = [];
-        this.rawData.forEach(row => toUpload.push(Object.values(_.pick(row, this.selected))));
-
-        this.$store.commit('setUploadedData', toUpload);
         this.$store.commit('setSelectedFields', _.cloneDeep(this.selected));
-
-        this.$store.commit('processData');
 
         this.isReady = true;
       }

@@ -9,6 +9,7 @@ export default {
     data: {
       dbSchemaName: '',
       fieldMetaData: [],
+      rawData: [],
       uploadedData: [],
       selectedFields: [],
       processedResult: []
@@ -22,18 +23,16 @@ export default {
       state.data.fieldMetaData = fieldMetaDataList;
       state.hasDbSchemaSet = true;
     },
-    setUploadedData(state, data) {
-      state.data.uploadedData = data;
-      state.hasFileUploaded = true;
+    setRawData(state, data) {
+      state.data.rawData = data;
     },
     setSelectedFields(state, fields) {
       state.data.selectedFields = fields;
     },
-    processData(state) {
+    processData(state, data) {
       try {
         state.error = [];
-        state.data.processedResult = processMapping(this.state.dataMappingNew.data.uploadedData,
-          this.state.dataMappingNew.data.fieldMetaData);
+        state.data.processedResult = processMapping(data, this.state.dataMappingNew.data.fieldMetaData);
       } catch (err) {
         state.error.push(err);
         state.data.processedResult = [];
