@@ -11,7 +11,7 @@
     <el-row>
       <el-col v-for='(list, index) in mappingList' :key='index' :span='2' class='box'>
           <draggable :list='list' group='fields'>
-            <div v-for='item in list' :key='item'>
+            <div v-for='(item, index) in list' :key='index'>
               <div class='user-field'><p>{{ item }}</p></div>
             </div>
           </draggable>
@@ -35,11 +35,17 @@
         rawData: _.cloneDeep(this.$store.state.dataMappingNew.data.rawData),
         fieldMetaData: _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
         dbSchemaName: _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName),
-        mappingList: _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData).map((field, index) =>
-          [_.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields)[index]])
+        mappingList: this.zip(_.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
+          _.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields))
       }
     },
     methods: {
+      zip: function(list1, list2) {
+        return list1.map((field, index) =>
+          (index === list1.length - 1)
+            ? list2.slice(index)
+            : list2.slice(index, index + 1));
+      },
       submitClicked: function () {
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(Object.values(_.pick(row, this.mappingList.flat()))));
