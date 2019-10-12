@@ -3,7 +3,7 @@
     <el-button v-on:click='submitClicked'>Submit</el-button>
     <br>
     <el-row>
-      <el-col v-for='element in fieldMetaData' :key='element.fieldName' :span='2'>
+      <el-col v-for='(element, index) in fieldMetaData' :key='index' :span='2'>
         <div class='db-field'><p>{{ element.name }}</p></div>
       </el-col>
     </el-row>

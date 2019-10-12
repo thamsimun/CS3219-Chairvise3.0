@@ -30,13 +30,13 @@
     <div>
       <h2>Pick columns</h2>
       <ul>
-        <li v-for='field in pool' v-bind:key='field' v-on:click='addToSelected(field)'>
+        <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
           {{ field }}
         </li>
       </ul>
       <h2>Selected</h2>
       <ul>
-        <li v-for='field in selected' v-bind:key='field' v-on:click='addToPool(field)'>
+        <li v-for='(field, index) in selected' v-bind:key='index' v-on:click='addToPool(field)'>
           {{ field }}
         </li>
       </ul>
