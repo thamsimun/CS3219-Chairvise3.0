@@ -99,6 +99,27 @@ public class PresentationSection {
         }
     }
 
+    public static class FileMapping {
+        private String fileName;
+        private int fileNumber;
+
+        public String getName() {
+            return fileName;
+        }
+
+        public void setName(String name) {
+            this.fileName = name;
+        }
+
+        public int getFileNumber() {
+            return fileNumber;
+        }
+
+        public void setFileNumber(int fileNumber) {
+            this.fileNumber = fileNumber;
+        }
+    }
+
     public static class Record {
         private String name;
 

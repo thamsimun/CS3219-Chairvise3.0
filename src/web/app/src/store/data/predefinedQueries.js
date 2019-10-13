@@ -305,6 +305,12 @@ export default {
           customized: false,
         }
       ],
+      fileMapping: [
+        {
+          fileName: 'author_record',
+          fileNumber: '1',
+        }
+      ],
       filters: [],
       joiners: [],
       groupers: [
