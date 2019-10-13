@@ -1,4 +1,4 @@
-import {processMapping} from '@/store/helpers/processorNew.js';
+import {applyTransformations, processMapping, noTransformation} from '@/store/helpers/processorNew.js';
 import axios from 'axios';
 
 export default {
@@ -12,7 +12,8 @@ export default {
       rawData: [],
       uploadedData: [],
       selectedFields: [],
-      processedResult: []
+      processedResult: [],
+      mappingList: []
     },
     error: []
   },
@@ -29,10 +30,18 @@ export default {
     setSelectedFields(state, fields) {
       state.data.selectedFields = fields;
     },
+    setMappingList(state, mappingList) {
+      state.data.mappingList = mappingList;
+    },
     processData(state, data) {
       try {
         state.error = [];
-        state.data.processedResult = processMapping(data, this.state.dataMappingNew.data.fieldMetaData);
+
+        let transformations = [];
+        state.data.mappingList.forEach(() => transformations.push(noTransformation));
+        let transformedData = applyTransformations(data, state.data.mappingList, transformations);
+
+        state.data.processedResult = processMapping(transformedData, this.state.dataMappingNew.data.fieldMetaData);
       } catch (err) {
         state.error.push(err);
         state.data.processedResult = [];

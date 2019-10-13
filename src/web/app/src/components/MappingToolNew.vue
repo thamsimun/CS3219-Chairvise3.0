@@ -48,14 +48,18 @@
       },
       submitClicked: function () {
         let toProcess = [];
-        this.rawData.forEach(row => toProcess.push(Object.values(_.pick(row, this.mappingList.flat()))));
+        this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 
+        this.$store.commit('setMappingList', _.cloneDeep(this.mappingList));
         this.$store.commit('processData', toProcess);
 
         this.$store.dispatch('persistData');
       },
       log: function () {
         console.log(this.mappingList);
+        let toProcess = [];
+        this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
+        console.log(toProcess);
       }
     }
   }

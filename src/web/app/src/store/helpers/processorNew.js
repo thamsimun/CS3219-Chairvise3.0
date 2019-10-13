@@ -36,24 +36,39 @@ function processAuthors(raw) {
 }
 
 /*
-  takes in an index that specifies the date and time column index in the row.
-  idx is the index for date, and idx + 1 must be the index for time.
-  returns a new function that replaces both columns with just 1 column of date time.
-  the final date time column will have index idx.
-  (sanity check) there will be one less column after the resulting function acts on the row.
+  solely returns the field without any transformation.
  */
-function processDate(idx) {
-  return function (row) {
-    let before = row.slice(0, idx);
-    let after = row.slice(idx + 2); // time must be immediately after date; both (2) are not included
-    let date = row[idx];
-    let time = row[idx + 1]; // time must be immediately after date
+export function noTransformation(row, field) {
+  return row[field];
+}
 
-    let datetime = moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+/*
+  takes a dateField and a timeField, and returns a dateTime field.
+ */
+function transformToDateTime(row, dateField, timeField) {
+  let date = row[dateField];
+  let time = row[timeField];
 
-    before.push(datetime);
-    return before.concat(after);
-  }
+  // check for errors; is it an invalid date?
+  return moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+}
+
+/*
+  takes in a data object (still with the key-value pairings), a mapping list and a list of transformations
+  return a list of list of rows (only values and not the keys)
+ */
+export function applyTransformations(data, mappingList, transformations) {
+  let transformedData = [];
+
+  data.forEach(row => {
+    let transformedRow = [];
+    mappingList.forEach((list, index) => {
+      transformedRow.push(transformations[index](row, ...list));
+    });
+    transformedData.push(transformedRow);
+  });
+
+  return transformedData;
 }
 
 /*
