@@ -13,7 +13,8 @@ export default {
       uploadedData: [],
       selectedFields: [],
       processedResult: [],
-      mappingList: []
+      mappingList: [],
+      transformations: []
     },
     error: []
   },
@@ -33,14 +34,13 @@ export default {
     setMappingList(state, mappingList) {
       state.data.mappingList = mappingList;
     },
+    setTransformations(state, transformations) {
+      state.data.transformations = transformations;
+    },
     processData(state, data) {
       try {
         state.error = [];
-
-        let transformations = [];
-        state.data.mappingList.forEach(() => transformations.push(noTransformation));
-        let transformedData = applyTransformations(data, state.data.mappingList, transformations);
-
+        let transformedData = applyTransformations(data, state.data.mappingList, state.data.transformations);
         state.data.processedResult = processMapping(transformedData, this.state.dataMappingNew.data.fieldMetaData);
       } catch (err) {
         state.error.push(err);

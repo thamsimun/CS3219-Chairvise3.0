@@ -45,7 +45,7 @@ export function noTransformation(row, field) {
 /*
   takes a dateField and a timeField, and returns a dateTime field.
  */
-function transformToDateTime(row, dateField, timeField) {
+export function transformToDateTime(row, dateField, timeField) {
   let date = row[dateField];
   let time = row[timeField];
 
@@ -80,6 +80,7 @@ export function applyTransformations(data, mappingList, transformations) {
         correct format.
         Way to do this might be using the fieldMetaData to choose standard functions, and having drop-downs to
         let the user choose differently.
+        This function should be reduced to just mapping the dbfield to the item in the list.
  */
 export function processMapping(data, fieldMetaData) {
   let result = [];

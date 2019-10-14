@@ -9,12 +9,25 @@
     </el-row>
     <br>
     <el-row>
+      <el-col v-for='(element, index) in transformations' :key='index' :span='2'>
+        <el-select v-model='transformations[index]'>
+          <el-option
+            v-for='item in options'
+            :key='item.name'
+            :value='item.value'
+            :label='item.name'>
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <br>
+    <el-row>
       <el-col v-for='(list, index) in mappingList' :key='index' :span='2' class='box'>
-          <draggable :list='list' group='fields'>
-            <div v-for='(item, index) in list' :key='index'>
-              <div class='user-field'><p>{{ item }}</p></div>
-            </div>
-          </draggable>
+        <draggable :list='list' group='fields'>
+          <div v-for='(item, index) in list' :key='index'>
+            <div class='user-field'><p>{{ item }}</p></div>
+          </div>
+        </draggable>
       </el-col>
     </el-row>
 
@@ -24,6 +37,7 @@
 
 <script>
   import draggable from "vuedraggable";
+  import {noTransformation, transformToDateTime} from "../store/helpers/processorNew";
 
   export default {
     name: "MappingToolNew",
@@ -36,11 +50,22 @@
         fieldMetaData: _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
         dbSchemaName: _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName),
         mappingList: this.zip(_.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
-          _.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields))
+          _.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields)),
+        transformations: this.$store.state.dataMappingNew.data.fieldMetaData.map(() => noTransformation),
+        options: [
+          {
+            value: noTransformation,
+            name: 'none'
+          },
+          {
+            value: transformToDateTime,
+            name: 'date and time'
+          }
+        ]
       }
     },
     methods: {
-      zip: function(list1, list2) {
+      zip: function (list1, list2) {
         return list1.map((field, index) =>
           (index === list1.length - 1)
             ? list2.slice(index)
@@ -51,6 +76,7 @@
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 
         this.$store.commit('setMappingList', _.cloneDeep(this.mappingList));
+        this.$store.commit('setTransformations', _.cloneDeep(this.transformations));
         this.$store.commit('processData', toProcess);
 
         this.$store.dispatch('persistData');
@@ -60,6 +86,7 @@
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
         console.log(toProcess);
+        console.log(this.transformations);
       }
     }
   }
