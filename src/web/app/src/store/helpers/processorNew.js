@@ -75,6 +75,11 @@ export function applyTransformations(data, mappingList, transformations) {
   data should be clear of unwanted fields.
   data fields should be ordered as in dbFields.
   dbSchema is the chosen dbSchema.
+
+  Note: Actually this function could be not needed if we can ensure the transformations give us the
+        correct format.
+        Way to do this might be using the fieldMetaData to choose standard functions, and having drop-downs to
+        let the user choose differently.
  */
 export function processMapping(data, fieldMetaData) {
   let result = [];
