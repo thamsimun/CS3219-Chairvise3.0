@@ -15,12 +15,16 @@ export function leaveEmpty(row) {
 /*
   takes a dateField and a timeField, and returns a dateTime field.
  */
-export function transformToDateTime(row, dateField, timeField) {
+export function transformDateAndTimeToDateTime(row, dateField, timeField) {
   let date = row[dateField];
   let time = row[timeField];
 
   // check for errors; is it an invalid date?
   return moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+}
+
+export function transformToDateTime(row, field) {
+  return moment(row[field], 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
 }
 
 /*
@@ -100,11 +104,11 @@ export default {
   ],
   Date: [
     {
-      value: (row, field) => moment(cell, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss'),
+      value: transformToDateTime,
       name: 'do not change'
     },
     {
-      value: transformToDateTime,
+      value: transformDateAndTimeToDateTime,
       name: 'date + time to datetime'
     }
   ],
