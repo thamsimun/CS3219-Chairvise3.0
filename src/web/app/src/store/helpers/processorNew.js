@@ -36,86 +36,21 @@ function processAuthors(raw) {
 }
 
 /*
-  solely returns the field without any transformation.
+  takes in a data object (still with the key-value pairings), a mapping list, a list of transformations
+  and the field meta data
+  return the mapped data (list of objects that fit the db)
  */
-export function noTransformation(row, field) {
-  return row[field];
-}
-
-/*
-  takes a dateField and a timeField, and returns a dateTime field.
- */
-export function transformToDateTime(row, dateField, timeField) {
-  let date = row[dateField];
-  let time = row[timeField];
-
-  // check for errors; is it an invalid date?
-  return moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
-}
-
-/*
-  takes in a data object (still with the key-value pairings), a mapping list and a list of transformations
-  return a list of list of rows (only values and not the keys)
- */
-export function applyTransformations(data, mappingList, transformations) {
+export function applyTransformations(data, mappingList, transformations, fieldMetaData) {
   let transformedData = [];
 
   data.forEach(row => {
-    let transformedRow = [];
+    let resultingData = {};
     mappingList.forEach((list, index) => {
-      transformedRow.push(transformations[index](row, ...list));
+      resultingData[fieldMetaData[index].jsonProperty] = transformations[index](row, ...list);
     });
-    transformedData.push(transformedRow);
+    transformedData.push(resultingData);
   });
 
   return transformedData;
 }
 
-/*
-  data should be clear of unwanted fields.
-  data fields should be ordered as in dbFields.
-  dbSchema is the chosen dbSchema.
-
-  Note: Actually this function could be not needed if we can ensure the transformations give us the
-        correct format.
-        Way to do this might be using the fieldMetaData to choose standard functions, and having drop-downs to
-        let the user choose differently.
-        This function should be reduced to just mapping the dbfield to the item in the list.
- */
-export function processMapping(data, fieldMetaData) {
-  let result = [];
-  let dbFields = fieldMetaData;
-
-  for (let i = 0; i < data.length; i++) {
-    let row = data[i];
-    let resultingData = {};
-
-    row.forEach((cell, idx) => {
-      let cellData;
-      let fieldType = dbFields[idx].type;
-
-      switch (fieldType) {
-        // TODO: missing LocalData and LocalTime cases
-        case 'Date':
-          cellData = moment(cell, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
-          break;
-        case 'int':
-          cellData = parseInt(cell);
-          break;
-        case 'double':
-          cellData = processDouble(cell);
-          break;
-        case 'List':
-          cellData = processAuthors(cell);
-          break;
-        default:
-          cellData = cell;
-      }
-
-      resultingData[dbFields[idx].jsonProperty] = cellData;
-    });
-
-    result.push(resultingData);
-  }
-  return result;
-}

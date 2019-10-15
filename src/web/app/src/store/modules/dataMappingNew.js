@@ -1,4 +1,4 @@
-import {applyTransformations, processMapping, noTransformation} from '@/store/helpers/processorNew.js';
+import {applyTransformations, processMapping} from '@/store/helpers/processorNew.js';
 import axios from 'axios';
 
 export default {
@@ -40,8 +40,13 @@ export default {
     processData(state, data) {
       try {
         state.error = [];
-        let transformedData = applyTransformations(data, state.data.mappingList, state.data.transformations);
-        state.data.processedResult = processMapping(transformedData, this.state.dataMappingNew.data.fieldMetaData);
+        state.data.processedResult =
+          applyTransformations(
+            data,
+            state.data.mappingList,
+            state.data.transformations,
+            this.state.dataMappingNew.data.fieldMetaData
+          );
       } catch (err) {
         state.error.push(err);
         state.data.processedResult = [];
