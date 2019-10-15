@@ -8,6 +8,10 @@ export function noTransformation(row, field) {
   return row[field];
 }
 
+export function leaveEmpty(row) {
+  return "";
+}
+
 /*
   takes a dateField and a timeField, and returns a dateTime field.
  */
@@ -72,6 +76,10 @@ export default {
     {
       value: noTransformation,
       name: 'none'
+    },
+    {
+      value: leaveEmpty,
+      name: 'leave empty'
     }
   ],
   int: [
