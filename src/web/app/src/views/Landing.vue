@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="14">
+    <el-container class="landing">
+      <el-col class="welcome" :span="14">
           <WelcomeSection/>
       </el-col>
-      <el-col :span="10">
+      <el-col class="register" :span="10">
           <SignUpSection/>
       </el-col>
-    </el-row>
+    </el-container>
   </div>
 </template>
 
@@ -21,7 +21,7 @@
   import WelcomeSection from "@/components/landingPageDetail/WelcomeSection";
 
   export default {
-    name: 'home',
+    name: 'landing',
     components: {
       WelcomeSection,
       // WelcomeMessage,
@@ -33,4 +33,15 @@
   }
 </script>
 <style scoped>
+  .landing {
+    height:600px;
+    background-color: lightblue;
+  }
+  .welcome {
+    /*border-width: 1px;*/
+    /*border-right-style: solid;*/
+    /*border-right-color: #777777;*/
+  }
+  .register {}
+
 </style>
