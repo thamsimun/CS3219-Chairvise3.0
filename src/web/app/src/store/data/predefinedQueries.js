@@ -3284,37 +3284,34 @@ export default {
       involvedRecords: [
         {
           name: "(select A.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
-            " from (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
-            " from (select r_confidence_level,case when r_overall_evaluation_score<"+
+            " from (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
+            " from (select r_confidence_level,case when r_overall_evaluation_score<" +
             "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
-            " LEFT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
-            " from (select r_confidence_level,case when r_overall_evaluation_score<"+
+            " LEFT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
+            " from (select r_confidence_level,case when r_overall_evaluation_score<" +
             "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
             " ON A.r_confidence_level=B.r_confidence_level" +
             " union" +
             " select B.r_confidence_level as r_confidence_level, IFNULL(A.tot_score,0) AS r_score_low, IFNULL(B.tot_score,0) AS r_score_high" +
-            " from (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
-            " from (select r_confidence_level,case when r_overall_evaluation_score<"+
+            " from (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
+            " from (select r_confidence_level,case when r_overall_evaluation_score<" +
             "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'low' group by r_confidence_level,r_low_or_high) as A" +
-            " RIGHT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score"+
-            " from (select r_confidence_level,case when r_overall_evaluation_score<"+
+            " RIGHT JOIN (select r_confidence_level, r_low_or_high, count(*) as tot_score" +
+            " from (select r_confidence_level,case when r_overall_evaluation_score<" +
             "(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id  = '${PLACEHOLDER_USER_ID}') then 'low' when r_overall_evaluation_score=(select case when ((MAX(r_overall_evaluation_score)-MIN(r_overall_evaluation_score))/2)<3 then 3 else 0 end as medium FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}') then 'medium' else 'high' end as r_low_or_high FROM review_record WHERE review_record.user_id = '${PLACEHOLDER_USER_ID}')as temp1  where r_low_or_high like 'high' group by r_confidence_level,r_low_or_high) as B" +
             " ON A.r_confidence_level=B.r_confidence_level)as temp",
           customized: true,
         }
       ],
-      filters: [
-      ],
+      filters: [],
       joiners: [],
       //determine the field for group by clause
       groupers: [],
-      sorters: [
-
-      ],
+      sorters: [],
       // set the labels, x and y axis, and modify chart style
       extraData: {
         dataSetLabel: 'Percentage of High Scores',
-        xAxisFieldName:'r_confidence_level' ,
+        xAxisFieldName: 'r_confidence_level',
         yAxisFieldName: 'r_score_high_per',
         numOfResultToDisplay: 10,
         isColorfulBar: false,

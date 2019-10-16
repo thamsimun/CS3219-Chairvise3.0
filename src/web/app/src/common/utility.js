@@ -18,8 +18,8 @@ export const filterPredefinedMap = (mappedIdArray, originalArray) => {
  */
 export const distribute = (xs, n) => {
   return [...Array(n)].map((field, index) =>
-  (index === xs.length - 1)
-    ? xs.slice(index)
-    : xs.slice(index, index + 1));
+    (index === xs.length - 1)
+      ? xs.slice(index)
+      : xs.slice(index, index + 1));
 };
 
