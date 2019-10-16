@@ -17,9 +17,8 @@ export const filterPredefinedMap = (mappedIdArray, originalArray) => {
   the last list contains the remaining elements if xs.length > n
  */
 export const distribute = (xs, n) => {
-  return [...Array(n)].map((field, index) =>
-    (index === xs.length - 1)
+  return [...Array(n)].map((_, index) =>
+    (n - 1 === index)
       ? xs.slice(index)
       : xs.slice(index, index + 1));
 };
-
