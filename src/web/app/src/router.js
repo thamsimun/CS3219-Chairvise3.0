@@ -41,15 +41,15 @@ export default new Router({
       meta: {
         title: 'Import Data Page'
       },
-      component: () => import(/* webpackChunkName: "importData" */ './views/NewImportData.vue')
+      component: () => import(/* webpackChunkName: "importData" */ './views/ImportData.vue')
     },
     {
-      path: '/test',
-      name: 'test',
+      path: '/ImportDataNew',
+      name: 'ImportDataNew',
       meta: {
-        title: 'test'
+        title: 'Import Data Page'
       },
-      component: () => import('./components/newImportDataComponents/ImportDataNew.vue')
+      component: () => import(/* webpackChunkName: "importDataNew" */ './views/ImportDataNew.vue')
     },
     {
       path: '/',

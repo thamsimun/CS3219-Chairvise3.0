@@ -4,7 +4,7 @@ import moment from 'moment';
  solely returns the field without any transformation.
  this should be for string
 */
-export function noTransformation(row, field) {
+function noTransformation(row, field) {
   return row[field];
 }
 
@@ -15,7 +15,7 @@ export function leaveEmpty(row) {
 /*
   takes a dateField and a timeField, and returns a dateTime field.
  */
-export function transformDateAndTimeToDateTime(row, dateField, timeField) {
+function transformDateAndTimeToDateTime(row, dateField, timeField) {
   let date = row[dateField];
   let time = row[timeField];
 
@@ -23,21 +23,21 @@ export function transformDateAndTimeToDateTime(row, dateField, timeField) {
   return moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
 }
 
-export function transformToDateTime(row, field) {
+function transformToDateTime(row, field) {
   return moment(row[field], 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
 }
 
 /*
   parse to an int
  */
-export function transformToInt(row, field) {
+function transformToInt(row, field) {
   return parseInt(row[field]);
 }
 
 /*
   parse to javascript number
  */
-export function transformToFloat(row, field) {
+function transformToFloat(row, field) {
   return parseFloat(row[field]);
 }
 
@@ -45,7 +45,7 @@ export function transformToFloat(row, field) {
   parse confidence.
   this is copied from chairvise2.0. hardcoded, should take a look at this again
  */
-export function transformToConfidenceLevel(row, field) {
+function transformToConfidenceLevel(row, field) {
   let rawStringList = row[field].toLocaleLowerCase().split('\n');
   for (let i = 0; i < rawStringList.length; i++) {
     let rawString = rawStringList[i];
@@ -62,7 +62,7 @@ export function transformToConfidenceLevel(row, field) {
   parse list of authors.
   this is copied from chairvise2.0. this is hardcoded so should take a look how to improve this.
  */
-export function transformToAuthorList(row, field) {
+function transformToAuthorList(row, field) {
   let dataList = row[field].split('and');
   if (dataList.length === 1) {
     return dataList.map(author => author.trim());

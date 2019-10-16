@@ -1,4 +1,4 @@
-import {applyTransformations, processMapping} from '@/store/helpers/processorNew.js';
+import {applyTransformations} from '@/store/helpers/processorNew.js';
 import axios from 'axios';
 
 export default {

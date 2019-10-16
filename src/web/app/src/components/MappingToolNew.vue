@@ -30,8 +30,6 @@
         </draggable>
       </el-col>
     </el-row>
-
-    <button v-on:click='log'>Log</button>
   </div>
 </template>
 
@@ -71,13 +69,6 @@
         this.$store.commit('processData', toProcess);
 
         this.$store.dispatch('persistData');
-      },
-      log: function () {
-        console.log(this.mappingList);
-        let toProcess = [];
-        this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
-        console.log(toProcess);
-        console.log(this.transformations);
       }
     }
   }
