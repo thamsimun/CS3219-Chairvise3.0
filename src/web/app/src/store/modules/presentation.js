@@ -14,6 +14,7 @@ export default {
       name: '',
       description: '',
       creatorIdentifier: '',
+      fileIds: new Set(),
     },
     presentationFormStatus: {
       isLoading: false,
@@ -75,13 +76,18 @@ export default {
       state.presentationForm.name = '';
       state.presentationForm.description = '';
       state.presentationForm.creatorIdentifier = '';
+      state.presentationForm.fileIds = new Set();
       state.presentationFormStatus.isLoading = false;
       state.presentationFormStatus.isApiError = false;
       state.presentationFormStatus.apiErrorMsg = '';
     },
 
     setPresentationFormField(state, {field, value}) {
-      state.presentationForm[field] = value
+      state.presentationForm[field] = value;
+    },
+
+    appendToPresentationFormFileIds(state, value) {
+        state.presentationForm.fileIds.add(value);
     },
 
     setIsPresentationEditable(state, isPresentationEditable) {

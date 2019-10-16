@@ -7,6 +7,7 @@ import presentation from "./modules/presentation";
 import section from "./modules/section";
 import dbMetaData from "./modules/dbMetaData";
 import dataMapping from "./modules/dataMapping";
+import fileRecords from "./modules/fileRecords";
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     accessControl,
     section,
     dbMetaData,
-    dataMapping
+    dataMapping,
+    fileRecords
   }
 })

@@ -11,7 +11,7 @@ import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import java.util.List;
 
 @RestController
-public class FileController {
+public class FileController extends BaseRestController {
 
     private GateKeeper gateKeeper;
 
