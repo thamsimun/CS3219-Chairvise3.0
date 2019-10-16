@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-container>
-        <el-aside width="250px" v-if="isLogin">
+        <el-aside class="sidebar" width="250px" v-if="isLogin">
           <list-of-presentation/>
         </el-aside>
         <el-main>
@@ -41,3 +41,9 @@
     }
   }
 </script>
+
+<style>
+  .sidebar {
+    padding-left:10px;
+  }
+</style>

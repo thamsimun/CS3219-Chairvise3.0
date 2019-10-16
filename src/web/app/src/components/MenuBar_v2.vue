@@ -1,13 +1,13 @@
 <template>
   <el-menu mode="horizontal" router :default-active="menuDefaultActive">
 
-    <el-menu-item index="/landing" v-if="!isLogin">
+    <el-menu-item index="/landing" >
       <el-image :src="appLogo" style="width: 30px; height: 30px" ></el-image>
     </el-menu-item>
 
-    <el-menu-item index="/userHome" v-if="isLogin">
-      <el-image :src="appLogo" style="width: 30px; height: 30px" ></el-image>
-    </el-menu-item>
+<!--    <el-menu-item index="/userHome" v-if="isLogin">-->
+<!--      <el-image :src="appLogo" style="width: 30px; height: 30px" ></el-image>-->
+<!--    </el-menu-item>-->
 
     <el-menu-item index="/guide">Guide</el-menu-item>
     <el-menu-item index="/explore">Explore</el-menu-item>
