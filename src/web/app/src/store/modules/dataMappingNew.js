@@ -10,6 +10,7 @@ export default {
       dbSchemaName: '',
       fieldMetaData: [],
       rawData: [],
+      fileName: '',
       uploadedData: [],
       selectedFields: [],
       processedResult: [],
@@ -27,6 +28,9 @@ export default {
     },
     setRawData(state, data) {
       state.data.rawData = data;
+    },
+    setFileName(state, fileName) {
+      state.data.fileName = fileName
     },
     setSelectedFields(state, fields) {
       state.data.selectedFields = fields;
@@ -71,7 +75,10 @@ export default {
           break;
       }
 
-      await axios.post('/api/record/' + endpoint, state.data.processedResult)
+      await axios.post('/api/record/' + endpoint, {
+        'fileName': state.data.fileName,
+        'records': state.data.processedResult
+      })
         .then(() => {
           commit('setPageLoadingStatus', false);
           commit('setUploadSuccess', true);

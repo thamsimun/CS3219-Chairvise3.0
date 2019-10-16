@@ -90,6 +90,7 @@
           complete: result => {
             this.pool = result.meta.fields;
             this.$store.commit('setRawData', result.data);
+            this.$store.commit('setFileName', file.name);
             this.$store.commit('setPageLoadingStatus', false);
           }
         })
