@@ -1,11 +1,108 @@
 {
+    "userDetails": {
+        "s1": {
+            "userId": 1,
+            "userName": "person1",
+            "userEmail": "test@hotmail.com"
+        },
+        "s2": {
+            "userId": 2,
+            "userName": "person2",
+            "userEmail": "test2@hotmail.com"
+        },
+        "s3": {
+            "userId": 3,
+            "userName": "person3",
+            "userEmail": "test2@hotmail.com"
+        }
+    },
+    "fileRecords": {
+        "f1": {
+            "fileName": "file1",
+            "userDetails": {
+                "userName": "person1",
+                "userId": 1,
+                "userEmail": "test@hotmail.com"
+            },
+            "fileId": {
+                "fileNumber": 1,
+                "userId": 1
+            }
+        },
+      "f2": {
+        "fileName": "file2",
+        "userDetails": {
+          "userName": "person1",
+          "userId": 1,
+          "userEmail": "test@hotmail.com"
+        },
+        "fileId": {
+          "fileNumber": 2,
+          "userId": 1
+        }
+      },
+      "f3": {
+        "fileName": "file3",
+        "userDetails": {
+          "userName": "person2",
+          "userId": 2,
+          "userEmail": "testt@hotmail.com"
+        },
+        "fileId": {
+          "fileNumber": 1,
+          "userId": 2
+        }
+      },
+      "f4": {
+        "fileName": "file4",
+        "userDetails": {
+          "userName": "person2",
+          "userId": 2,
+          "userEmail": "testt@hotmail.com"
+        },
+        "fileId": {
+          "fileNumber": 2,
+          "userId": 2
+        }
+      },
+      "f5": {
+        "fileName": "file5",
+        "userDetails": {
+          "userName": "person1",
+          "userId": 1,
+          "userEmail": "test@hotmail.com"
+        },
+        "fileId": {
+          "fileNumber": 3,
+          "userId": 1
+        }
+      },
+      "f6": {
+        "fileName": "file6",
+        "userDetails": {
+          "userName": "person1",
+          "userId": 2,
+          "userEmail": "test@hotmail.com"
+        },
+        "fileId": {
+          "fileNumber": 3,
+          "userId": 2
+        }
+      }
+    },
     "submissionRecords": {
         "s1": {
             "id": 1,
             "authors": [
                 "Laxxx Kaxx"
             ],
-            "dataSet": "test@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "1"
+                },
+                "fileName": "test"
+            },
             "isAccepted": "no",
             "isNotified": "yes",
             "isReviewsSent": "yes",
@@ -23,7 +120,13 @@
             "authors": [
                 "Laxxx Kaxx"
             ],
-            "dataSet": "test1@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "2",
+                    "fileNumber": "1"
+                },
+                "fileName": "test"
+            },
             "isAccepted": "no",
             "isNotified": "yes",
             "isReviewsSent": "yes",
@@ -41,7 +144,13 @@
             "authors": [
                 "test"
             ],
-            "dataSet": "test1@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "1"
+                },
+                "fileName": "test"
+            },
             "isAccepted": "yes",
             "isNotified": "no",
             "isReviewsSent": "yes",
@@ -59,7 +168,13 @@
         "authorS1": {
             "id": 1,
             "country": "United States",
-            "dataSet": "test@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "2"
+                },
+                "fileName": "test"
+            },
             "email": "xxxxxxxxdiana.edu",
             "firstName": "Laxxx",
             "isCorresponding": "yes",
@@ -72,7 +187,13 @@
         "authorS1ByDifferentUser": {
             "id": 2,
             "country": "United States11",
-            "dataSet": "test1@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "2",
+                    "fileNumber": "2"
+                },
+                "fileName": "test"
+            },
             "email": "xxxxxxxxdiana.edu",
             "firstName": "Laxxx",
             "isCorresponding": "yes",
@@ -85,7 +206,13 @@
         "authorS2": {
             "id": 3,
             "country": "United States22",
-            "dataSet": "test1@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "2"
+                },
+                "fileName": "test"
+            },
             "email": "xxxxxxxxdiana.edu",
             "firstName": "Laxxx",
             "isCorresponding": "yes",
@@ -99,7 +226,13 @@
     "reviewRecords": {
         "review1S1": {
             "id": 1,
-            "dataSet": "test@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "3"
+                },
+                "fileName": "test"
+            },
             "expertiseLevel": 1,
             "confidenceLevel": 1,
             "hasRecommendedForBestPaper": "no",
@@ -113,7 +246,13 @@
         },
         "review2S1": {
             "id": 2,
-            "dataSet": "test@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "1",
+                    "fileNumber": "3"
+                },
+                "fileName": "test"
+            },
             "expertiseLevel": 1,
             "confidenceLevel": 1,
             "hasRecommendedForBestPaper": "no",
@@ -127,7 +266,13 @@
         },
         "review1S1ByDifferentUser": {
             "id": 3,
-            "dataSet": "test1@example.com",
+            "fileRecord": {
+                "fileId": {
+                    "userId": "2",
+                    "fileNumber": "3"
+                },
+                "fileName": "test"
+            },
             "expertiseLevel": 1,
             "confidenceLevel": 1,
             "hasRecommendedForBestPaper": "no",

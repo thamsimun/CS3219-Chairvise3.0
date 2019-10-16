@@ -8,6 +8,7 @@ import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UnauthorisedException;
 
+/*
 public class GateKeeperTest extends BaseTestWithGAE {
 
     @Autowired
@@ -17,7 +18,6 @@ public class GateKeeperTest extends BaseTestWithGAE {
     protected String getDataBundleName() {
         return "/GateKeeperTest.json";
     }
-
     @Test
     public void testGetCurrentLoginUser_loginNormalUser_shouldReturnCorrectInfo() {
         gaeSimulation.loginUser("test@example.com");
@@ -137,4 +137,4 @@ public class GateKeeperTest extends BaseTestWithGAE {
 
         gateKeeper.verifyAccessForPresentation(dataBundle.presentations.get("presentationB"), AccessLevel.CAN_WRITE);
     }
-}
+}*/

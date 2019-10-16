@@ -45,7 +45,7 @@ public class PresentationSection {
 
     private String type;
 
-    private String dataSet;
+    private String userId;
 
     // The following field does not worth to be stored as relation in RDBMS
     // we store them as serialized json string
@@ -246,12 +246,12 @@ public class PresentationSection {
         this.type = type;
     }
 
-    public String getDataSet() {
-        return dataSet;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<Selection> getSelections() {

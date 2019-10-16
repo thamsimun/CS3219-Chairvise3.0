@@ -12,6 +12,7 @@ export default {
     hasMappingFinished: false,
     isUploadSuccess: false,
     data: {
+        fileName : null,
       dbSchema: null,
       uploadedData: [],
       uploadedLabel: [],
@@ -27,6 +28,10 @@ export default {
   },
 
   mutations: {
+
+    setUploadFileName(state, fileName) {
+        state.data.fileName = fileName;
+    },
     setUploadSuccess(state, success) {
       state.isUploadSuccess = success;
     },
@@ -143,7 +148,11 @@ export default {
           endpoint = "submission";
           break;
       }
-      await axios.post("/api/record/" + endpoint, state.data.processedResult)
+
+      await axios.post("/api/record/" + endpoint, {
+          "fileName" : state.data.fileName,
+          "records" : state.data.processedResult
+      })
         .then(() => {
           commit("setPageLoadingStatus", false);
           commit("setUploadSuccess", true);

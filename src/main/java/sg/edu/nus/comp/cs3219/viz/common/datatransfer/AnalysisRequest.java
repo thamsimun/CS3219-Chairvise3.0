@@ -8,8 +8,9 @@ import java.util.List;
 
 public class AnalysisRequest {
 
-    @NotEmpty
-    private String dataSet;
+    private long userId;
+
+    private int fileNumber;
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 
@@ -24,12 +25,20 @@ public class AnalysisRequest {
 
     private List<PresentationSection.Sorter> sorters = new ArrayList<>();
 
-    public String getDataSet() {
-        return dataSet;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setDataSet(String dataSet) {
-        this.dataSet = dataSet;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public int getFileNumber() {
+        return fileNumber;
+    }
+
+    public void setFileNumber(int fileNumber) {
+        this.fileNumber = fileNumber;
     }
 
     public List<PresentationSection.Selection> getSelections() {

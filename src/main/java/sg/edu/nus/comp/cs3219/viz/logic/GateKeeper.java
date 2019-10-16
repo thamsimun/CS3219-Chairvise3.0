@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
+import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UnauthorisedException;
 import sg.edu.nus.comp.cs3219.viz.common.util.Const;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationAccessControlRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.Optional;
 
@@ -17,9 +19,14 @@ import java.util.Optional;
 public class GateKeeper {
 
     private PresentationAccessControlRepository presentationAccessControlRepository;
+    private UserDetailsRepository userDetailsRepository;
+    private SignUpLogic signUpLogic;
 
-    public GateKeeper(PresentationAccessControlRepository presentationAccessControlRepository) {
+    public GateKeeper(PresentationAccessControlRepository presentationAccessControlRepository,
+                      UserDetailsRepository userDetailsRepository, SignUpLogic signUpLogic) {
         this.presentationAccessControlRepository = presentationAccessControlRepository;
+        this.userDetailsRepository = userDetailsRepository;
+        this.signUpLogic = signUpLogic;
     }
 
     private static UserService userService = UserServiceFactory.getUserService();
@@ -34,6 +41,7 @@ public class GateKeeper {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserEmail(user.getEmail());
         userInfo.setUserNickname(user.getNickname());
+        userInfo.setUserId(getUserIdIfExistElseCreate(user));
         return Optional.of(userInfo);
     }
 
@@ -62,7 +70,7 @@ public class GateKeeper {
         UserInfo currentUser = getCurrentLoginUser()
                 .orElseThrow(UnauthorisedException::new);
 
-        if (!currentUser.getUserEmail().equals(presentation.getCreatorIdentifier())) {
+        if (!(currentUser.getUserId() == presentation.getUserId())) {
             throw new UnauthorisedException();
         }
     }
@@ -101,6 +109,17 @@ public class GateKeeper {
         }
 
         throw new UnauthorisedException();
+    }
+
+    public long getUserIdIfExistElseCreate(User user) {
+        Optional<UserDetails> userProfile = userDetailsRepository.findByUserEmail(user.getEmail());
+        if (userProfile.isPresent()) {
+            return userProfile.get().getUserId();
+        } else {
+            //creates a new user profile
+            UserDetails newUser = signUpLogic.createNewUser(user);
+            return newUser.getUserId();
+        }
     }
 
 

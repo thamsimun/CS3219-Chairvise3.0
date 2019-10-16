@@ -29,6 +29,7 @@ public class AuthInfoController extends BaseRestController {
         if (authInfo.isLogin()) {
             authInfo.setLogoutUrl(urlPrefix + gateKeeper.getLogoutUrl(redirect));
             authInfo.setUserInfo(userInfo);
+            System.out.println("USER ID : " + authInfo.getUserInfo().getUserId());
         } else {
             authInfo.setLoginUrl(urlPrefix + gateKeeper.getLoginUrl(redirect));
         }
