@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {deepCopy} from "@/common/utility"
 
 export default {
     state: {
@@ -53,18 +52,11 @@ export default {
             state.FileRecord = payload;
         },
 
-        // resetPresentationForm(state) {
-        //     state.presentationForm.id = '';
-        //     state.presentationForm.name = '';
-        //     state.presentationForm.description = '';
-        //     state.presentationForm.creatorIdentifier = '';
-        //     state.presentationFormStatus.isLoading = false;
-        //     state.presentationFormStatus.isApiError = false;
-        //     state.presentationFormStatus.apiErrorMsg = '';
+        // resetFileRecordState() {
         // },
 
-        // setPresentationFormField(state, {field, value}) {
-        //     state.presentationForm[field] = value
+        // setFileRecordField(state, {field, value}) {
+        //     state.FileRecord[field] = value
         // },
 
     },
