@@ -1,5 +1,5 @@
 <template>
-    <div class="welcome">
+    <div class="welcome_container">
         <h1 class="welcome_heading">
             Welcome to CharVise!
         </h1>
@@ -8,6 +8,7 @@
             <br><br>
             Create and Share beautiful visualisations with your friends.
         </div>
+        <br/><br/>
         <div class="welcome_button">
             <el-button round id="welcome_button" >Get started</el-button>
         </div>
@@ -21,8 +22,8 @@
 </script>
 
 <style scoped>
-    .welcome {
-        padding:30px 35px 0 35px;
+    .welcome_container {
+        padding:30px 35px 35px 35px;
     }
     .welcome_heading {
         padding: 5px 0 5px 0;
@@ -32,7 +33,7 @@
 
     .welcome_content {
         padding: 5px 0 5px 0;
-        text-align: justify;
+        text-align: center;
         font-size: large;
     }
 
