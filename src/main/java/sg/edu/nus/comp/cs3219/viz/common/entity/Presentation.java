@@ -25,6 +25,17 @@ public class Presentation {
 
     private String creatorIdentifier;
 
+    @Column(columnDefinition = "TEXT")
+    private String fileMappings;
+
+    public String getFileMappings() {
+        return fileMappings;
+    }
+
+    public void setFileMappings(String fileMappings) {
+        this.fileMappings = fileMappings;
+    }
+
     public Long getId() {
         return id;
     }

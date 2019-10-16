@@ -59,6 +59,9 @@ public class PresentationSection {
     //private List<Record> involvedRecords = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
+    private String fileMappings;
+
+    @Column(columnDefinition = "TEXT")
     private String filters;
     //private List<Filter> filters = new ArrayList<>();
 
@@ -225,6 +228,14 @@ public class PresentationSection {
         public void setOrder(String order) {
             this.order = order;
         }
+    }
+
+    public String getFileMappings() {
+        return fileMappings;
+    }
+
+    public void setFileMappings(String fileMappings) {
+        this.fileMappings = fileMappings;
     }
 
     public Long getId() {

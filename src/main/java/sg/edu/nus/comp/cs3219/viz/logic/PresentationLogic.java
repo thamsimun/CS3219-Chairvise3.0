@@ -37,6 +37,7 @@ public class PresentationLogic {
         UserDetails userDetails = getUserDetails(userInfo.getUserId());
         newPresentation.setUserDetails(userDetails);
         newPresentation.setCreatorIdentifier(userInfo.getUserEmail());
+        newPresentation.setFileMappings(presentation.getFileMappings());
 
         return presentationRepository.save(newPresentation);
     }
@@ -52,6 +53,7 @@ public class PresentationLogic {
     public Presentation updatePresentation(Presentation oldPresentation, Presentation newPresentation) {
         oldPresentation.setName(newPresentation.getName());
         oldPresentation.setDescription(newPresentation.getDescription());
+        oldPresentation.setFileMappings(newPresentation.getFileMappings());
         return presentationRepository.save(oldPresentation);
     }
 
