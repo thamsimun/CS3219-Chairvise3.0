@@ -50,10 +50,11 @@
 
 <script>
   import MappingToolNew from '@/components/MappingToolNew.vue';
-  import Papa from "papaparse";
+  import _ from 'lodash';
+  import Papa from 'papaparse';
 
   export default {
-    name: "PromptTableType",
+    name: "ImportDataNew",
     mounted: function () {
       this.$store.dispatch('fetchDBMetaDataEntities');
     },

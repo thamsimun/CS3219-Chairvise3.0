@@ -34,8 +34,10 @@
 </template>
 
 <script>
-  import draggable from "vuedraggable";
+  import draggable from 'vuedraggable';
+  import _ from 'lodash';
   import op from '../store/data/predefinedTransformations';
+  import {distribute} from '../common/utility';
 
   export default {
     name: "MappingToolNew",
@@ -47,19 +49,13 @@
         rawData: _.cloneDeep(this.$store.state.dataMappingNew.data.rawData),
         fieldMetaData: _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
         dbSchemaName: _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName),
-        mappingList: this.zip(_.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
-          _.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields)),
+        mappingList: distribute(_.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields),
+          this.$store.state.dataMappingNew.data.fieldMetaData.length),
         transformations: [],
         options: op
       }
     },
     methods: {
-      zip: function (list1, list2) {
-        return list1.map((field, index) =>
-          (index === list1.length - 1)
-            ? list2.slice(index)
-            : list2.slice(index, index + 1));
-      },
       submitClicked: function () {
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
@@ -75,12 +71,6 @@
 </script>
 
 <style scoped>
-  .block {
-    display: block;
-    font-size: 18px;
-    text-align: center;
-  }
-
   .db-field {
     border-style: solid;
     border-width: 5px;

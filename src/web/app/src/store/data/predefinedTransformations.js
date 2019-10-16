@@ -8,7 +8,7 @@ function noTransformation(row, field) {
   return row[field];
 }
 
-export function leaveEmpty(row) {
+export function leaveEmpty(_row) {
   return "";
 }
 
