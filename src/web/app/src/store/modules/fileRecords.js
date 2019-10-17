@@ -49,7 +49,7 @@ export default {
         },
 
         setFileRecord(state, payload) {
-            state.FileRecord = payload;
+            state.fileRecord = payload;
         },
 
         // resetFileRecordState() {

@@ -29,11 +29,9 @@
       </el-button>
       <el-row>
       <div v-for="file in fileInfoList" :key="file.fileNumber">
-        <el-button type="primary" v-on:click="addFileData(file.fileNumber)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
+        <el-button type="primary" v-on:click="addToFileIds(file.fileNumber)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
       </div>
       </el-row>
-
-<!--      <el-button type="primary" @click="addData()" v-if="isNewPresentation && isLogin && fileRecordsReady">File1</el-button>-->
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
       <el-button type="info" @click="changeEditMode(false)" v-if="isInEditMode && !isNewPresentation">Cancel</el-button>
       <el-button type="danger" v-if="!isNewPresentation && isLogin && isPresentationEditable"
@@ -110,10 +108,12 @@
           return this.$store.state.presentation.presentationForm.fileIds
         },
         set(value) {
-          this.$store.commit('appendToPresentationFormFileIds', {
-            field: 'fileIds',
-            value
-          })
+          if (!this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+            this.$store.commit('appendToPresentationFormFileIds', {
+              field: 'fileIds',
+              value
+            })
+          }
         }
       },
 
@@ -250,8 +250,12 @@
         });
       },
 
-      addFileData(value) {
-        this.$store.commit('appendToPresentationFormFileIds', value);
+      addToFileIds(value) {
+        if (this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+          console.log("error");
+          return;
+        }
+          this.$store.commit('appendToPresentationFormFileIds', value);
       }
     },
 
