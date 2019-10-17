@@ -49,7 +49,7 @@ export default new Router({
       meta: {
         title: 'Landing Page'
       },
-      component: () => import(/* webpackChunkName: "home" */ './views/Landing.vue')
+      component: () => import(/* webpackChunkName: "landing" */ './views/Landing.vue')
     },
     {
       path: '/guide',
@@ -57,7 +57,7 @@ export default new Router({
       meta: {
         title: 'Guide Page'
       },
-      component: () => import(/* webpackChunkName: "home" */ './views/Guide.vue')
+      component: () => import(/* webpackChunkName: "guide" */ './views/Guide.vue')
     },
     {
       path: '/',

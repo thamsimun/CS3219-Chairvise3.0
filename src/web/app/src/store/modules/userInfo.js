@@ -78,7 +78,6 @@ export default {
     async addUser({commit, state}) {
       commit('setPageLoadingStatus', true);
       // TODO: hook up URL with the backend
-      console.log("asdfadfafdfdaf");
       axios.post('/api/auth...' , state.registerForm)
           .then(response => {
             commit('setAuthInfo', response.data)
