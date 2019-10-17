@@ -34,6 +34,11 @@
       </el-button>
       <el-button type="primary" @click="changeEditMode(true)" v-if="!isInEditMode && isPresentationEditable">Edit
       </el-button>
+      <el-row>
+      <div v-for="file in fileInfoList" :key="file.fileNumber">
+        <el-button type="primary" v-on:click="addToFileIds(file.fileNumber)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
+      </div>
+      </el-row>
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
       <el-button type="info" @click="changeEditMode(false)" v-if="isInEditMode && !isNewPresentation">Cancel</el-button>
       <el-button type="danger" v-if="!isNewPresentation && isLogin && isPresentationEditable"
@@ -57,6 +62,7 @@
     },
     mounted() {
       this.updatePresentationForm()
+
     },
     watch: {
       'id'() {
@@ -76,6 +82,7 @@
           name: this.presentationFormName,
           creatorIdentifier: this.presentationFormCreatorIdentifier,
           description: this.presentationFormDescription,
+          fileIds: this.fileIds
         }
       },
 
@@ -107,6 +114,20 @@
         },
       },
 
+      fileIds: {
+        get() {
+          return this.$store.state.presentation.presentationForm.fileIds
+        },
+        set(value) {
+          if (!this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+            this.$store.commit('appendToPresentationFormFileIds', {
+              field: 'fileIds',
+              value
+            })
+          }
+        }
+      },
+
       isNewPresentation() {
         return this.id === ID_NEW_PRESENTATION
       },
@@ -125,19 +146,25 @@
 
       apiErrorMsg() {
         return this.$store.state.presentation.presentationFormStatus.apiErrorMsg
+      },
+      fileInfoList() {
+          return this.$store.state.fileRecords.fileList
       }
+
     },
 
     data() {
       return {
         isEditing: false,
         isAccessControlDialogVisible: false,
+        // filesReady: false,
         rules: {
           name: [
             {required: true, message: 'Please enter presentation name', trigger: 'blur'},
             {min: 3, message: 'The length should be more than 3 character', trigger: 'blur'}
           ]
-        }
+        },
+        fileRecords: [],
       }
     },
     methods: {
@@ -220,6 +247,9 @@
                   this.$store.commit('setIsPresentationEditable', isPresentationEditable)
                 })
             })
+        } else {
+          //new presentation
+          this.$store.dispatch('getFileList')
         }
       },
       downloadPDF() {
@@ -234,6 +264,13 @@
             vm.$store.commit('setPageLoadingStatus', false);
           });
         });
+      },
+
+      addToFileIds(value) {
+        if (this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+          return;
+        }
+          this.$store.commit('appendToPresentationFormFileIds', value);
       }
     },
 
