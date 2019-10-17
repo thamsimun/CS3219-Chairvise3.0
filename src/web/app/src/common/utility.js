@@ -11,3 +11,14 @@ export const filterPredefinedMap = (mappedIdArray, originalArray) => {
   }
   return result;
 };
+
+/*
+  takes in a list and splits it into a list of lists (length n).
+  the last list contains the remaining elements if xs.length > n
+ */
+export const distribute = (xs, n) => {
+  return [...Array(n)].map((_, index) =>
+    (n - 1 === index)
+      ? xs.slice(index)
+      : xs.slice(index, index + 1));
+};

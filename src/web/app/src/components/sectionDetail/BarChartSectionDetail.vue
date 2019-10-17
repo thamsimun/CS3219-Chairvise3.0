@@ -70,7 +70,7 @@
 <script>
   import BarChart from '@/components/sectionDetail/chart/BarChart.vue'
   import BasicSectionDetail from '@/components/sectionDetail/BasicSectionDetail.vue'
-  import {generateBorderColor, generateBackgroundColor} from '@/common/color'
+  import {generateBackgroundColor, generateBorderColor} from '@/common/color'
 
   export default {
     name: "BarChartSectionDetail",

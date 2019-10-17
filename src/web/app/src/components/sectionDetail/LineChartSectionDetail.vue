@@ -35,7 +35,7 @@
 <script>
   import LineChart from '@/components/sectionDetail/chart/LineChart.vue'
   import BasicSectionDetail from '@/components/sectionDetail/BasicSectionDetail.vue'
-  import {generateBorderColor, generateBackgroundColor} from '@/common/color'
+  import {generateBackgroundColor, generateBorderColor} from '@/common/color'
 
   export default {
     name: "LineChartSectionDetail",

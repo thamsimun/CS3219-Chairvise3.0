@@ -8,6 +8,7 @@ import section from "./modules/section";
 import dbMetaData from "./modules/dbMetaData";
 import dataMapping from "./modules/dataMapping";
 import fileRecords from "./modules/fileRecords";
+import dataMappingNew from "./modules/dataMappingNew";
 
 Vue.use(Vuex);
 
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     accessControl,
     section,
     dbMetaData,
-    dataMapping,
-    fileRecords
+    fileRecords,
+    dataMappingNew,
+    dataMapping
   }
 })
