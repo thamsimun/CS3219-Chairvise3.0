@@ -9,7 +9,16 @@ export default {
     logoutUrl: '',
     userEmail: '',
     userNickname: '',
-    userId: ''
+    userId: '',
+    registerForm: {
+      email: '',
+      password: '',
+    },
+    registerFormStatus: {
+      isLoading: false,
+      // isApiError: false,
+      // formErrorMsg: '',
+    },
   },
   mutations: {
     setAuthInfoApiRequestFail(state, payload) {
@@ -27,7 +36,29 @@ export default {
         state.userNickname = payload.userInfo.userNickname;
         state.userId = payload.userInfo.userId;
       }
+    },
+
+    // setRegisterFormApiError(state, msg) {
+    //   state.registerFormStatus.isApiError = true;
+    //   state.registerFormStatus.apiErrorMsg = msg
+    // },
+    //
+    // setRegisterForm(state, payload) {
+    //   state.registerForm = payload;
+    // },
+    //
+    // resetRegisterForm(state) {
+    //   state.registerForm.email = '';
+    //   state.registerForm.password = '';
+    //   state.registerForm.isLoading = false;
+    //   state.registerForm.isApiError = false;
+    //   state.registerForm.apiErrorMsg = '';
+    // },
+
+    setRegisterFormField(state, {field, value}) {
+      state.registerForm[field] = value;
     }
+
   },
   actions: {
     async getAuthInfo({commit}) {
@@ -43,6 +74,20 @@ export default {
         .finally(() => {
           commit('setPageLoadingStatus', false)
         })
+    },
+    async addUser({commit, state}) {
+      commit('setPageLoadingStatus', true);
+      // TODO: hook up URL with the backend
+      axios.post('/api/auth...' , state.registerForm)
+          .then(response => {
+            commit('setAuthInfo', response.data)
+          })
+          .catch(e => {
+            commit('setAuthInfoApiRequestFail', e.toString());
+          })
+          .finally(() => {
+            commit('setPageLoadingStatus', false)
+          })
     }
   }
 };

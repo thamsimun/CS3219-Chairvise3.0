@@ -1,38 +1,51 @@
 <template>
   <el-alert v-if="isNewPresentation && !isLogin" title="Please login to create new presentation" type="error" show-icon
             class="errorMsg"/>
-  <el-form v-else label-position="right" ref="presentationForm" label-width="120px" :rules="rules"
+
+  <el-form v-else label-position="top" ref="presentationForm" label-width="120px" :rules="rules"
            :model="presentationForm" v-loading="isLoading">
+
     <el-alert v-if="isError" :title="apiErrorMsg" type="error" show-icon class="errorMsg"/>
+
     <el-form-item label="Name" :prop=" isInEditMode ? 'name' : ''">
       <div v-if="!isInEditMode">{{ presentationForm.name }}</div>
       <el-input v-model="presentationFormName" v-if="isInEditMode"/>
     </el-form-item>
+
     <el-form-item label="Access Control" v-if="!isNewPresentation">
       <el-tag>Created by {{ presentationForm.creatorIdentifier }}</el-tag>
       <el-button type="success" size="small" class="share_button_left_margin" icon="el-icon-view"
                  @click="openAccessControlPanel()" v-if="isLogin && isPresentationEditable">SHARE
       </el-button>
     </el-form-item>
+
     <el-dialog title="Share with other users:" :visible.sync="isAccessControlDialogVisible" width="70%"
                :close-on-click-modal="false">
       <access-control-panel :presentationId="id"></access-control-panel>
     </el-dialog>
+
     <el-form-item label="Description">
       <div v-if="!isInEditMode" id="presentation-description">{{ presentationForm.description }}</div>
       <el-input v-model="presentationFormDescription" v-if="isInEditMode"/>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="downloadPDF()" v-if="!isInEditMode && !isNewPresentation">Download as PDF
       </el-button>
       <el-button type="primary" @click="changeEditMode(true)" v-if="!isInEditMode && isPresentationEditable">Edit
       </el-button>
+      <el-row>
+      <div v-for="file in fileInfoList" :key="file.fileNumber">
+        <el-button type="primary" v-on:click="addToFileIds(file.fileNumber)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
+      </div>
+      </el-row>
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
       <el-button type="info" @click="changeEditMode(false)" v-if="isInEditMode && !isNewPresentation">Cancel</el-button>
       <el-button type="danger" v-if="!isNewPresentation && isLogin && isPresentationEditable"
                  @click="deletePresentation()">Delete
       </el-button>
     </el-form-item>
+
   </el-form>
 </template>
 
@@ -49,6 +62,7 @@
     },
     mounted() {
       this.updatePresentationForm()
+
     },
     watch: {
       'id'() {
@@ -68,8 +82,10 @@
           name: this.presentationFormName,
           creatorIdentifier: this.presentationFormCreatorIdentifier,
           description: this.presentationFormDescription,
+          fileIds: this.fileIds
         }
       },
+
       presentationFormName: {
         get() {
           return this.$store.state.presentation.presentationForm.name
@@ -81,9 +97,11 @@
           })
         },
       },
+
       presentationFormCreatorIdentifier() {
         return this.$store.state.presentation.presentationForm.creatorIdentifier
       },
+
       presentationFormDescription: {
         get() {
           return this.$store.state.presentation.presentationForm.description
@@ -95,32 +113,58 @@
           })
         },
       },
+
+      fileIds: {
+        get() {
+          return this.$store.state.presentation.presentationForm.fileIds
+        },
+        set(value) {
+          if (!this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+            this.$store.commit('appendToPresentationFormFileIds', {
+              field: 'fileIds',
+              value
+            })
+          }
+        }
+      },
+
       isNewPresentation() {
         return this.id === ID_NEW_PRESENTATION
       },
+
       isInEditMode() {
         return this.isEditing || this.isNewPresentation
       },
+
       isLoading() {
         return this.$store.state.presentation.presentationFormStatus.isLoading
       },
+
       isError() {
         return this.$store.state.presentation.presentationFormStatus.isApiError
       },
+
       apiErrorMsg() {
         return this.$store.state.presentation.presentationFormStatus.apiErrorMsg
+      },
+      fileInfoList() {
+          return this.$store.state.fileRecords.fileList
       }
+
     },
+
     data() {
       return {
         isEditing: false,
         isAccessControlDialogVisible: false,
+        // filesReady: false,
         rules: {
           name: [
             {required: true, message: 'Please enter presentation name', trigger: 'blur'},
             {min: 3, message: 'The length should be more than 3 character', trigger: 'blur'}
           ]
-        }
+        },
+        fileRecords: [],
       }
     },
     methods: {
@@ -203,6 +247,9 @@
                   this.$store.commit('setIsPresentationEditable', isPresentationEditable)
                 })
             })
+        } else {
+          //new presentation
+          this.$store.dispatch('getFileList')
         }
       },
       downloadPDF() {
@@ -217,6 +264,13 @@
             vm.$store.commit('setPageLoadingStatus', false);
           });
         });
+      },
+
+      addToFileIds(value) {
+        if (this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+          return;
+        }
+          this.$store.commit('appendToPresentationFormFileIds', value);
       }
     },
 

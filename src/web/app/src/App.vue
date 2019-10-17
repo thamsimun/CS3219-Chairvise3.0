@@ -1,17 +1,20 @@
 <template>
-  <el-container v-loading.fullscreen.lock="isAppLoading">
-    <el-header>
+  <el-container id="no-gap" v-loading.fullscreen.lock="isAppLoading">
+    <el-header id="no-gap">
       <menu-bar></menu-bar>
     </el-header>
-    <el-main>
+    <el-main id="no-gap">
       <router-view/>
     </el-main>
-    <el-footer></el-footer>
+    <el-footer id="no-gap">
+<!--      <footer/>-->
+    </el-footer>
   </el-container>
 </template>
 
 <script>
-  import MenuBar from '@/components/MenuBar.vue'
+  import MenuBar from '@/components/MenuBar_v2.vue'
+  // import Footer from '@/components/FooterBar.vue'
 
   export default {
     watch: {
@@ -31,6 +34,7 @@
     },
     components: {
       'menu-bar': MenuBar,
+      // 'footer': Footer,
     },
     computed: {
       isAppLoading() {
@@ -46,6 +50,9 @@
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
 
+  #no-gap {
+    padding: 0;
+  }
   body {
     font-family: 'Montserrat', sans-serif;
   }
