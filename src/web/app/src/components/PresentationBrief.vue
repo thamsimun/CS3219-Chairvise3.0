@@ -1,27 +1,34 @@
 <template>
   <el-alert v-if="isNewPresentation && !isLogin" title="Please login to create new presentation" type="error" show-icon
             class="errorMsg"/>
-  <el-form v-else label-position="right" ref="presentationForm" label-width="120px" :rules="rules"
+
+  <el-form v-else label-position="top" ref="presentationForm" label-width="120px" :rules="rules"
            :model="presentationForm" v-loading="isLoading">
+
     <el-alert v-if="isError" :title="apiErrorMsg" type="error" show-icon class="errorMsg"/>
+
     <el-form-item label="Name" :prop=" isInEditMode ? 'name' : ''">
       <div v-if="!isInEditMode">{{ presentationForm.name }}</div>
       <el-input v-model="presentationFormName" v-if="isInEditMode"/>
     </el-form-item>
+
     <el-form-item label="Access Control" v-if="!isNewPresentation">
       <el-tag>Created by {{ presentationForm.creatorIdentifier }}</el-tag>
       <el-button type="success" size="small" class="share_button_left_margin" icon="el-icon-view"
                  @click="openAccessControlPanel()" v-if="isLogin && isPresentationEditable">SHARE
       </el-button>
     </el-form-item>
+
     <el-dialog title="Share with other users:" :visible.sync="isAccessControlDialogVisible" width="70%"
                :close-on-click-modal="false">
       <access-control-panel :presentationId="id"></access-control-panel>
     </el-dialog>
+
     <el-form-item label="Description">
       <div v-if="!isInEditMode" id="presentation-description">{{ presentationForm.description }}</div>
       <el-input v-model="presentationFormDescription" v-if="isInEditMode"/>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="downloadPDF()" v-if="!isInEditMode && !isNewPresentation">Download as PDF
       </el-button>
@@ -38,6 +45,7 @@
                  @click="deletePresentation()">Delete
       </el-button>
     </el-form-item>
+
   </el-form>
 </template>
 
@@ -77,6 +85,7 @@
           fileIds: this.fileIds
         }
       },
+
       presentationFormName: {
         get() {
           return this.$store.state.presentation.presentationForm.name
@@ -88,9 +97,11 @@
           })
         },
       },
+
       presentationFormCreatorIdentifier() {
         return this.$store.state.presentation.presentationForm.creatorIdentifier
       },
+
       presentationFormDescription: {
         get() {
           return this.$store.state.presentation.presentationForm.description
@@ -120,15 +131,19 @@
       isNewPresentation() {
         return this.id === ID_NEW_PRESENTATION
       },
+
       isInEditMode() {
         return this.isEditing || this.isNewPresentation
       },
+
       isLoading() {
         return this.$store.state.presentation.presentationFormStatus.isLoading
       },
+
       isError() {
         return this.$store.state.presentation.presentationFormStatus.isApiError
       },
+
       apiErrorMsg() {
         return this.$store.state.presentation.presentationFormStatus.apiErrorMsg
       },
@@ -137,6 +152,7 @@
       }
 
     },
+
     data() {
       return {
         isEditing: false,
