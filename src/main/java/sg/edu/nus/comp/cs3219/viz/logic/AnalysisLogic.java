@@ -10,6 +10,7 @@ import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -20,9 +21,9 @@ public class AnalysisLogic {
 
     private static final Map<String, Class> DATABASE_FIELD_NAME_TO_TYPE_MAP = new HashMap<>();
 
-    private static final String FILE_TYPE_AUTHOR = "author";
-    private static final String FILE_TYPE_SUBMISSION = "submission";
-    private static final String FILE_TYPE_REVIEW = "review";
+    private static final String FILE_TYPE_AUTHOR = "author_record";
+    private static final String FILE_TYPE_SUBMISSION = "submission_record";
+    private static final String FILE_TYPE_REVIEW = "review_record";
 
     static {
         populateMapForClass(AuthorRecord.class);
@@ -86,29 +87,32 @@ public class AnalysisLogic {
                 .map(s -> String.format("%s %s", s.getField(), s.getOrder()))
                 .collect(Collectors.joining(","));
 
-
+        List<String> involvedRecordsString = analysisRequest.getInvolvedRecords().parallelStream().map(PresentationSection.Record::getName).collect(Collectors.toList());
 
         String authorFileNumberFilter = analysisRequest.getMappings().stream()
-                .filter(t -> t.getName().equals(FILE_TYPE_AUTHOR))
-                .map(m -> String.format("%s.file_number = %s", m.getName(), m.getFileNumber()))
+                .filter(t -> t.getFileName().equals(FILE_TYPE_AUTHOR))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
                 .collect(Collectors.joining(" OR "));
 
         String submissionFileNumberFilter = analysisRequest.getMappings().stream()
-                .filter(t -> t.getName().equals(FILE_TYPE_SUBMISSION))
-                .map(m -> String.format("%s.file_number = %s", m.getName(), m.getFileNumber()))
+                .filter(t -> t.getFileName().equals(FILE_TYPE_SUBMISSION))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
                 .collect(Collectors.joining(" OR "));
 
         String reviewFileNumberFilter = analysisRequest.getMappings().stream()
-                .filter(t -> t.getName().equals(FILE_TYPE_REVIEW))
-                .map(m -> String.format("%s.file_number = %s", m.getName(), m.getFileNumber()))
+                .filter(t -> t.getFileName().equals(FILE_TYPE_REVIEW))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
                 .collect(Collectors.joining(" OR "));
 
         List<String> strings = new ArrayList<>();
         strings.add(authorFileNumberFilter);
         strings.add(submissionFileNumberFilter);
         strings.add(reviewFileNumberFilter);
-
         String fileNumberFilerStr = combineFileNumber(strings);
+
 
 
         String baseSQL = String.format("SELECT %s FROM %s", selectionsStr, tablesStr);
@@ -152,16 +156,10 @@ public class AnalysisLogic {
         return String.format("'%s'", val);
     }
 
-    String combineFileNumber(List<String> stringList) {
-        StringBuilder result = new StringBuilder();
-        int len = stringList.size();
-
-        for (int i = 0; i < len - 1; i++) {
-            result.append("( ").append(stringList.get(i)).append(" )");
-            if (i <= len - 2) { //add the keyword if its not the last in the list
-                result.append(" AND ");
-            }
-        }
-        return result.toString();
+    private String combineFileNumber(List<String> stringList) {
+         return stringList.stream().filter(x -> !x.equals("")).map(x -> {
+             return "(" + x + ")";
+        }).collect(Collectors.joining(" AND "));
     }
+
 }

@@ -59,9 +59,6 @@ public class PresentationSection {
     //private List<Record> involvedRecords = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT")
-    private String fileMappings;
-
-    @Column(columnDefinition = "TEXT")
     private String filters;
     //private List<Filter> filters = new ArrayList<>();
 
@@ -99,27 +96,6 @@ public class PresentationSection {
 
         public void setRename(String rename) {
             this.rename = rename;
-        }
-    }
-
-    public static class FileMapping {
-        private String fileName;
-        private int fileNumber;
-
-        public String getName() {
-            return fileName;
-        }
-
-        public void setName(String name) {
-            this.fileName = name;
-        }
-
-        public int getFileNumber() {
-            return fileNumber;
-        }
-
-        public void setFileNumber(int fileNumber) {
-            this.fileNumber = fileNumber;
         }
     }
 
@@ -228,14 +204,6 @@ public class PresentationSection {
         public void setOrder(String order) {
             this.order = order;
         }
-    }
-
-    public String getFileMappings() {
-        return fileMappings;
-    }
-
-    public void setFileMappings(String fileMappings) {
-        this.fileMappings = fileMappings;
     }
 
     public Long getId() {

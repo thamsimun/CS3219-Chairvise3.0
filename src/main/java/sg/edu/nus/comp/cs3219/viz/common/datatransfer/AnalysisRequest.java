@@ -11,7 +11,7 @@ public class AnalysisRequest {
 
     private long userId;
 
-    private List<PresentationSection.FileMapping> mappings = new ArrayList<>();
+    private List<Presentation.FileMappings> mappings = new ArrayList<>();
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 
@@ -34,11 +34,11 @@ public class AnalysisRequest {
         this.userId = userId;
     }
 
-    public List<PresentationSection.FileMapping> getMappings() {
+    public List<Presentation.FileMappings> getMappings() {
         return mappings;
     }
 
-    public void setMappings(List<PresentationSection.FileMapping> mappings) {
+    public void setMappings(List<Presentation.FileMappings> mappings) {
         this.mappings = mappings;
     }
 

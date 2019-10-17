@@ -36,7 +36,7 @@
       </el-button>
       <el-row>
       <div v-for="file in fileInfoList" :key="file.fileNumber">
-        <el-button type="primary" v-on:click="addToFileIds(file.fileNumber)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
+        <el-button type="primary" v-on:click="addToFileMappings(file)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
       </div>
       </el-row>
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
@@ -82,7 +82,7 @@
           name: this.presentationFormName,
           creatorIdentifier: this.presentationFormCreatorIdentifier,
           description: this.presentationFormDescription,
-          fileIds: this.fileIds
+          fileMapping: this.fileMappings
         }
       },
 
@@ -114,14 +114,14 @@
         },
       },
 
-      fileIds: {
+      fileMappings: {
         get() {
-          return this.$store.state.presentation.presentationForm.fileIds
+          return this.$store.state.presentation.presentationForm.fileMappings
         },
         set(value) {
-          if (!this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
-            this.$store.commit('appendToPresentationFormFileIds', {
-              field: 'fileIds',
+          if (!this.$store.state.presentation.presentationForm.fileMappings.includes(value)) {
+            this.$store.commit('appendToPresentationFormFileMappings', {
+              fileMappings: 'fileMappings',
               value
             })
           }
@@ -266,11 +266,11 @@
         });
       },
 
-      addToFileIds(value) {
-        if (this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
+      addToFileMappings(value) {
+        if (this.$store.state.presentation.presentationForm.fileMappings.includes(value)) {
           return;
         }
-          this.$store.commit('appendToPresentationFormFileIds', value);
+          this.$store.commit('appendToPresentationFormFileMappings', value);
       }
     },
 
