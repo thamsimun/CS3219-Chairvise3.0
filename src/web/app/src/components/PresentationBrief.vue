@@ -252,7 +252,6 @@
 
       addToFileIds(value) {
         if (this.$store.state.presentation.presentationForm.fileIds.includes(value)) {
-          console.log("error");
           return;
         }
           this.$store.commit('appendToPresentationFormFileIds', value);
