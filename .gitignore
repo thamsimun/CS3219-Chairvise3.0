@@ -18,8 +18,9 @@ src/main/webapp/assets/*
 src/main/webapp/dist/*
 .gradle/*
 
-# Fronend dependency
+# Frontend dependency
 src/web/app/node_modules/*
+src/web/app/package-lock.json
 
 # .java-version
 .java-version

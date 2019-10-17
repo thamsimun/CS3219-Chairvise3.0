@@ -5,7 +5,7 @@ function processDouble(raw) {
     return parseFloat(raw);
   }
   // if not even string, return default value 0
-  if (typeof(raw) !== "string") {
+  if (typeof (raw) !== "string") {
     return 0;
   }
 
@@ -124,29 +124,28 @@ export function processMapping(mapping, data, dbFields, hasLabel) {
         //console.log(rawData);
 
 
-
-        var convertstring=require("convert-string");
-        for (var key in rawData){
-            var author=rawData[key];
-            let name=author.split(" ");
-            var concatname="";
-            for (var itemkey in name){
-                var conv=convertstring.stringToBytes(name[itemkey]);
-                var itemconv="";
-                for(var a=0;a<conv.length;a++){
-                    itemconv=itemconv.concat(String(conv[a]+18));
-                }
-                name[itemkey]=itemconv;
-                concatname=concatname.concat(itemconv);
-                concatname=concatname.concat(" ");
+        var convertstring = require("convert-string");
+        for (var key in rawData) {
+          var author = rawData[key];
+          let name = author.split(" ");
+          var concatname = "";
+          for (var itemkey in name) {
+            var conv = convertstring.stringToBytes(name[itemkey]);
+            var itemconv = "";
+            for (var a = 0; a < conv.length; a++) {
+              itemconv = itemconv.concat(String(conv[a] + 18));
             }
-            //concatname.trim();
-            //console.log(concatname);
-            rawData[key]=concatname;
-         }
-         rawData = rawData.map(author => author.trim());
+            name[itemkey] = itemconv;
+            concatname = concatname.concat(itemconv);
+            concatname = concatname.concat(" ");
+          }
+          //concatname.trim();
+          //console.log(concatname);
+          rawData[key] = concatname;
+        }
+        rawData = rawData.map(author => author.trim());
 
-         //console.log(rawData);
+        //console.log(rawData);
 
       }
 
