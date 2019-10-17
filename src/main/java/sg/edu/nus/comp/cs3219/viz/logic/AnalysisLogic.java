@@ -9,10 +9,8 @@ import sg.edu.nus.comp.cs3219.viz.common.entity.record.Exportable;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.ReviewRecord;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.SubmissionRecord;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -22,6 +20,10 @@ public class AnalysisLogic {
     private static final Logger log = Logger.getLogger(AnalysisLogic.class.getSimpleName());
 
     private static final Map<String, Class> DATABASE_FIELD_NAME_TO_TYPE_MAP = new HashMap<>();
+
+    private static final String FILE_TYPE_AUTHOR = "author_record";
+    private static final String FILE_TYPE_SUBMISSION = "submission_record";
+    private static final String FILE_TYPE_REVIEW = "review_record";
 
     static {
         populateMapForClass(AuthorRecord.class);
@@ -77,11 +79,6 @@ public class AnalysisLogic {
                 .map(t -> String.format("%s.user_id = '%s'", t.getName(), analysisRequest.getUserId()))
                 .collect(Collectors.joining(" AND "));
 
-        String fileNumberFilter = analysisRequest.getInvolvedRecords().stream()
-                .filter(r -> !r.isCustomized())
-                .map(t -> String.format("%s.file_number = '%s'", t.getName(), analysisRequest.getFileNumber()))
-                .collect(Collectors.joining(" AND "));
-
         String groupersStr = analysisRequest.getGroupers().stream()
                 .map(PresentationSection.Grouper::getField)
                 .collect(Collectors.joining(","));
@@ -89,6 +86,34 @@ public class AnalysisLogic {
         String sortersStr = analysisRequest.getSorters().stream()
                 .map(s -> String.format("%s %s", s.getField(), s.getOrder()))
                 .collect(Collectors.joining(","));
+
+        List<String> involvedRecordsString = analysisRequest.getInvolvedRecords().parallelStream().map(PresentationSection.Record::getName).collect(Collectors.toList());
+
+        String authorFileNumberFilter = analysisRequest.getMappings().stream()
+                .filter(t -> t.getFileName().equals(FILE_TYPE_AUTHOR))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
+                .collect(Collectors.joining(" OR "));
+
+        String submissionFileNumberFilter = analysisRequest.getMappings().stream()
+                .filter(t -> t.getFileName().equals(FILE_TYPE_SUBMISSION))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
+                .collect(Collectors.joining(" OR "));
+
+        String reviewFileNumberFilter = analysisRequest.getMappings().stream()
+                .filter(t -> t.getFileName().equals(FILE_TYPE_REVIEW))
+                .filter(t -> involvedRecordsString.contains(t.getFileName()))
+                .map(m -> String.format("%s.file_number = %s", m.getFileName(), m.getFileNumber()))
+                .collect(Collectors.joining(" OR "));
+
+        List<String> strings = new ArrayList<>();
+        strings.add(authorFileNumberFilter);
+        strings.add(submissionFileNumberFilter);
+        strings.add(reviewFileNumberFilter);
+        String fileNumberFilerStr = combineFileNumber(strings);
+
+
 
         String baseSQL = String.format("SELECT %s FROM %s", selectionsStr, tablesStr);
 
@@ -101,6 +126,10 @@ public class AnalysisLogic {
 
         if (!joinersStr.isEmpty()) {
             baseSQL += String.format(" AND %s", joinersStr);
+        }
+
+        if (!fileNumberFilerStr.isEmpty()) {
+            baseSQL += String.format(" AND %s", fileNumberFilerStr);
         }
 
         if (!filtersStr.isEmpty()) {
@@ -126,4 +155,11 @@ public class AnalysisLogic {
         }
         return String.format("'%s'", val);
     }
+
+    private String combineFileNumber(List<String> stringList) {
+         return stringList.stream().filter(x -> !x.equals("")).map(x -> {
+             return "(" + x + ")";
+        }).collect(Collectors.joining(" AND "));
+    }
+
 }

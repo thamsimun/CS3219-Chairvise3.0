@@ -43,6 +43,8 @@ public class AnalysisController extends BaseRestController {
                 .orElseThrow(() -> new PresentationNotFoundException(id));
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
 
+        analysisRequest.setMappings(presentation.getFileMappings());
+
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);
         log.info("Analysis Result from query: " + result);
         // convert to map with key all in lower case

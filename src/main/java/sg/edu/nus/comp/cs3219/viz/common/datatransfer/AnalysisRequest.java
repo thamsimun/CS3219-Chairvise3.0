@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.common.datatransfer;
 
+import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
 
 import javax.validation.constraints.NotEmpty;
@@ -10,7 +11,7 @@ public class AnalysisRequest {
 
     private long userId;
 
-    private int fileNumber;
+    private List<Presentation.FileMappings> mappings = new ArrayList<>();
 
     private List<PresentationSection.Selection> selections = new ArrayList<>();
 
@@ -33,12 +34,12 @@ public class AnalysisRequest {
         this.userId = userId;
     }
 
-    public int getFileNumber() {
-        return fileNumber;
+    public List<Presentation.FileMappings> getMappings() {
+        return mappings;
     }
 
-    public void setFileNumber(int fileNumber) {
-        this.fileNumber = fileNumber;
+    public void setMappings(List<Presentation.FileMappings> mappings) {
+        this.mappings = mappings;
     }
 
     public List<PresentationSection.Selection> getSelections() {

@@ -305,6 +305,7 @@ export default {
           customized: false,
         }
       ],
+
       filters: [],
       joiners: [],
       groupers: [
