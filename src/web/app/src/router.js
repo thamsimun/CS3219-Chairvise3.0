@@ -60,6 +60,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "guide" */ './views/Guide.vue')
     },
     {
+      path: '/ImportDataNew',
+      name: 'ImportDataNew',
+      meta: {
+        title: 'Import Data Page'
+      },
+      component: () => import(/* webpackChunkName: "importDataNew" */ './views/ImportDataNew.vue')
+    },
+    {
       path: '/',
       redirect: '/landing'
     }
