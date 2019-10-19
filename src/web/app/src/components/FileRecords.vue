@@ -62,7 +62,7 @@
 
         methods: {
             deleteFile(file) {
-
+                return file
             }
         }
     }
