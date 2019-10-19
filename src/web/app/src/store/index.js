@@ -31,6 +31,6 @@ export default new Vuex.Store({
     dbMetaData,
     fileRecords,
     dataMappingNew,
-    dataMapping
+    dataMapping,
   }
 })
