@@ -70,6 +70,14 @@ export default new Router({
     {
       path: '/',
       redirect: '/landing'
+    },
+    {
+      path: '/FileData',
+      name: 'FileData',
+      meta: {
+        title: 'File Data Page'
+      },
+      component: () => import(/*webpackChunkName: "fileData" */ './views/FileData.vue')
     }
   ]
 })
