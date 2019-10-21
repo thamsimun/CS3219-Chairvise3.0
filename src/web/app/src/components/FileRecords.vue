@@ -19,16 +19,28 @@
                 </el-col>
             </el-row>
         </el-main>
+        <el-dialog
+                title="Success"
+                :visible.sync="deleteSuccess"
+                width="30%" center>
+            <span>You have successfully deleted the file!</span>
+            <span slot="footer" class="dialog-footer">
+        <el-button type="primary" v-on:click="closeDeleteSuccess">Sure</el-button>
+      </span>
+        </el-dialog>
     </el-container>
 </template>
 
 <script>
+    import fileRecords from "../store/modules/fileRecords";
+
     const fileLogo = require('../assets/csv.png');
     export default {
         name: 'FileRecords',
         data() {
             return {
-                fileLogo
+                fileLogo,
+                file: undefined
             }
         },
         watch: {
@@ -55,15 +67,30 @@
             isError() {
                 return this.$store.state.fileRecords.fileListStatus.isApiError
             },
+
+            // whether upload is successful
+            deleteSuccess: function () {
+                return this.$store.state.fileRecords.isDeleteSuccess;
+            },
         },
         mounted() {
-            this.$store.dispatch('getFileList')
+            this.$store.dispatch('getFileList');
         },
 
         methods: {
             deleteFile(file) {
-                return file
+                this.$store.commit('deleteFromFileList', file);
+                this.$store.dispatch('deleteFile');
+            },
+
+            closeDeleteSuccess: function() {
+                this.$store.commit('clearFileRecord');
+                this.$store.commit('clearDeleteSuccess');
             }
+        },
+
+        components: {
+            fileRecords
         }
     }
 </script>

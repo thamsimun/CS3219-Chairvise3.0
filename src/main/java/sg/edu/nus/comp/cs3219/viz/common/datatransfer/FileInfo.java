@@ -6,6 +6,16 @@ public class FileInfo {
 
     private Integer fileNumber;
 
+    private String fileType;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     public String getFileName() {
         return fileName;
     }

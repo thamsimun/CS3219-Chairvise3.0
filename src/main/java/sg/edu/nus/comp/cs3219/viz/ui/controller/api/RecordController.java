@@ -15,6 +15,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static sg.edu.nus.comp.cs3219.viz.common.util.Const.*;
+
 @RestController
 public class RecordController extends BaseRestController {
 
@@ -38,7 +40,7 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<AuthorRecord> authorRecordList = fileWithAuthorData.records;
         String fileName = getFileNameIfExist(fileWithAuthorData.fileName);
-        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_AUTHOR);
 
         this.recordLogic.removeAndPersistAuthorRecordForUserId(fileRecord, authorRecordList);
 
@@ -52,7 +54,7 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<ReviewRecord> reviewRecordList = fileWithReviewRecordData.records;
         String fileName = getFileNameIfExist(fileWithReviewRecordData.fileName);
-        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_REVIEW);
 
         this.recordLogic.removeAndPersistReviewRecordForUserId(fileRecord, reviewRecordList);
 
@@ -66,7 +68,7 @@ public class RecordController extends BaseRestController {
         UserInfo userInfo = gateKeeper.verifyLoginAccess();
         List<SubmissionRecord> submissionRecordList = fileWithSubmissionRecordData.records;
         String fileName = getFileNameIfExist(fileWithSubmissionRecordData.fileName);
-        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName);
+        FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_SUBMISSION);
 
         this.recordLogic.removeAndPersistSubmissionRecordForUserId(fileRecord, submissionRecordList);
 

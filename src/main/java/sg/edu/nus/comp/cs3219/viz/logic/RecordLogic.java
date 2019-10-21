@@ -2,6 +2,7 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.*;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.AuthorRecordRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.ReviewRecordRepository;
@@ -11,6 +12,8 @@ import sg.edu.nus.comp.cs3219.viz.storage.repository.SubmissionRecordRepository;
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static sg.edu.nus.comp.cs3219.viz.common.util.Const.*;
 
 @Component
 public class RecordLogic {
@@ -54,6 +57,44 @@ public class RecordLogic {
             r.setFileRecord(fileRecord);
             // the other field can be arbitrary
         }).collect(Collectors.toList()));
+    }
+
+    @Transactional
+    public void removeRecordForUserIdFileId(long userId, FileInfo fileInfo) {
+        FileId fileId = new FileId();
+        fileId.setUserId(userId);
+        fileId.setFileNumber(fileInfo.getFileNumber());
+
+        switch (fileInfo.getFileType()) {
+            case FILE_TYPE_AUTHOR:
+                removeAuthorRecordForFileId(fileId);
+                break;
+
+            case FILE_TYPE_SUBMISSION:
+                removeSubmissionRecordForFileId(fileId);
+                break;
+
+            case FILE_TYPE_REVIEW:
+                removeReviewRecordForFileId(fileId);
+                break;
+
+            default:
+        }
+    }
+
+    @Transactional
+    public void removeAuthorRecordForFileId(FileId fileId) {
+        authorRecordRepository.deleteAllByFileRecordFileIdEquals(fileId);
+    }
+
+    @Transactional
+    public void removeSubmissionRecordForFileId(FileId fileId) {
+        submissionRecordRepository.deleteAllByFileRecordFileIdEquals(fileId);
+    }
+
+    @Transactional
+    public void removeReviewRecordForFileId(FileId fileId) {
+        reviewRecordRepository.deleteAllByFileRecordFileIdEquals(fileId);
     }
 
     @Transactional
