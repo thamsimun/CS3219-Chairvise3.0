@@ -151,28 +151,28 @@
             //console.log(this.$store.state.dataMapping.data.tableType)
             //author file preprocessing
 
-            if (this.$store.state.dataMapping.data.tableType == "0") {
+            if (this.$store.state.dataMapping.data.tableType == "0") { // author
               //ACL file preprocessing
-              if (this.$store.state.dataMapping.data.formatType == "2") {
+              if (this.$store.state.dataMapping.data.formatType == "2") { // soft conf
                 var authorres = [];
                 authorres.push(["submission #", "first name", "last name", "email", "country", "organization", "Web page", "person #", "corresponding?"]);
 
-                for (var i = 1; i < res2.length; i++) {
+                for (var i = 1; i < res2.length; i++) { // going through each row , skip header
                   var x = res2[i];
                   //console.log(x);
                   var k = 0, j = 14, element = [], corr = "", country = "";
-                  while (x[j] != "") {
-                    if (x[j] == x[65] && x[j + 1] == x[66]) {
+                  while (x[j] != "") { // look in the 14th indexed column, if it is not empty
+                    if (x[j] == x[65] && x[j + 1] == x[66]) { // check whether it matches with the 65 col. same for j + 1 to 66 col
                       corr = "yes";
-                      country = x[78];
+                      country = x[78]; // country is the 78 col
                     } else {
                       corr = "no";
                       country = "";
                     }
-                    element[k] = [x[0], x[j], x[j + 1], x[j + 2], country, x[j + 3], "", "", corr];
+                    element[k] = [x[0], x[j], x[j + 1], x[j + 2], country, x[j + 3], "", "", corr]; // !! here tells us the mappings
                     authorres.push(element[k]);
                     k += 1;
-                    j = 14 + k * 5;
+                    j = 14 + k * 5; // all these should be useless
                   }
                   //var element1=[x[0],x[14],x[15],x[16],"",x[17],"",""];
 
@@ -200,22 +200,22 @@
             }
 
             //review file preprocessing
-            if (this.$store.state.dataMapping.data.tableType == "1") {
-              if (this.$store.state.dataMapping.data.formatType == "2") {
+            if (this.$store.state.dataMapping.data.tableType == "1") { // review
+              if (this.$store.state.dataMapping.data.formatType == "2") { // softconf
                 var reviewres = [];
                 reviewres.push(["Review Id", "Submission Id", "Num Review Assignment", "Reviewer Name", "Expertise Level", "Review Comment", "Confidence Level", "Overall Evaluation Score", "Column 9", "Column 10", "Column 11", "Column 12", "Day of the Review Date", "Time of the Review Date", "Has Recommended for the Best Paper"]);
 
-                for (var q = 1; q < res2.length; q++) {
+                for (var q = 1; q < res2.length; q++) { // go through every row, skip header row
                   var z = res2[q];
-                  z[32] = "confidence: " + z[32];
+                  z[32] = "confidence: " + z[32]; // confidence is in the 32th indexed col, but add "confidence: " infront
                   //console.log(typeof(z[7]));
                   //var str=z[7].toString();
-                  var date_time = z[7].split(" ");
+                  var date_time = z[7].split(" "); // the date comes together, but not sure what format yet
                   //console.log(date_time);
                   var date = date_time[0];
                   var time = date_time[1].split(":")[0] + ":" + date_time[1].split(":")[1];
                   //console.log(date,time);
-                  element = ["", z[0], "", "", "", z[38], z[32], z[31], "", "", "", "", date, time, ""];
+                  element = ["", z[0], "", "", "", z[38], z[32], z[31], "", "", "", "", date, time, ""]; // a lot of blank  fields. otherwise this look fine actually
                   reviewres.push(element);
                 }
                 res2 = reviewres;
@@ -238,21 +238,21 @@
             }
 
             //ACL submission file processing
-            if (this.$store.state.dataMapping.data.tableType == "2") {
-              if (this.$store.state.dataMapping.data.formatType == "2") {
+            if (this.$store.state.dataMapping.data.tableType == "2") { // submission
+              if (this.$store.state.dataMapping.data.formatType == "2") { // soft conf
                 var submissionres = [];
                 submissionres.push(["#", "track #", "track name", "title", "authors", "submitted", "last updated", "form fields", "keywords", "decision", "notified", "reviews sent", "abstract"]);
 
                 for (var l = 1; l < res2.length; l++) {
                   var y = res2[l];
-                  var dt = moment(y[10], "D MMM YYYY HH:mm:ss").format("YYYY-M-D H:m");
-                  if (y[6].includes("Reject")) {
+                  var dt = moment(y[10], "D MMM YYYY HH:mm:ss").format("YYYY-M-D H:m"); // time is in 10th col, change to correct format. we need to take care of different formats
+                  if (y[6].includes("Reject")) { // decision is in y[6], but change to this either reject/ accept fist
                     y[6] = "reject";
                   } else {
                     y[6] = "accept";
                   }
                   //console.log(x);
-                  element = [y[0], "", y[4], y[2], y[3], dt, dt, "", y[13], y[6], "", "", y[9]];
+                  element = [y[0], "", y[4], y[2], y[3], dt, dt, "", y[13], y[6], "", "", y[9]]; //rest looks fine
                   submissionres.push(element);
                 }
                 res2 = submissionres;
