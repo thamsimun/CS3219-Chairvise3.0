@@ -3,6 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
+import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileId;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class FileLogic {
@@ -33,6 +35,18 @@ public class FileLogic {
         fileRecord.setFileNumber(fileNumber);
 
         return fileRecord;
+    }
+
+    public List<FileInfo> deleteFileRecord(long userId, FileInfo fileInfo) {
+        FileId fileId = new FileId();
+        fileId.setFileNumber(fileInfo.getFileNumber());
+        fileId.setUserId(userId);
+        return fileRecordRepository.deleteByFileIdEquals(fileId).stream().map(x -> {
+            FileInfo info = new FileInfo();
+            info.setFileNumber(x.getFileNumber());
+            info.setFileName(x.getFileName());
+            return info;
+        }).collect(Collectors.toList());
     }
 
     public List<FileInfo> retrieveFileRecordsUsingUserId(long userId) {

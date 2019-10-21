@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export default {
     state: {
+        isDeleteSuccess: false,
         fileList: [],
         fileListStatus: {
             isLoading: true,
@@ -9,12 +10,27 @@ export default {
             apiErrorMsg: '',
         },
         fileRecord: {
-            id: '',
-            name: '',
-            creatorIdentifier: '',
+            fileNumber: '',
+            fileName: '',
         },
     },
     mutations: {
+
+        clearDeleteSuccess(state) {
+            state.isDeleteSuccess = false;
+        },
+
+        clearFileRecord(state) {
+            state.fileRecord = {
+                fileNumber: '',
+                fileName: '',
+            }
+        },
+
+        setDeleteSuccess(state, success) {
+            state.isDeleteSuccess = success;
+        },
+
         setFileListLoading(state, payload) {
             if (payload) {
                 state.fileListStatus.isApiError = false;
@@ -35,9 +51,10 @@ export default {
         // addToFileList(state, payload) {
         // },
 
-        //can be used in the future
-        // deleteFromFileList(state, payload) {
-        // },
+
+        deleteFromFileList(state, payload) {
+            state.fileRecord = payload;
+        },
 
         updateFileListWith(state, payload) {
             state.fileList = state.fileList.map(file => {
@@ -74,6 +91,23 @@ export default {
                 .finally(() => {
                     commit('setFileListLoading', false);
                 })
+        },
+
+        async deleteFile({commit, state}) {
+            axios.post('/api/file', {
+                fileName: state.fileRecord.fileName,
+                fileNumber: state.fileRecord.fileNumber,
+            })
+                .then(response => {
+                    commit('setFileList', response.data);
+                    commit('setDeleteSuccess', true);
+                })
+                .catch(e => {
+                    commit('setFileListApiError', e.toString());
+                })
+                .finally(() => {
+                    commit('setFileListLoading', false)
+                });
         }
     }
 };

@@ -12,5 +12,5 @@ public interface FileRecordRepository extends JpaRepository<FileRecord, FileId> 
 
     List<FileRecord> findAllByFileIdUserIdEquals(long userId);
 
-    void deleteByFileIdEquals(FileId fileId);
+    List<FileRecord> deleteByFileIdEquals(FileId fileId);
 }
