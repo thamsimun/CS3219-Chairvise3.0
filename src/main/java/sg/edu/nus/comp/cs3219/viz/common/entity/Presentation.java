@@ -101,6 +101,15 @@ public class Presentation {
     public static class FileMappings {
         private String fileName;
         private int fileNumber;
+        private String fileType;
+
+        public String getFileType() {
+            return fileType;
+        }
+
+        public void setFileType(String fileType) {
+            this.fileType = fileType;
+        }
 
         public String getFileName() {
             return fileName;

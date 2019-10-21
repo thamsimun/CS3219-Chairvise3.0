@@ -12,6 +12,7 @@ export default {
         fileRecord: {
             fileNumber: '',
             fileName: '',
+            fileType: '',
         },
     },
     mutations: {
@@ -24,6 +25,7 @@ export default {
             state.fileRecord = {
                 fileNumber: '',
                 fileName: '',
+                fileType: '',
             }
         },
 
@@ -97,6 +99,7 @@ export default {
             axios.post('/api/file', {
                 fileName: state.fileRecord.fileName,
                 fileNumber: state.fileRecord.fileNumber,
+                fileType: state.fileRecord.fileType,
             })
                 .then(response => {
                     commit('setFileList', response.data);

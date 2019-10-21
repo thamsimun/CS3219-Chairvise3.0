@@ -20,6 +20,17 @@ public class FileRecord {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserDetails userDetails;
 
+    @Column(name = "file_type")
+    private String fileType;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     public FileRecord() {
         this.fileId = new FileId();
     }

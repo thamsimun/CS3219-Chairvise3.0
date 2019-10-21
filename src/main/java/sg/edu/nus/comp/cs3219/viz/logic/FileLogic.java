@@ -25,7 +25,7 @@ public class FileLogic {
         this.userDetailsRepository = userDetailsRepository;
     }
 
-    public FileRecord createFileRecord(long userId, String fileName) {
+    public FileRecord createFileRecord(long userId, String fileName, String fileType) {
 
         UserDetails userDetails = retrieveUserDetailsUsingUserId(userId);
         int fileNumber = findNextUnusedFileId(userDetails.getUserId());
@@ -33,6 +33,7 @@ public class FileLogic {
         fileRecord.setFileName(fileName);
         fileRecord.setUserDetails(userDetails);
         fileRecord.setFileNumber(fileNumber);
+        fileRecord.setFileType(fileType);
 
         return fileRecord;
     }
@@ -60,6 +61,7 @@ public class FileLogic {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileName(fileRecord.getFileName());
         fileInfo.setFileNumber(fileRecord.getFileNumber());
+        fileInfo.setFileType(fileRecord.getFileType());
         return fileInfo;
     }
 
@@ -67,8 +69,8 @@ public class FileLogic {
         fileRecordRepository.save(fileRecord);
     }
 
-    public FileRecord createAndSaveFileRecord(long userId, String fileName) {
-        FileRecord fileRecord = createFileRecord(userId, fileName);
+    public FileRecord createAndSaveFileRecord(long userId, String fileName, String fileType) {
+        FileRecord fileRecord = createFileRecord(userId, fileName, fileType);
         saveFileRecord(fileRecord);
         return fileRecord;
     }

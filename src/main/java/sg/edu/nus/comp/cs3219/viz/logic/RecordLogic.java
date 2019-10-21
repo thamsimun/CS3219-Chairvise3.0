@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static sg.edu.nus.comp.cs3219.viz.common.util.Const.*;
+
 @Component
 public class RecordLogic {
     private AuthorRecordRepository authorRecordRepository;
@@ -63,16 +65,16 @@ public class RecordLogic {
         fileId.setUserId(userId);
         fileId.setFileNumber(fileInfo.getFileNumber());
 
-        switch (fileInfo.getFileName()) {
-            case "author.csv":
+        switch (fileInfo.getFileType()) {
+            case FILE_TYPE_AUTHOR:
                 removeAuthorRecordForFileId(fileId);
                 break;
 
-            case "submission.csv":
+            case FILE_TYPE_SUBMISSION:
                 removeSubmissionRecordForFileId(fileId);
                 break;
 
-            case "review.csv":
+            case FILE_TYPE_REVIEW:
                 removeReviewRecordForFileId(fileId);
                 break;
 

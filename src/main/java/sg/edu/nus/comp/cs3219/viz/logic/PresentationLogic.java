@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static sg.edu.nus.comp.cs3219.viz.common.util.Const.*;
+
 @Component
 public class PresentationLogic {
 
@@ -45,17 +47,20 @@ public class PresentationLogic {
         return presentationRepository.save(newPresentation);
     }
 
-    //TODO Fix hard coding
     private List<Presentation.FileMappings> parseFileMappings(List<Presentation.FileMappings> mappings) {
         List<Presentation.FileMappings> newList = new ArrayList<>();
         mappings.forEach(x -> {
             String toReplace = "";
-            if (x.getFileName().toLowerCase().contains("author")) {
-                toReplace = "author_record";
-            } else if (x.getFileName().toLowerCase().contains("review")) {
-                toReplace = "review_record";
-            } else if (x.getFileName().toLowerCase().contains("submission")) {
-                toReplace = "submission_record";
+            switch (x.getFileType()) {
+                case FILE_TYPE_AUTHOR:
+                    toReplace = "author_record";
+                    break;
+                case FILE_TYPE_REVIEW:
+                    toReplace = "review_record";
+                    break;
+                case FILE_TYPE_SUBMISSION:
+                    toReplace = "submission_record";
+                    break;
             }
             x.setFileName(toReplace);
             newList.add(x);
