@@ -41,6 +41,9 @@ export default {
     setTransformations(state, transformations) {
       state.data.transformations = transformations;
     },
+    setDataMappingError(state, err) {
+      state.error.push(err);
+    },
     processData(state, data) {
       try {
         state.error = [];
