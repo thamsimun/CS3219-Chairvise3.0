@@ -115,7 +115,7 @@ export default {
                     commit('setDeleteSuccess', true);
                 })
                 .catch(e => {
-                    commit('setDeleteFailure', true);
+                    commit('setDeleteFailure', e.toString());
                 })
                 .finally(() => {
                     commit('setFileListLoading', false)
