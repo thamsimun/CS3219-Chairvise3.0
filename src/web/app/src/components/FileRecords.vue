@@ -28,6 +28,16 @@
         <el-button type="primary" v-on:click="closeDeleteSuccess">Sure</el-button>
       </span>
         </el-dialog>
+
+        <el-dialog
+                title="Failure"
+                :visible.sync="deleteFailure"
+                width="30%" center>
+            <span>File cannot be deleted! Check that none of your presentations are using the file!</span>
+            <span slot="footer" class="dialog-footer">
+        <el-button type="primary" v-on:click="closeDeleteFailure">Go back</el-button>
+      </span>
+        </el-dialog>
     </el-container>
 </template>
 
@@ -72,6 +82,11 @@
             deleteSuccess: function () {
                 return this.$store.state.fileRecords.isDeleteSuccess;
             },
+
+            // whether upload is failed
+            deleteFailure: function () {
+                return this.$store.state.fileRecords.isDeleteFailure;
+            },
         },
         mounted() {
             this.$store.dispatch('getFileList');
@@ -86,6 +101,11 @@
             closeDeleteSuccess: function() {
                 this.$store.commit('clearFileRecord');
                 this.$store.commit('clearDeleteSuccess');
+            },
+
+            closeDeleteFailure: function() {
+                this.$store.commit('clearFileRecord');
+                this.$store.commit('clearDeleteFailure');
             }
         },
 

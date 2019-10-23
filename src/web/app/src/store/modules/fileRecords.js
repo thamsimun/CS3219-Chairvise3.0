@@ -3,6 +3,7 @@ import axios from 'axios'
 export default {
     state: {
         isDeleteSuccess: false,
+        isDeleteFailure: false,
         fileList: [],
         fileListStatus: {
             isLoading: true,
@@ -21,6 +22,10 @@ export default {
             state.isDeleteSuccess = false;
         },
 
+        clearDeleteFailure(state) {
+            state.isDeleteFailure = false;
+        },
+
         clearFileRecord(state) {
             state.fileRecord = {
                 fileNumber: '',
@@ -31,6 +36,10 @@ export default {
 
         setDeleteSuccess(state, success) {
             state.isDeleteSuccess = success;
+        },
+
+        setDeleteFailure(state, failure) {
+            state.isDeleteFailure = failure;
         },
 
         setFileListLoading(state, payload) {
@@ -106,7 +115,7 @@ export default {
                     commit('setDeleteSuccess', true);
                 })
                 .catch(e => {
-                    commit('setFileListApiError', e.toString());
+                    commit('setDeleteFailure', true);
                 })
                 .finally(() => {
                     commit('setFileListLoading', false)
