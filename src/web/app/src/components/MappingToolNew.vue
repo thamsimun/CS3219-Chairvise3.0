@@ -1,35 +1,34 @@
 <template>
   <div>
     <el-button v-on:click='submitClicked'>Submit</el-button>
-    <br>
-    <el-row>
-      <el-col v-for='(element, index) in fieldMetaData' :key='index' :span='2'>
-        <div class='db-field'><p>{{ element.name }}</p></div>
-      </el-col>
-    </el-row>
-    <br>
-    <el-row>
-      <el-col v-for='(element, index) in fieldMetaData' :key='index' :span='2'>
-        <el-select v-model='transformations[index]'>
-          <el-option
-            v-for='item in options[element.type]'
-            :key='item.name'
-            :value='item.value'
-            :label='item.name'>
-          </el-option>
-        </el-select>
-      </el-col>
-    </el-row>
-    <br>
-    <el-row>
-      <el-col v-for='(list, index) in mappingList' :key='index' :span='2' class='box'>
-        <draggable :list='list' group='fields'>
-          <div v-for='(item, index) in list' :key='index'>
-            <div class='user-field'><p>{{ item }}</p></div>
-          </div>
-        </draggable>
-      </el-col>
-    </el-row>
+    <div>
+      <div class='table'>
+        <div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
+          <div class='db-field'><p>{{ element.name }}</p></div>
+        </div>
+      </div>
+      <div class='table'>
+        <div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
+          <el-select v-model='transformations[index]'>
+            <el-option
+              v-for='item in options[element.type]'
+              :key='item.name'
+              :value='item.value'
+              :label='item.name'>
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class='table'>
+        <div class='table-cell box' v-for='(list, index) in mappingList' :key='index'>
+          <draggable :list='list' group='fields'>
+            <div v-for='(item, index) in list' :key='index'>
+              <div class='user-field'><p>{{ item }}</p></div>
+            </div>
+          </draggable>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -92,4 +91,15 @@
     border-width: 5px;
     border-color: green;
   }
+
+  .table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .table-cell {
+    display: table-cell;
+  }
+
 </style>

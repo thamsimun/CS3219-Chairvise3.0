@@ -1,7 +1,6 @@
 <template>
   <div class='wrapper'>
-    <mapping-tool-new v-if='isReady' ref='mapTool'></mapping-tool-new>
-    <div v-else-if='schemaNotSelected'>
+    <div v-if='schemaNotSelected'>
       <h1>Select your record type:</h1>
       <SelectDbSchema></SelectDbSchema>
     </div>
@@ -25,22 +24,22 @@
       <SelectTemplateTable></SelectTemplateTable>
     </div>
     <div v-else>
-      <h1> else </h1>
-      <div>
-        <h2>Pick columns</h2>
+      <div class='pick-col'>
+        <h1>Pick columns</h1>
         <ul>
           <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
             {{ field }}
           </li>
         </ul>
-        <h2>Selected</h2>
+        <h1>Selected</h1>
         <ul>
           <li v-for='(field, index) in selected' v-bind:key='index' v-on:click='addToPool(field)'>
             {{ field }}
           </li>
         </ul>
+        <mapping-tool-new ref='mapTool'></mapping-tool-new>
+        <el-button v-on:click='nextClicked'>Next</el-button>
       </div>
-      <el-button v-on:click='nextClicked'>Next</el-button>
     </div>
   </div>
 </template>
@@ -142,5 +141,15 @@
   .forward-btn {
     position: absolute;
     right: 25%;
+  }
+
+  .pick-col {
+    text-align: center;
+  }
+
+  .pick-col ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
   }
 </style>
