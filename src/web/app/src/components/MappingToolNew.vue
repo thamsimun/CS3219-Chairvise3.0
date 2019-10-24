@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class='table'>
-        <div class='table-cell box' v-for='(list, colIdx) in mappingList' :key='colIdx'>
+        <div class='table-cell' v-for='(list, colIdx) in mappingList' :key='colIdx'>
           <draggable :list='list' group='fields'>
             <div v-for='(item, lstIdx) in list' :key='lstIdx' @dblclick='removeFromSelected(colIdx, lstIdx)'>
               <div class='user-field'><p>{{ item }}</p></div>
@@ -108,12 +108,6 @@
     border-color: orange;
     margin: 5px;
     padding: 5px;
-  }
-
-  .box {
-    border-style: solid;
-    border-width: 5px;
-    border-color: green;
   }
 
   .table {
