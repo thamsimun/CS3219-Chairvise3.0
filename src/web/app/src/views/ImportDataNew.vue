@@ -24,6 +24,7 @@
       <SelectTemplateTable></SelectTemplateTable>
     </div>
     <div v-else>
+      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
       <mapping-tool-new ref='mapTool'></mapping-tool-new>
     </div>
   </div>
@@ -41,7 +42,7 @@
       return {
         pool: [],
         selected: [],
-        template: ''
+        template: '' // to be implemented
       }
     },
     computed: {
@@ -80,6 +81,9 @@
       },
       skipTemplate: function () {
         this.template = 'none';
+      },
+      clearTemplate: function () {
+        this.template = '';
       }
     },
     components: {
