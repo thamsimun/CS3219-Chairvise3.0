@@ -1,42 +1,43 @@
 <template>
   <div class='wrapper'>
     <mapping-tool-new v-if='isReady' ref='mapTool'></mapping-tool-new>
+    <div v-else-if='schemaNotSelected'>
+      <h1>Select your record type:</h1>
+      <SelectDbSchema></SelectDbSchema>
+    </div>
+    <div v-else-if='fileNotUploaded'>
+      <h1>Please upload your file:</h1>
+      <el-upload drag action=''
+                 :auto-upload='false'
+                 :show-file-list='false'
+                 :multiple='false'
+                 :on-change='fileUploadHandler'>
+        <i class='el-icon-upload'></i>
+        <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
+        <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
+      </el-upload>
+    </div>
     <div v-else>
-      <div v-if='schemaNotSelected'>
-        <h1 style='text-align:center;padding:20px;'>Select your record type:</h1>
-        <SelectDbSchema></SelectDbSchema>
+      <div>
       </div>
-      <div v-else>
-        <div>
-          <el-upload drag action=''
-                     :auto-upload='false'
-                     :show-file-list='false'
-                     :multiple='false'
-                     :on-change='fileUploadHandler'>
-            <i class='el-icon-upload'></i>
-            <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
-            <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
-          </el-upload>
-        </div>
-        <div class='template-container'>
-          <p>CHOOSE TEMPLATE</p>
-        </div>
-        <div>
-          <h2>Pick columns</h2>
-          <ul>
-            <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
-              {{ field }}
-            </li>
-          </ul>
-          <h2>Selected</h2>
-          <ul>
-            <li v-for='(field, index) in selected' v-bind:key='index' v-on:click='addToPool(field)'>
-              {{ field }}
-            </li>
-          </ul>
-        </div>
-        <el-button v-on:click='nextClicked'>Next</el-button>
+      <div class='template-container'>
+        <p>CHOOSE TEMPLATE</p>
       </div>
+      <div>
+        <h2>Pick columns</h2>
+        <ul>
+          <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
+            {{ field }}
+          </li>
+        </ul>
+        <h2>Selected</h2>
+        <ul>
+          <li v-for='(field, index) in selected' v-bind:key='index' v-on:click='addToPool(field)'>
+            {{ field }}
+          </li>
+        </ul>
+      </div>
+      <el-button v-on:click='nextClicked'>Next</el-button>
     </div>
   </div>
 </template>
@@ -62,6 +63,9 @@
       },
       schemaNotSelected: function () {
         return this.$store.state.dataMappingNew.data.dbSchemaName === '';
+      },
+      fileNotUploaded: function () {
+        return this.$store.state.dataMappingNew.data.rawData.length === 0;
       }
     },
     methods: {
@@ -114,5 +118,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  h1 {
+    text-align: center;
+    padding: 20px;
   }
 </style>
