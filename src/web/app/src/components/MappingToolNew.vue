@@ -74,6 +74,7 @@
     },
     methods: {
       submit: function () {
+        // TODO: make sure proper error messages are shown.
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 
