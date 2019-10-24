@@ -15,7 +15,8 @@ export default {
       selectedFields: [],
       processedResult: [],
       mappingList: [],
-      transformations: []
+      transformations: [],
+      pool: []
     },
     error: []
   },
@@ -43,6 +44,9 @@ export default {
     },
     setDataMappingError(state, err) {
       state.error.push(err);
+    },
+    setPool(state, fields) {
+      state.data.pool = fields;
     },
     processData(state, data) {
       try {

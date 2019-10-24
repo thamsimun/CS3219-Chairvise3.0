@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <el-button v-on:click='submitClicked'>Submit</el-button>
+  <div class='wrapper'>
+    <div class='pick-col'>
+      <h1>Pick columns</h1>
+      <ul>
+        <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
+          {{ field }}
+        </li>
+      </ul>
+    </div>
     <div>
       <div class='table'>
         <div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
@@ -20,15 +27,16 @@
         </div>
       </div>
       <div class='table'>
-        <div class='table-cell box' v-for='(list, index) in mappingList' :key='index'>
+        <div class='table-cell box' v-for='(list, colIdx) in mappingList' :key='colIdx'>
           <draggable :list='list' group='fields'>
-            <div v-for='(item, index) in list' :key='index'>
+            <div v-for='(item, lstIdx) in list' :key='lstIdx' @dblclick='removeFromSelected(colIdx, lstIdx)'>
               <div class='user-field'><p>{{ item }}</p></div>
             </div>
           </draggable>
         </div>
       </div>
     </div>
+    <el-button class='btn-complete' plain type='success' v-on:click='submitClicked'>Complete</el-button>
   </div>
 </template>
 
@@ -36,7 +44,7 @@
   import draggable from 'vuedraggable';
   import _ from 'lodash';
   import op from '../store/data/predefinedTransformations';
-  import {distribute} from '../common/utility';
+  import {distribute, removeItem} from '../common/utility';
 
   export default {
     name: "MappingToolNew",
@@ -45,13 +53,23 @@
     },
     data: function () {
       return {
-        rawData: _.cloneDeep(this.$store.state.dataMappingNew.data.rawData),
-        fieldMetaData: _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData),
-        dbSchemaName: _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName),
-        mappingList: distribute(_.cloneDeep(this.$store.state.dataMappingNew.data.selectedFields),
-          this.$store.state.dataMappingNew.data.fieldMetaData.length),
         transformations: [],
-        options: op
+        options: op,
+        mappingList: this.$store.state.dataMappingNew.data.fieldMetaData.map(() => [])
+      }
+    },
+    computed: {
+      pool: function () {
+        return _.cloneDeep(this.$store.state.dataMappingNew.data.pool);
+      },
+      rawData: function () {
+        return _.cloneDeep(this.$store.state.dataMappingNew.data.rawData);
+      },
+      fieldMetaData: function () {
+        return _.cloneDeep(this.$store.state.dataMappingNew.data.fieldMetaData);
+      },
+      dbSchemaName: function () {
+        return _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName);
       }
     },
     methods: {
@@ -64,6 +82,12 @@
         this.$store.commit('processData', toProcess);
 
         this.$store.dispatch('persistData');
+      },
+      addToSelected: function (field) {
+        distribute(this.mappingList, field);
+      },
+      removeFromSelected: function (colIdx, lstIdx) {
+        this.mappingList = removeItem(this.mappingList, colIdx, lstIdx);
       }
     }
   }
@@ -96,10 +120,19 @@
     display: table;
     width: 100%;
     table-layout: fixed;
+    margin-top: 10px;
   }
 
   .table-cell {
     display: table-cell;
   }
 
+  .wrapper {
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .btn-complete {
+    margin: 20px;
+  }
 </style>

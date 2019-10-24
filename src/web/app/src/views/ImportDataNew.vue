@@ -24,31 +24,15 @@
       <SelectTemplateTable></SelectTemplateTable>
     </div>
     <div v-else>
-      <div class='pick-col'>
-        <h1>Pick columns</h1>
-        <ul>
-          <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
-            {{ field }}
-          </li>
-        </ul>
-        <h1>Selected</h1>
-        <ul>
-          <li v-for='(field, index) in selected' v-bind:key='index' v-on:click='addToPool(field)'>
-            {{ field }}
-          </li>
-        </ul>
-        <mapping-tool-new ref='mapTool'></mapping-tool-new>
-        <el-button v-on:click='nextClicked'>Next</el-button>
-      </div>
+      <mapping-tool-new ref='mapTool'></mapping-tool-new>
     </div>
   </div>
 </template>
 
 <script>
-  import MappingToolNew from '@/components/MappingToolNew.vue';
+  import MappingToolNew from '../components/MappingToolNew.vue';
   import SelectDbSchema from "../components/SelectDbSchema";
   import SelectTemplateTable from '../components/SelectTemplateTable';
-  import _ from 'lodash';
   import Papa from 'papaparse';
 
   export default {
@@ -57,7 +41,6 @@
       return {
         pool: [],
         selected: [],
-        isReady: false,
         template: ''
       }
     },
@@ -76,31 +59,18 @@
       }
     },
     methods: {
-      addToSelected: function (field) {
-        this.pool.splice(this.pool.indexOf(field), 1);
-        this.selected.push(field);
-      },
-      addToPool: function (field) {
-        this.selected.splice(this.selected.indexOf(field), 1);
-        this.pool.push(field);
-      },
       fileUploadHandler: function (file) {
         this.$store.commit('setPageLoadingStatus', true);
         Papa.parse(file.raw, {
           skipEmptyLines: true,
           header: true, // we take it as there are headers present for now
           complete: result => {
-            this.pool = result.meta.fields;
+            this.$store.commit('setPool', result.meta.fields);
             this.$store.commit('setRawData', result.data);
             this.$store.commit('setFileName', file.name);
             this.$store.commit('setPageLoadingStatus', false);
           }
         })
-      },
-      nextClicked: function () {
-        this.$store.commit('setSelectedFields', _.cloneDeep(this.selected));
-
-        this.isReady = true;
       },
       clearSelectedSchema: function () {
         this.$store.commit('setDbSchema', {name: '', fieldMetaDataList: []});
@@ -131,6 +101,7 @@
   h1 {
     text-align: center;
     padding: 20px;
+    margin: 0;
   }
 
   .back-btn {
