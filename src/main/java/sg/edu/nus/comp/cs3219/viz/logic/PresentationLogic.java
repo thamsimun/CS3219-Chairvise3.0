@@ -35,6 +35,11 @@ public class PresentationLogic {
         return presentationRepository.findById(id);
     }
 
+    public boolean checkIfPresentationContainsFileNumber(int fileNumber, long userId) {
+        List<Presentation> presentations = presentationRepository.findByUserDetailsUserId(userId);
+        return presentations.stream().anyMatch(p -> p.getFileMappings().stream().anyMatch(f -> f.getFileNumber() == fileNumber));
+    };
+
     public Presentation saveForUser(Presentation presentation, UserInfo userInfo) {
         Presentation newPresentation = new Presentation();
         newPresentation.setName(presentation.getName());

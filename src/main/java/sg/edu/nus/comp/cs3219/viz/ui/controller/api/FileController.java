@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
+import sg.edu.nus.comp.cs3219.viz.common.exception.ForeignKeyViolationException;
 import sg.edu.nus.comp.cs3219.viz.logic.FileLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
+import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.RecordLogic;
 
 import java.util.List;
@@ -23,10 +25,13 @@ public class FileController extends BaseRestController {
 
     private RecordLogic recordLogic;
 
-    public FileController(GateKeeper gateKeeper, FileLogic fileLogic, RecordLogic recordLogic) {
+    private PresentationLogic presentationLogic;
+
+    public FileController(GateKeeper gateKeeper, FileLogic fileLogic, RecordLogic recordLogic, PresentationLogic presentationLogic) {
         this.gateKeeper = gateKeeper;
         this.fileLogic = fileLogic;
         this.recordLogic = recordLogic;
+        this.presentationLogic = presentationLogic;
     }
 
     @GetMapping("/file")
@@ -37,8 +42,11 @@ public class FileController extends BaseRestController {
 
     @Transactional
     @PostMapping("/file")
-    public List<FileInfo> deleteFileRecord(@RequestBody FileInfo fileInfo) {
+    public List<FileInfo> deleteFileRecord(@RequestBody FileInfo fileInfo) throws ForeignKeyViolationException {
         UserInfo user = gateKeeper.verifyLoginAccess();
+        if (presentationLogic.checkIfPresentationContainsFileNumber(fileInfo.getFileNumber(), user.getUserId())) {
+            throw new ForeignKeyViolationException("file_record", "presentation");
+        };
         recordLogic.removeRecordForUserIdFileId(user.getUserId(), fileInfo);
         fileLogic.deleteFileRecord(user.getUserId(), fileInfo);
         return getFileRecords();
