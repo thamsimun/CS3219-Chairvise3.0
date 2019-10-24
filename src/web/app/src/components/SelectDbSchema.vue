@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <div class='card-container'>
-      <div class='table-cell' v-for='dbSchema in dbSchemas' v-bind:key='dbSchema.tableName'
-           v-on:click='select(dbSchema)'>
-        <el-card class='box-card' shadow='hover'>
-          <h1>{{ dbSchema.name }}</h1>
-          <ul>
-            <li v-for='field in dbSchema.fieldMetaDataList' v-bind:key='field.name'>
-              {{ field.name }}
-            </li>
-          </ul>
-        </el-card>
-      </div>
+  <div class='card-container'>
+    <div class='table-cell' v-for='dbSchema in dbSchemas' v-bind:key='dbSchema.tableName'
+         v-on:click='select(dbSchema)'>
+      <el-card class='box-card' shadow='hover'>
+        <h1>{{ dbSchema.name }}</h1>
+        <ul>
+          <li v-for='field in dbSchema.fieldMetaDataList' v-bind:key='field.name'>
+            {{ field.name }}
+          </li>
+        </ul>
+      </el-card>
     </div>
   </div>
 </template>

@@ -54,6 +54,10 @@
     padding: 0;
   }
 
+  html, body, #container, #main {
+    height: 100%;
+  }
+
   body {
     font-family: 'Montserrat', sans-serif;
   }

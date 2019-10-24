@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class='wrapper'>
     <mapping-tool-new v-if='isReady' ref='mapTool'></mapping-tool-new>
     <div v-else>
       <div v-if='schemaNotSelected'>
+        <h1 style='text-align:center;padding:20px;'>Select your record type:</h1>
         <SelectDbSchema></SelectDbSchema>
       </div>
       <div v-else>
@@ -108,4 +109,10 @@
     border-color: gold;
   }
 
+  .wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
