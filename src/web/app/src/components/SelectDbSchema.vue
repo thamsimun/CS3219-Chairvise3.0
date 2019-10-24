@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class='card-container' v-for='dbSchema in dbSchemas' v-bind:key='dbSchema.tableName'>
-      <div v-on:click='select(dbSchema)'>
+    <div class='card-container'>
+      <div class='table-cell' v-for='dbSchema in dbSchemas' v-bind:key='dbSchema.tableName'
+           v-on:click='select(dbSchema)'>
         <el-card class='box-card' shadow='hover'>
           <h1>{{ dbSchema.name }}</h1>
           <ul>
@@ -36,13 +37,19 @@
 
 <style scoped>
   .card-container {
-    display: inline-block;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    align-content: center;
+  }
+
+  .table-cell {
+    display: table-cell;
   }
 
   .box-card {
     width: 480px;
     height: 480px;
-    margin-right: 20px;
+    margin: auto;
   }
-
 </style>
