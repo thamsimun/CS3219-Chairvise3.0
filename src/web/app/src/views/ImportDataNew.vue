@@ -6,6 +6,7 @@
       <SelectDbSchema></SelectDbSchema>
     </div>
     <div v-else-if='fileNotUploaded'>
+      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
       <h1>Please upload your file:</h1>
       <el-upload drag action=''
                  :auto-upload='false'
@@ -94,6 +95,12 @@
         this.$store.commit('setSelectedFields', _.cloneDeep(this.selected));
 
         this.isReady = true;
+      },
+      clearSelectedSchema: function () {
+        this.$store.commit('setDbSchema', {name: '', fieldMetaDataList: []});
+      },
+      clearRawData: function () {
+        this.$store.commit('setRawData', []);
       }
     },
     components: {
@@ -123,5 +130,11 @@
   h1 {
     text-align: center;
     padding: 20px;
+  }
+
+  .back-btn {
+    position: absolute;
+    left: 25%;
+    top: 25%;
   }
 </style>
