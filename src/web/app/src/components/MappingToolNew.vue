@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <el-button class='btn-complete' plain type='success' v-on:click='submitClicked'>Complete</el-button>
+    <el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete</el-button>
   </div>
 </template>
 
@@ -73,7 +73,7 @@
       }
     },
     methods: {
-      submitClicked: function () {
+      submit: function () {
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 
