@@ -18,12 +18,14 @@
         <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
       </el-upload>
     </div>
+    <div v-else-if='templateNotSelected'>
+      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
+      <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+      <h1>Choose a template:</h1>
+      <SelectTemplateTable></SelectTemplateTable>
+    </div>
     <div v-else>
-      <div>
-      </div>
-      <div class='template-container'>
-        <p>CHOOSE TEMPLATE</p>
-      </div>
+      <h1> else </h1>
       <div>
         <h2>Pick columns</h2>
         <ul>
@@ -46,6 +48,7 @@
 <script>
   import MappingToolNew from '@/components/MappingToolNew.vue';
   import SelectDbSchema from "../components/SelectDbSchema";
+  import SelectTemplateTable from '../components/SelectTemplateTable';
   import _ from 'lodash';
   import Papa from 'papaparse';
 
@@ -55,7 +58,8 @@
       return {
         pool: [],
         selected: [],
-        isReady: false
+        isReady: false,
+        template: ''
       }
     },
     computed: {
@@ -67,6 +71,9 @@
       },
       fileNotUploaded: function () {
         return this.$store.state.dataMappingNew.data.rawData.length === 0;
+      },
+      templateNotSelected: function () {
+        return this.template === '';
       }
     },
     methods: {
@@ -101,25 +108,20 @@
       },
       clearRawData: function () {
         this.$store.commit('setRawData', []);
+      },
+      skipTemplate: function () {
+        this.template = 'none';
       }
     },
     components: {
       MappingToolNew,
-      SelectDbSchema
+      SelectDbSchema,
+      SelectTemplateTable
     }
   }
 </script>
 
 <style scoped>
-  .template-container {
-    display: inline-block;
-    width: 1000px;
-    height: 480px;
-    border-style: solid;
-    border-width: 10px;
-    border-color: gold;
-  }
-
   .wrapper {
     height: 100%;
     display: flex;
@@ -135,6 +137,10 @@
   .back-btn {
     position: absolute;
     left: 25%;
-    top: 25%;
+  }
+
+  .forward-btn {
+    position: absolute;
+    right: 25%;
   }
 </style>
