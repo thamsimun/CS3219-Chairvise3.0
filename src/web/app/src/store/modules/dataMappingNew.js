@@ -12,7 +12,6 @@ export default {
       rawData: [],
       fileName: '',
       uploadedData: [],
-      selectedFields: [],
       processedResult: [],
       mappingList: [],
       transformations: [],
@@ -32,9 +31,6 @@ export default {
     },
     setFileName(state, fileName) {
       state.data.fileName = fileName
-    },
-    setSelectedFields(state, fields) {
-      state.data.selectedFields = fields;
     },
     setMappingList(state, mappingList) {
       state.data.mappingList = mappingList;
