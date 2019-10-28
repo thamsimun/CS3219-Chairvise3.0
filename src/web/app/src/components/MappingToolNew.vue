@@ -1,6 +1,6 @@
 <template>
   <div class='wrapper'>
-    <div class='pick-col'>
+    <div>
       <h1>Pick columns</h1>
       <ul>
         <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
@@ -149,5 +149,10 @@
 
   .btn-complete {
     margin: 20px;
+  }
+
+  ul {
+    height:500px;
+    overflow:auto;
   }
 </style>
