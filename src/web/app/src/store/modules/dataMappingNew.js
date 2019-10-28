@@ -42,7 +42,8 @@ export default {
     setTransformations(state, transformations) {
       state.data.transformations = transformations;
     },
-    setDataMappingError(state, err) {
+    setMappingError(state, err) {
+      state.error.length = 0;
       state.error.push(err);
     },
     setPool(state, fields) {
@@ -92,7 +93,7 @@ export default {
         }).catch(e => {
           commit('setPageLoadingStatus', false);
           commit('setUploadSuccess', false);
-          commit('setDataMappingError', e.toString());
+          commit('setMappingError', e.toString());
         })
     }
   }

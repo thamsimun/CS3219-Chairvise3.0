@@ -70,11 +70,19 @@
       },
       dbSchemaName: function () {
         return _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName);
+      },
+      errors: function () {
+        return this.$store.state.dataMappingNew.error;
       }
     },
     methods: {
       submit: function () {
-        // TODO: make sure proper error messages are shown.
+        // make sure that user has picked all transformations
+        if (this.transformations.length !== this.mappingList.length) {
+          this.$store.commit('setMappingError', 'Please ensure all transformations are selected!');
+          return;
+        }
+
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 
@@ -89,6 +97,18 @@
       },
       removeFromSelected: function (colIdx, lstIdx) {
         this.mappingList = removeItem(this.mappingList, colIdx, lstIdx);
+      }
+    },
+    watch: {
+      errors: function (errList) {
+        if (errList.length === 0) {
+          return;
+        }
+
+        this.$notify.error({
+          title: 'Error',
+          message: errList.join('\n')
+        });
       }
     }
   }
