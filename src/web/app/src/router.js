@@ -86,7 +86,7 @@ export default new Router({
         title: 'Presentation Data Page'
       },
       component: () => import(/*webpackChunkName: "fileData" */ './views/PresentationData.vue')
-    },
+    }
 
 
   ]
