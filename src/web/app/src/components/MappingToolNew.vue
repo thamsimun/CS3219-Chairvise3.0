@@ -73,6 +73,9 @@
       },
       errors: function () {
         return this.$store.state.dataMappingNew.error;
+      },
+      messages: function () {
+        return this.$store.state.dataMappingNew.messages;
       }
     },
     methods: {
@@ -90,7 +93,9 @@
         this.$store.commit('setTransformations', _.cloneDeep(this.transformations));
         this.$store.commit('processData', toProcess);
 
-        this.$store.dispatch('persistData');
+        if (this.errors.length === 0) {
+          this.$store.dispatch('persistData');
+        }
       },
       addToSelected: function (field) {
         distribute(this.mappingList, field);
@@ -101,14 +106,20 @@
     },
     watch: {
       errors: function (errList) {
-        if (errList.length === 0) {
-          return;
+        if (errList.length !== 0) {
+          this.$notify.error({
+            title: 'Error',
+            message: errList.join('\n')
+          });
         }
-
-        this.$notify.error({
-          title: 'Error',
-          message: errList.join('\n')
-        });
+      },
+      messages: function (msgList) {
+        if (msgList.length === 0) {
+          this.$notify.success({
+            title: 'Success',
+            message: msgList.join('\n')
+          });
+        }
       }
     }
   }

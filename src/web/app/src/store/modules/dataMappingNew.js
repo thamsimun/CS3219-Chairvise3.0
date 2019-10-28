@@ -17,7 +17,8 @@ export default {
       transformations: [],
       pool: []
     },
-    error: []
+    error: [],
+    messages: []
   },
 
   mutations: {
@@ -59,6 +60,10 @@ export default {
         state.error.push(err);
         state.data.processedResult = [];
       }
+    },
+    notifySuccess(state, message) {
+      state.messages.length = 0;
+      state.messages.push(message);
     }
   },
 
@@ -85,10 +90,9 @@ export default {
       })
         .then(() => {
           commit('setPageLoadingStatus', false);
-          commit('setUploadSuccess', true);
+          commit('notifySuccess', 'Upload success!');
         }).catch(e => {
           commit('setPageLoadingStatus', false);
-          commit('setUploadSuccess', false);
           commit('setMappingError', e.toString());
         })
     }
