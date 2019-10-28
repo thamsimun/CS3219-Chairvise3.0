@@ -78,14 +78,6 @@ export default new Router({
         title: 'File Data Page'
       },
       component: () => import(/*webpackChunkName: "fileData" */ './views/FileData.vue')
-    },
-    {
-      path: '/PresentationData',
-      name: 'PresentationData',
-      meta: {
-        title: 'Presentation Data Page'
-      },
-      component: () => import(/*webpackChunkName: "presentationData" */ './views/PresentationData.vue')
     }
   ]
 })
