@@ -1,16 +1,16 @@
 <template>
     <el-container>
         <el-main>
-            <div slot="header">
-                <span>Files Added</span>
+            <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
+                <span style="font-size: 30px; font-weight: bold">Files Added</span>
             </div>
             <el-row>
-                <el-col :span="5" v-for="file in fileListInfo"
+                <el-col :span="7" v-for="file in fileListInfo"
                         :key="file.fileNumber" class="text-item" style="margin-bottom: 30px">
-                    <el-card :body-style="{ padding: '5px' }">
-                        <img src="../assets/csv1.png" class="image">
-                        <div style="padding: 14px;">
-                            <span>{{file.fileName}}</span>
+                    <el-card :body-style="{ padding: '40px'}" style="min-width: 200px" justify="center">
+                        <img src="../assets/csvicon.png" class="image" style="alignment: center">
+                            <div  class="text">
+                                <span>{{file.fileName}}</span>
                             <div class="bottom-clearfix">
                                 <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
                             </div>
@@ -118,16 +118,26 @@
 <style>
     .bottom-clearfix {
         font-size: 14px;
-        padding-left: 25px;
+        /*padding-left: 25px;*/
+        text-align: center;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+        /*not working*/
+        text-after-overflow: ellipsis;
+
     }
 
     .text-item {
         font-size: 18px;
-        padding-left: 55px;
+        padding-left: 60px;
     }
 
     .image{
         width: 100%;
+        display: block;
     }
 
 </style>

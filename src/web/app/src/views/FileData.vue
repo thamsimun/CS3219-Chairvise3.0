@@ -1,5 +1,7 @@
 <template>
-    <el-container>
+    <el-alert v-if="!isLogin" title="Please login to view files added" type="error" show-icon
+              class="errorMsg"/>
+    <el-container v-else-if="isLogin">
         <el-aside class="sidebar" width="250px" v-if="isLogin"></el-aside>
         <el-header class="header" style="text-align: right; font-size: 12px">
             <el-dropdown>
