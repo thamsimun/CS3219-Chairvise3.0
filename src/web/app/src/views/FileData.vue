@@ -2,25 +2,22 @@
     <el-alert v-if="!isLogin" title="Please login to view files added" type="error" show-icon
               class="errorMsg"/>
     <el-container v-else-if="isLogin">
-        <el-aside class="sidebar" width="250px" v-if="isLogin"></el-aside>
-        <el-header class="header" style="text-align: right; font-size: 12px">
-            <el-dropdown>
-                <i class="el-icon-setting" style="margin-right: 20px"></i>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>View</el-dropdown-item>
-                    <el-dropdown-item>Add</el-dropdown-item>
-                    <el-dropdown-item>Delete</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-        </el-header>
-        <el-col class="fileRecords">
-            <FileRecords/>
-        </el-col>
+        <el-container>
+            <el-aside class="sidebar" width="250px">
+                <DataSideBar/>
+            </el-aside>
+        </el-container>
+        <el-container>
+            <el-col class="fileRecords">
+                <FileRecords/>
+            </el-col>
+        </el-container>
     </el-container>
 </template>
 
 <script>
     import FileRecords from "@/components/FileRecords.vue";
+    import DataSideBar from "@/components/DataSideBar.vue";
 
     export default {
         name: 'FileData',
@@ -33,6 +30,7 @@
             }
         },
         components: {
+            DataSideBar,
             FileRecords
         }
     }
@@ -48,10 +46,11 @@
 
     .sidebar {
         padding-left:10px;
+        margin-top: 5px;
     }
 
     .fileRecords {
-        padding-left: 350px;
+        padding-left: 150px;
         margin-top: 25px;
     }
 </style>

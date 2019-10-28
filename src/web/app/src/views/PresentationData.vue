@@ -2,25 +2,24 @@
   <el-alert v-if="!isLogin" title="Please login to view presentations" type="error" show-icon
             class="errorMsg"/>
   <el-container v-else-if="isLogin">
-    <el-aside class="sidebar" width="250px" v-if="isLogin"></el-aside>
-    <el-header class="header" style="text-align: right; font-size: 12px">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 20px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>View</el-dropdown-item>
-          <el-dropdown-item>Add</el-dropdown-item>
-          <el-dropdown-item>Delete</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-header>
-    <el-col class="presentationCreatedByMe">
-      <PresentationCreatedByMe/>
-    </el-col>
+    <el-container>
+      <el-aside class="sidebar" width="250px">
+        <DataSideBar/>
+      </el-aside>
+    </el-container>
+    <el-container>
+      <el-col class="presentationCreatedByMe">
+        <PresentationCreatedByMe/>
+      </el-col>
+    </el-container>
   </el-container>
+
+
 </template>
 
 <script>
   import PresentationCreatedByMe from "@/components/PresentationCreatedByMe.vue";
+  import DataSideBar from "@/components/DataSideBar.vue";
 
   export default {
     name: 'PresentationData',
@@ -36,6 +35,7 @@
       }
     },
     components: {
+      DataSideBar,
       PresentationCreatedByMe
     }
   }
@@ -50,11 +50,11 @@
 
   .sidebar {
     padding-left:10px;
+    margin-top: 5px;
   }
 
   .presentationCreatedByMe {
     min-width: 300px;
-    padding-left: 375px;
-    margin-top: 0px;
+    padding-left: 150px;
   }
 </style>
