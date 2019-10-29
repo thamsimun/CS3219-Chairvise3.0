@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
-import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate.TemplateMappingList;
 import sg.edu.nus.comp.cs3219.viz.common.exception.ForeignKeyViolationException;
 import sg.edu.nus.comp.cs3219.viz.logic.FileLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
@@ -50,13 +50,5 @@ public class FileController extends BaseRestController {
         recordLogic.removeRecordForUserIdFileId(user.getUserId(), fileInfo);
         fileLogic.deleteFileRecord(user.getUserId(), fileInfo);
         return getFileRecords();
-    }
-
-
-    @PostMapping("/ftgt")
-    public TemplateMappingList importTemplateMapping(@RequestBody TemplateMappingList templateMappingList) {
-        //UserInfo user = gateKeeper.verifyLoginAccess();
-        fileLogic.saveTemplate(templateMappingList, 1);
-        return templateMappingList;
     }
 }
