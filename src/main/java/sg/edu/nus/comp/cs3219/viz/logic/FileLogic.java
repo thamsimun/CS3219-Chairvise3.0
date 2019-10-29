@@ -23,12 +23,10 @@ import java.util.stream.Collectors;
 public class FileLogic {
     private FileRecordRepository fileRecordRepository;
     private UserDetailsRepository userDetailsRepository;
-    private FileTemplateRepository fileTemplateRepository;
 
-    public FileLogic(FileRecordRepository fileRecordRepository, UserDetailsRepository userDetailsRepository, FileTemplateRepository fileTemplateRepository) {
+    public FileLogic(FileRecordRepository fileRecordRepository, UserDetailsRepository userDetailsRepository) {
         this.fileRecordRepository = fileRecordRepository;
         this.userDetailsRepository = userDetailsRepository;
-        this.fileTemplateRepository = fileTemplateRepository;
     }
 
     public FileRecord createFileRecord(long userId, String fileName, String fileType) {
@@ -87,36 +85,6 @@ public class FileLogic {
             throw new EntityNotFoundException("User " + userId);
         }
         return profile.get();
-    }
-
-    public void saveTemplate(TemplateMappingList templateMappingList, long userId) {
-        FileTemplate template = new FileTemplate();
-        template.setCreatorIdentifier(String.valueOf(userId));
-        template.setTemplateMappingList(templateMappingList);
-        fileTemplateRepository.save(template);
-    }
-
-    public List<FileTemplateData> getTemplatesForUser(long userId) {
-        List<FileTemplate> templates = fileTemplateRepository.findAllByCreatorIdentifierEquals(String.valueOf(userId));
-        List<FileTemplateData> templateData = new ArrayList<>();
-        templates.forEach(x -> templateData.add(parseFileTemplateForDataTransfer(x)));
-        return templateData;
-    }
-
-    public List<FileTemplateData> deleteTemplateForUser(long templateId, long userId) {
-        Optional<FileTemplate> template = fileTemplateRepository.findByCreatorIdentifierAndIdEquals(String.valueOf(userId), templateId);
-        if (!template.isPresent()) {
-            throw new EntityNotFoundException(String.format("File template %s", templateId));
-        }
-        fileTemplateRepository.deleteByCreatorIdentifierAndIdEquals(String.valueOf(userId), templateId);
-        return getTemplatesForUser(userId);
-    }
-
-    private FileTemplateData parseFileTemplateForDataTransfer(FileTemplate fileTemplate) {
-        FileTemplateData data = new FileTemplateData();
-        data.setTemplateId(fileTemplate.getId());
-        data.setTemplateMappingList(fileTemplate.getTemplateMappingList());
-        return data;
     }
 
     private int findNextUnusedFileId(long userId) {
