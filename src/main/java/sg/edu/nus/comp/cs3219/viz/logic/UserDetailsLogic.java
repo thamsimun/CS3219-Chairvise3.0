@@ -35,7 +35,7 @@ public class UserDetailsLogic {
     private UserDetails getUserDetails(long userId) throws EntityNotFoundException {
         Optional<UserDetails> details = userDetailsRepository.findByUserId(userId);
         if (!details.isPresent()) {
-            throw new EntityNotFoundException(userId);
+            throw new EntityNotFoundException(String.format("User %s", userId));
         }
         return details.get();
     }
