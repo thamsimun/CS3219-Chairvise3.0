@@ -2,11 +2,14 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
+import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate;
+import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate.TemplateMappingList;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileId;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.FileTemplateRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.ArrayList;
@@ -19,10 +22,12 @@ import java.util.stream.Collectors;
 public class FileLogic {
     private FileRecordRepository fileRecordRepository;
     private UserDetailsRepository userDetailsRepository;
+    private FileTemplateRepository fileTemplateRepository;
 
-    public FileLogic(FileRecordRepository fileRecordRepository, UserDetailsRepository userDetailsRepository) {
+    public FileLogic(FileRecordRepository fileRecordRepository, UserDetailsRepository userDetailsRepository, FileTemplateRepository fileTemplateRepository) {
         this.fileRecordRepository = fileRecordRepository;
         this.userDetailsRepository = userDetailsRepository;
+        this.fileTemplateRepository = fileTemplateRepository;
     }
 
     public FileRecord createFileRecord(long userId, String fileName, String fileType) {
@@ -81,6 +86,13 @@ public class FileLogic {
             throw new UserNotFoundException(userId);
         }
         return profile.get();
+    }
+
+    public void saveTemplate(TemplateMappingList templateMappingList, long userId) {
+        FileTemplate template = new FileTemplate();
+        template.setCreatorIdentifier(String.valueOf(userId));
+        template.setTemplateMappingList(templateMappingList);
+        fileTemplateRepository.save(template);
     }
 
     private int findNextUnusedFileId(long userId) {
