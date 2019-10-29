@@ -1,8 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.common.entity;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -11,7 +9,6 @@ import sg.edu.nus.comp.cs3219.viz.logic.AnalysisLogic;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -38,6 +35,15 @@ public class FileTemplate {
             this.templateMappingList = objectMapper.writeValueAsString(template);
         } catch (JsonProcessingException e) {
             log.severe(e.getMessage());
+        }
+    }
+
+    public TemplateMappingList getTemplateMappingList() {
+        try {
+            return objectMapper.readValue(templateMappingList, TemplateMappingList.class);
+        } catch (IOException e) {
+            log.severe(e.getMessage());
+            return new TemplateMappingList();
         }
     }
 
