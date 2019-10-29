@@ -1,12 +1,12 @@
 <template>
-  <el-container id="no-gap" v-loading.fullscreen.lock="isAppLoading">
-    <el-header id="no-gap">
+  <el-container id="container" v-loading.fullscreen.lock="isAppLoading">
+    <el-header id="header">
       <menu-bar></menu-bar>
     </el-header>
-    <el-main id="no-gap">
+    <el-main id="main">
       <router-view/>
     </el-main>
-    <el-footer id="no-gap">
+    <el-footer id="footer">
 <!--      <footer/>-->
     </el-footer>
   </el-container>
@@ -50,9 +50,14 @@
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500');
 
-  #no-gap {
+  #container, #header, #main, #footer {
     padding: 0;
   }
+
+  html, body, #container, #main {
+    height: 100%;
+  }
+
   body {
     font-family: 'Montserrat', sans-serif;
   }

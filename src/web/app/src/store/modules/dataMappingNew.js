@@ -12,12 +12,13 @@ export default {
       rawData: [],
       fileName: '',
       uploadedData: [],
-      selectedFields: [],
       processedResult: [],
       mappingList: [],
-      transformations: []
+      transformations: [],
+      pool: []
     },
-    error: []
+    error: [],
+    messages: []
   },
 
   mutations: {
@@ -32,14 +33,18 @@ export default {
     setFileName(state, fileName) {
       state.data.fileName = fileName
     },
-    setSelectedFields(state, fields) {
-      state.data.selectedFields = fields;
-    },
     setMappingList(state, mappingList) {
       state.data.mappingList = mappingList;
     },
     setTransformations(state, transformations) {
       state.data.transformations = transformations;
+    },
+    setMappingError(state, err) {
+      state.error.length = 0;
+      state.error.push(err);
+    },
+    setPool(state, fields) {
+      state.data.pool = fields;
     },
     processData(state, data) {
       try {
@@ -55,6 +60,10 @@ export default {
         state.error.push(err);
         state.data.processedResult = [];
       }
+    },
+    notifySuccess(state, message) {
+      state.messages.length = 0;
+      state.messages.push(message);
     }
   },
 
@@ -81,11 +90,10 @@ export default {
       })
         .then(() => {
           commit('setPageLoadingStatus', false);
-          commit('setUploadSuccess', true);
+          commit('notifySuccess', 'Upload success!');
         }).catch(e => {
           commit('setPageLoadingStatus', false);
-          commit('setUploadSuccess', false);
-          commit('setDataMappingError', e.toString());
+          commit('setMappingError', e.toString());
         })
     }
   }

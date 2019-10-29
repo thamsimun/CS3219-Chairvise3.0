@@ -1,44 +1,95 @@
 import moment from 'moment';
 
+let MISSING_FIELDS = 'Missing fields!';
+
+function noEmptyParams(...fields) {
+  return fields.reduce((acc, field) => (field !== undefined), true);
+}
+
 /*
  solely returns the field without any transformation.
  this should be for string
 */
 function noTransformation(row, field) {
+  if (!noEmptyParams(field)) {
+    throw MISSING_FIELDS;
+  }
+
   return row[field];
 }
 
 export function leaveEmpty() {
-  return "";
+  return '';
 }
 
 /*
-  takes a dateField and a timeField, and returns a dateTime field.
+  takes a dateField (YYYY-M-D) and a timeField (H:m), and returns a dateTime field in the correct format.
  */
 function transformDateAndTimeToDateTime(row, dateField, timeField) {
-  let date = row[dateField];
-  let time = row[timeField];
+  if (!noEmptyParams(dateField, timeField)) {
+    throw MISSING_FIELDS;
+  }
 
-  // check for errors; is it an invalid date?
-  return moment(`${date} ${time}`, 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+  const date = row[dateField];
+  const time = row[timeField];
+  const combined = moment(`${date} ${time}`, 'YYYY-M-D H:m', true);
+
+  if (!combined.isValid()) {
+    throw 'Problem with parsing date and time!';
+  }
+
+  return combined.format('YYYY-MM-DD hh:mm:ss');
 }
 
+/*
+  takes a dateTime field (YYYY-M-D H:m), returns a dateTime field in the correct format.
+ */
 function transformToDateTime(row, field) {
-  return moment(row[field], 'YYYY-M-D H:m').format('YYYY-MM-DD hh:mm:ss');
+  if (!noEmptyParams(field)) {
+    throw MISSING_FIELDS;
+  }
+
+  const parsed = moment(row[field], 'YYYY-M-D H:m', true);
+
+  if (!parsed.isValid()) {
+    throw 'Problem with parsing date time!';
+  }
+
+  return parsed.format('YYYY-MM-DD hh:mm:ss');
 }
 
 /*
   parse to an int
  */
 function transformToInt(row, field) {
-  return parseInt(row[field]);
+  if (!noEmptyParams(field)) {
+    throw MISSING_FIELDS;
+  }
+
+  const parsed = parseInt(row[field]);
+
+  if (isNaN(parsed)) {
+    throw 'Problem with parsing int!';
+  }
+
+  return parsed;
 }
 
 /*
   parse to javascript number
  */
 function transformToFloat(row, field) {
-  return parseFloat(row[field]);
+  if (!noEmptyParams(field)) {
+    throw MISSING_FIELDS;
+  }
+
+  const parsed = parseFloat(row[field]);
+
+  if (isNaN(parsed)) {
+    throw 'Problem with parsing double/float!';
+  }
+
+  return parsed;
 }
 
 /*
