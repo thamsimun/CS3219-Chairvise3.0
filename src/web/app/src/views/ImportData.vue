@@ -9,11 +9,14 @@
     </el-alert>
     <div v-if="isLogin">
       <mapping-tool v-if="isReadyForMapping" ref="mapTool"></mapping-tool>
+
       <div v-else class="upload-box">
+
         <el-select v-model="formatType" placeholder="Format Type">
           <el-option :key="'EasyChair'" :label="'EasyChair'" :value="1"></el-option>
           <el-option :key="'SoftConf'" :label="'SoftConf'" :value="2"></el-option>
         </el-select>
+
         <el-select v-model="tableType" placeholder="Table Type">
           <el-option v-for="(schema, idx) in dbSchemas"
                      :key="schema.name"
@@ -21,10 +24,12 @@
                      :value="idx">
           </el-option>
         </el-select>
+
         <el-select v-model="hasHeader" placeholder="Has header?">
           <el-option :key="'Yes'" :label="'Yes'" :value="true"></el-option>
           <el-option :key="'No'" :label="'No'" :value="false"></el-option>
         </el-select>
+
         <el-select v-model="predefinedMappingId" placeholder="Predefined Mapping">
           <el-option v-for="(mapping, idx) in predefinedMappings"
                      :key="mapping.name"
@@ -32,6 +37,7 @@
                      :value="idx">
           </el-option>
         </el-select>
+
         <el-upload v-if="isReadyForUpload" drag action=""
                    :auto-upload="false"
                    :show-file-list="false"

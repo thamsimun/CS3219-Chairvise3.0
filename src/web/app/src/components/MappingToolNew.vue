@@ -51,7 +51,7 @@
     components: {
       draggable
     },
-    data: function () {
+    data() {
       return {
         transformations: [],
         options: op,
