@@ -3,7 +3,7 @@
     <div>
       <el-container>
         <el-aside class="sidebar" width="250px" v-if="isLogin">
-          <list-of-presentation/>
+          <DataSideBar/>
         </el-aside>
         <el-main>
           <presentation-brief :id="id"/>
@@ -19,6 +19,8 @@
   import ListOfPresentation from '@/components/ListOfPresentation.vue';
   import PresentationBrief from "@/components/PresentationBrief.vue";
   import SectionListPanel from "@/components/SectionListPanel.vue";
+  import DataSideBar from "@/components/DataSideBar.vue";
+
 
   export default {
     name: 'Analyze',
@@ -34,6 +36,7 @@
       }
     },
     components: {
+      DataSideBar,
       PresentationBrief,
       ListOfPresentation,
       SectionListPanel,
