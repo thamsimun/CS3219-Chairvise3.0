@@ -2,7 +2,7 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
-import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.EntityNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.Optional;
@@ -32,10 +32,10 @@ public class UserDetailsLogic {
         return userDetails;
     }
 
-    private UserDetails getUserDetails(long userId) throws UserNotFoundException {
+    private UserDetails getUserDetails(long userId) throws EntityNotFoundException {
         Optional<UserDetails> details = userDetailsRepository.findByUserId(userId);
         if (!details.isPresent()) {
-            throw new UserNotFoundException(userId);
+            throw new EntityNotFoundException(String.format("User %s", userId));
         }
         return details.get();
     }

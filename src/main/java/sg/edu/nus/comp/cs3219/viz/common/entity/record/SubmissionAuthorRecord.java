@@ -3,6 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.common.entity.record;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -23,7 +24,7 @@ public class SubmissionAuthorRecord {
     })
     private FileRecord fileRecord;
 
-    @Column(name = "s_author_name")
+    @Column(name = "s_author_name", length = 500)
     private String name;
 
     public Long getId() {

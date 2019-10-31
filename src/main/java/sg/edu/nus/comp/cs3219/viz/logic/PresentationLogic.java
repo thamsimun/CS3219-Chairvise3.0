@@ -3,16 +3,14 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
-import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationSection;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
-import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.EntityNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static sg.edu.nus.comp.cs3219.viz.common.util.Const.*;
 
@@ -73,10 +71,10 @@ public class PresentationLogic {
         return newList;
     }
 
-    private UserDetails getUserDetails(long userId) throws UserNotFoundException {
+    private UserDetails getUserDetails(long userId) throws EntityNotFoundException {
         Optional<UserDetails> details = userDetailsRepository.findByUserId(userId);
         if (!details.isPresent()) {
-            throw new UserNotFoundException(userId);
+            throw new EntityNotFoundException(String.format("User %s", userId));
         }
         return details.get();
     }
