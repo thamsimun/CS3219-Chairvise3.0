@@ -2,11 +2,15 @@ package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileInfo;
+import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileTemplateData;
+import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate;
+import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate.TemplateMappingList;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileId;
 import sg.edu.nus.comp.cs3219.viz.common.entity.record.FileRecord;
-import sg.edu.nus.comp.cs3219.viz.common.exception.UserNotFoundException;
+import sg.edu.nus.comp.cs3219.viz.common.exception.EntityNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.FileRecordRepository;
+import sg.edu.nus.comp.cs3219.viz.storage.repository.FileTemplateRepository;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.ArrayList;
@@ -75,10 +79,10 @@ public class FileLogic {
         return fileRecord;
     }
 
-    private UserDetails retrieveUserDetailsUsingUserId(long userId) throws UserNotFoundException {
+    private UserDetails retrieveUserDetailsUsingUserId(long userId) throws EntityNotFoundException {
         Optional<UserDetails> profile = userDetailsRepository.findByUserId(userId);
         if (!profile.isPresent()) {
-            throw new UserNotFoundException(userId);
+            throw new EntityNotFoundException("User " + userId);
         }
         return profile.get();
     }
