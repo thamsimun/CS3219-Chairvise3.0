@@ -155,8 +155,8 @@
             //console.log((res.data)[0]);
             //console.log(res.data);
             //console.log(this.$store.state.dataMapping.data.tableType)
-            //author file preprocessing
 
+            //AUTHOR file preprocessing
             if (this.$store.state.dataMapping.data.tableType == "0") { // author
               //ACL file preprocessing
               if (this.$store.state.dataMapping.data.formatType == "2") { // soft conf
@@ -205,7 +205,7 @@
               //console.log(res2);
             }
 
-            //review file preprocessing
+            //REVIEW file preprocessing
             if (this.$store.state.dataMapping.data.tableType == "1") { // review
               if (this.$store.state.dataMapping.data.formatType == "2") { // softconf
                 var reviewres = [];
@@ -271,6 +271,7 @@
             this.$store.commit("setUploadedFile", res2);
             this.$store.commit("setUploadFileName", file.name);
             this.$store.commit("setPageLoadingStatus", false);
+
           }.bind(this)
         });
       }
