@@ -17,16 +17,16 @@
 <script>
   export default {
     name: "SelectDbSchema",
-    mounted: function () {
+    mounted() {
       this.$store.dispatch('fetchDBMetaDataEntities');
     },
     computed: {
-      dbSchemas: function () {
+      dbSchemas() {
         return this.$store.state.dbMetaData.entities;
       }
     },
     methods: {
-      select: function (dbSchema) {
+      select(dbSchema) {
         this.$store.commit('setDbSchema', dbSchema);
       }
     }
