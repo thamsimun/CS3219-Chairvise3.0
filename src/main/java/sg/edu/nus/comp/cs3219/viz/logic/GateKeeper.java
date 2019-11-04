@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
-import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
+import sg.edu.nus.comp.cs3219.viz.common.exception.EntityNotFoundException;
 import sg.edu.nus.comp.cs3219.viz.common.exception.UnauthorisedException;
 import sg.edu.nus.comp.cs3219.viz.common.util.Const;
 import sg.edu.nus.comp.cs3219.viz.storage.repository.PresentationAccessControlRepository;
-import sg.edu.nus.comp.cs3219.viz.storage.repository.UserDetailsRepository;
 
 import java.util.Optional;
 
@@ -19,30 +18,57 @@ import java.util.Optional;
 public class GateKeeper {
 
     private PresentationAccessControlRepository presentationAccessControlRepository;
-    private UserDetailsRepository userDetailsRepository;
-    private SignUpLogic signUpLogic;
+    private UserDetailsLogic userDetailsLogic;
 
     public GateKeeper(PresentationAccessControlRepository presentationAccessControlRepository,
-                      UserDetailsRepository userDetailsRepository, SignUpLogic signUpLogic) {
+                      UserDetailsLogic userDetailsLogic) {
         this.presentationAccessControlRepository = presentationAccessControlRepository;
-        this.userDetailsRepository = userDetailsRepository;
-        this.signUpLogic = signUpLogic;
+        this.userDetailsLogic = userDetailsLogic;
     }
 
     private static UserService userService = UserServiceFactory.getUserService();
 
-    public Optional<UserInfo> getCurrentLoginUser() {
+    public Optional<UserInfo> getCurrentLoginUser(String email, String password) {
         User user = userService.getCurrentUser();
 
-        if (user == null) {
+        if (user == null && email.equals("")) {
             return Optional.empty();
         }
 
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserEmail(user.getEmail());
-        userInfo.setUserNickname(user.getNickname());
-        userInfo.setUserId(getUserIdIfExistElseCreate(user));
+
+        //if is a google api user
+        if (user != null) {
+            userInfo = handleGoogleUsers(user.getEmail());
+        } else {
+            userInfo = handleNormalUsers(email, password);
+        }
         return Optional.of(userInfo);
+    }
+
+    public UserInfo handleGoogleUsers(String email) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserEmail(email);
+        userInfo.setUserPassword("${PLACEHOLDER_PASSWORD}");
+        try {
+            //see if user is registered
+            return userDetailsLogic.getUserInfo(email);
+        } catch (EntityNotFoundException e) {
+            //register user
+            return createNewUser(email, userInfo.getUserPassword());
+        }
+    }
+
+    public UserInfo handleNormalUsers(String email, String password) {
+        //if someone tries to log in with the google api password
+        if (password.equals("${PLACEHOLDER_PASSWORD}")) {
+            throw new UnauthorisedException();
+        }
+        //check if user email and password correct
+        if (!verifyUserCredentials(email, password)) {
+            throw new UnauthorisedException();
+        };
+        return userDetailsLogic.getUserInfo(email);
     }
 
     public String getLoginUrl(String redirectPage) {
@@ -58,16 +84,16 @@ public class GateKeeper {
         return userService.createLogoutURL(redirectPage);
     }
 
-    public UserInfo verifyLoginAccess() {
-        return getCurrentLoginUser().orElseThrow(UnauthorisedException::new);
+    public UserInfo verifyLoginAccess(String email, String password) {
+        return getCurrentLoginUser(email, password).orElseThrow(UnauthorisedException::new);
     }
 
-    public void verifyDeletionAccessForPresentation(Presentation presentation) {
+    public void verifyDeletionAccessForPresentation(Presentation presentation, String email, String password) {
         if (presentation == null) {
             throw new UnauthorisedException();
         }
 
-        UserInfo currentUser = getCurrentLoginUser()
+        UserInfo currentUser = getCurrentLoginUser(email, password)
                 .orElseThrow(UnauthorisedException::new);
 
         if (!(currentUser.getUserId() == presentation.getUserId())) {
@@ -75,7 +101,7 @@ public class GateKeeper {
         }
     }
 
-    public void verifyAccessForPresentation(Presentation presentation, AccessLevel accessLevel) {
+    public void verifyAccessForPresentation(Presentation presentation, AccessLevel accessLevel, String email, String password) {
         if (presentation == null) {
             throw new UnauthorisedException();
         }
@@ -90,7 +116,7 @@ public class GateKeeper {
             return;
         }
 
-        UserInfo currentUser = getCurrentLoginUser()
+        UserInfo currentUser = getCurrentLoginUser(email, password)
                 .orElseThrow(UnauthorisedException::new);
 
         // creator can always access their own presentation
@@ -111,15 +137,13 @@ public class GateKeeper {
         throw new UnauthorisedException();
     }
 
-    public long getUserIdIfExistElseCreate(User user) {
-        Optional<UserDetails> userProfile = userDetailsRepository.findByUserEmail(user.getEmail());
-        if (userProfile.isPresent()) {
-            return userProfile.get().getUserId();
-        } else {
-            //creates a new user profile
-            UserDetails newUser = signUpLogic.createNewUser(user);
-            return newUser.getUserId();
-        }
+    public UserInfo createNewUser(String email, String password) {
+        return userDetailsLogic.createUserDetails(email, password);
+    }
+
+    public boolean verifyUserCredentials(String email, String password) {
+        UserInfo userInfo = userDetailsLogic.getUserInfo(email);
+        return userInfo.getUserPassword().equals(password);
     }
 
 
