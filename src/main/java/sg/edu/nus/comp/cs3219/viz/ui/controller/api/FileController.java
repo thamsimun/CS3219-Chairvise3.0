@@ -31,21 +31,23 @@ public class FileController extends BaseRestController {
     }
 
     @GetMapping("/file")
-    public List<FileInfo> getFileRecords() {
-        UserInfo user = gateKeeper.verifyLoginAccess();
+    public List<FileInfo> getFileRecords(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userNickname") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileLogic.retrieveFileRecordsUsingUserId(user.getUserId());
     }
 
     @Transactional
     @PostMapping("/file")
-    public List<FileInfo> deleteFileRecord(@RequestBody FileInfo fileInfo) throws ForeignKeyViolationException {
-        UserInfo user = gateKeeper.verifyLoginAccess();
+    public List<FileInfo> deleteFileRecord(@RequestBody FileInfo fileInfo,
+                                           @CookieValue(value = "userEmail") String email,
+                                           @CookieValue(value = "userNickname") String password) throws ForeignKeyViolationException {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         if (presentationLogic.checkIfPresentationContainsFileNumber(fileInfo.getFileNumber(), user.getUserId())) {
             throw new ForeignKeyViolationException("file_record", "presentation");
         };
         recordLogic.removeRecordForUserIdFileId(user.getUserId(), fileInfo);
         fileLogic.deleteFileRecord(user.getUserId(), fileInfo);
-        return getFileRecords();
+        return getFileRecords(email, password);
     }
 
 }

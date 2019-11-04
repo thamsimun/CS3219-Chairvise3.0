@@ -1,9 +1,6 @@
 package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AnalysisRequest;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
@@ -37,11 +34,13 @@ public class AnalysisController extends BaseRestController {
     }
 
     @PostMapping("/presentations/{id}/analysis")
-    public List<Map<String, Object>> analysis(@PathVariable Long id, @Valid @RequestBody AnalysisRequest analysisRequest) {
+    public List<Map<String, Object>> analysis(@PathVariable Long id, @Valid @RequestBody AnalysisRequest analysisRequest,
+                                              @CookieValue(value = "userEmail") String email,
+                                              @CookieValue(value = "userNickname") String nickname) {
         // verify access level
         Presentation presentation = presentationLogic.findById(id)
                 .orElseThrow(() -> new PresentationNotFoundException(id));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, nickname);
 
         analysisRequest.setMappings(presentation.getFileMappings());
 

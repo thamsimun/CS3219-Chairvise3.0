@@ -32,19 +32,23 @@ public class PresentationSectionController extends BaseRestController {
     }
 
     @GetMapping("/presentations/{presentationId}/sections")
-    public List<PresentationSection> all(@PathVariable Long presentationId) {
+    public List<PresentationSection> all(@PathVariable Long presentationId,
+                                         @CookieValue(value = "userEmail") String email,
+                                         @CookieValue(value = "userNickname") String nickname) {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, nickname);
 
         return presentationSectionLogic.findAllByPresentation(presentation);
     }
 
     @PostMapping("/presentations/{presentationId}/sections")
-    public ResponseEntity<?> newPresentationSection(@PathVariable Long presentationId, @RequestBody PresentationSection presentationSection) throws URISyntaxException {
+    public ResponseEntity<?> newPresentationSection(@PathVariable Long presentationId, @RequestBody PresentationSection presentationSection,
+                                                    @CookieValue(value = "userEmail") String email,
+                                                    @CookieValue(value = "userNickname") String nickname) throws URISyntaxException {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, nickname);
 
         PresentationSection newPresentationSection = presentationSectionLogic.saveForPresentation(presentation, presentationSection);
 
@@ -55,12 +59,14 @@ public class PresentationSectionController extends BaseRestController {
 
     @PutMapping("/presentations/{presentationId}/sections/{sectionId}")
     public ResponseEntity<?> updatePresentationSection(@PathVariable Long presentationId, @PathVariable Long sectionId,
-                                                       @RequestBody PresentationSection newPresentationSection) throws URISyntaxException {
+                                                       @RequestBody PresentationSection newPresentationSection,
+                                                       @CookieValue(value = "userEmail") String email,
+                                                       @CookieValue(value = "userNickname") String nickname) throws URISyntaxException {
         PresentationSection oldPresentationSection = presentationSectionLogic.findById(sectionId)
                 .orElseThrow(() -> new PresentationSectionNotFoundException(presentationId, sectionId));
 
         Presentation presentation = oldPresentationSection.getPresentation();
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, nickname);
 
         PresentationSection updatedPresentationSection =
                 presentationSectionLogic.updatePresentation(oldPresentationSection, newPresentationSection);
@@ -71,12 +77,14 @@ public class PresentationSectionController extends BaseRestController {
     }
 
     @DeleteMapping("/presentations/{presentationId}/sections/{sectionId}")
-    public ResponseEntity<?> deletePresentationSection(@PathVariable Long presentationId, @PathVariable Long sectionId) {
+    public ResponseEntity<?> deletePresentationSection(@PathVariable Long presentationId, @PathVariable Long sectionId,
+                                                       @CookieValue(value = "userEmail") String email,
+                                                       @CookieValue(value = "userNickname") String nickname) {
         PresentationSection presentationSection = presentationSectionLogic.findById(sectionId)
                 .orElseThrow(() -> new PresentationSectionNotFoundException(presentationId, sectionId));
 
         Presentation presentation = presentationSection.getPresentation();
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, nickname);
 
         presentationSectionLogic.deleteById(sectionId);
 

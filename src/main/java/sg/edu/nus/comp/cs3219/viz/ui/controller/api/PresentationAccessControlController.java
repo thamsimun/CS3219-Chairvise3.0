@@ -33,27 +33,30 @@ public class PresentationAccessControlController extends BaseRestController {
     }
 
     @GetMapping("/presentations/{presentationId}/accessControl")
-    public List<PresentationAccessControl> all(@PathVariable Long presentationId) {
+    public List<PresentationAccessControl> all(@PathVariable Long presentationId,  @CookieValue(value = "userEmail") String email,
+                                               @CookieValue(value = "userPassword") String password) {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, password);
 
         return presentationAccessControlLogic.findAllByPresentation(presentation);
     }
 
     @GetMapping("/presentations/shared")
-    public List<Long> sharedPresentations() {
-        String userIdentifier = gateKeeper.verifyLoginAccess().getUserEmail();
+    public List<Long> sharedPresentations(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        String userIdentifier = gateKeeper.verifyLoginAccess(email, password).getUserEmail();
         List<PresentationAccessControl> accessControls = presentationAccessControlLogic
             .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
         return accessControls.stream().map(PresentationAccessControl::getId).collect(Collectors.toList());
     }
 
     @PostMapping("/presentations/{presentationId}/accessControl")
-    public ResponseEntity<?> addPermission(@RequestBody PresentationAccessControl presentationAccessControl, @PathVariable Long presentationId) throws URISyntaxException {
+    public ResponseEntity<?> addPermission(@RequestBody PresentationAccessControl presentationAccessControl, @PathVariable Long presentationId,
+                                           @CookieValue(value = "userEmail") String email,
+                                           @CookieValue(value = "userPassword") String password) throws URISyntaxException {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, password);
 
         PresentationAccessControl newAccessControl = presentationAccessControlLogic.saveForPresentation(presentation, presentationAccessControl);
         return ResponseEntity
@@ -62,10 +65,12 @@ public class PresentationAccessControlController extends BaseRestController {
     }
 
     @PutMapping("/presentations/{presentationId}/accessControl/{accessControlId}")
-    public ResponseEntity<?> updatePermission(@RequestBody PresentationAccessControl presentationAccessControl, @PathVariable Long presentationId, @PathVariable Long accessControlId) throws URISyntaxException {
+    public ResponseEntity<?> updatePermission(@RequestBody PresentationAccessControl presentationAccessControl, @PathVariable Long presentationId, @PathVariable Long accessControlId,
+                                              @CookieValue(value = "userEmail") String email,
+                                              @CookieValue(value = "userPassword") String password) throws URISyntaxException {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, password);
 
         PresentationAccessControl oldPresentationAccessControl = presentationAccessControlLogic.findById(accessControlId)
                 .orElseThrow(() -> new PresentationAccessControlNotFoundException(presentationId, accessControlId));
@@ -79,10 +84,12 @@ public class PresentationAccessControlController extends BaseRestController {
     }
 
     @DeleteMapping("/presentations/{presentationId}/accessControl/{accessControlId}")
-    public ResponseEntity<?> removePermission(@PathVariable Long presentationId, @PathVariable Long accessControlId) {
+    public ResponseEntity<?> removePermission(@PathVariable Long presentationId, @PathVariable Long accessControlId,
+                                              @CookieValue(value = "userEmail") String email,
+                                              @CookieValue(value = "userPassword") String password) {
         Presentation presentation = presentationLogic.findById(presentationId)
                 .orElseThrow(() -> new PresentationNotFoundException(presentationId));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_WRITE, email, password);
 
         presentationAccessControlLogic.deleteById(accessControlId);
 
