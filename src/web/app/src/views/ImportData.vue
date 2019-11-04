@@ -9,11 +9,14 @@
     </el-alert>
     <div v-if="isLogin">
       <mapping-tool v-if="isReadyForMapping" ref="mapTool"></mapping-tool>
+
       <div v-else class="upload-box">
+
         <el-select v-model="formatType" placeholder="Format Type">
           <el-option :key="'EasyChair'" :label="'EasyChair'" :value="1"></el-option>
           <el-option :key="'SoftConf'" :label="'SoftConf'" :value="2"></el-option>
         </el-select>
+
         <el-select v-model="tableType" placeholder="Table Type">
           <el-option v-for="(schema, idx) in dbSchemas"
                      :key="schema.name"
@@ -21,10 +24,12 @@
                      :value="idx">
           </el-option>
         </el-select>
+
         <el-select v-model="hasHeader" placeholder="Has header?">
           <el-option :key="'Yes'" :label="'Yes'" :value="true"></el-option>
           <el-option :key="'No'" :label="'No'" :value="false"></el-option>
         </el-select>
+
         <el-select v-model="predefinedMappingId" placeholder="Predefined Mapping">
           <el-option v-for="(mapping, idx) in predefinedMappings"
                      :key="mapping.name"
@@ -32,6 +37,7 @@
                      :value="idx">
           </el-option>
         </el-select>
+
         <el-upload v-if="isReadyForUpload" drag action=""
                    :auto-upload="false"
                    :show-file-list="false"
@@ -149,8 +155,8 @@
             //console.log((res.data)[0]);
             //console.log(res.data);
             //console.log(this.$store.state.dataMapping.data.tableType)
-            //author file preprocessing
 
+            //AUTHOR file preprocessing
             if (this.$store.state.dataMapping.data.tableType == "0") { // author
               //ACL file preprocessing
               if (this.$store.state.dataMapping.data.formatType == "2") { // soft conf
@@ -199,7 +205,7 @@
               //console.log(res2);
             }
 
-            //review file preprocessing
+            //REVIEW file preprocessing
             if (this.$store.state.dataMapping.data.tableType == "1") { // review
               if (this.$store.state.dataMapping.data.formatType == "2") { // softconf
                 var reviewres = [];
@@ -265,6 +271,7 @@
             this.$store.commit("setUploadedFile", res2);
             this.$store.commit("setUploadFileName", file.name);
             this.$store.commit("setPageLoadingStatus", false);
+
           }.bind(this)
         });
       }
