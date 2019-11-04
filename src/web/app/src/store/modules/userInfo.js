@@ -1,4 +1,7 @@
 import axios from 'axios'
+import VueCookies from 'vue-cookies'
+import {sha256} from "js-sha256";
+
 
 export default {
   state: {
@@ -8,11 +11,11 @@ export default {
     loginUrl: '',
     logoutUrl: '',
     userEmail: '',
-    userNickname: '',
     userId: '',
+    hashedPassword: '',
     registerForm: {
-      email: '',
-      password: '',
+      userEmail: '',
+      userPassword: '',
     },
     registerFormStatus: {
       isLoading: false,
@@ -20,7 +23,31 @@ export default {
       // formErrorMsg: '',
     },
   },
+
+  mounted: {
+
+  },
+
   mutations: {
+    hashPassword(state) {
+      if (state.registerForm.userPassword === '') {
+        return;
+      }
+      sha256(state.registerForm.userPassword);
+      var hash = sha256.create();
+      state.hashedPassword = hash.toString();
+    },
+
+    setCookies(state) {
+      VueCookies.set('userEmail', state.registerForm.userEmail, '1d', "/");
+      VueCookies.set('userPassword', state.hashedPassword, '1d', "/");
+    },
+
+    clearCookies() {
+      VueCookies.set('userEmail', "", '1d', "/");
+      VueCookies.set('userPassword', "", '1d', "/");
+    },
+
     setAuthInfoApiRequestFail(state, payload) {
       state.isApiError = true;
       state.apiErrorMsg = payload;
@@ -33,7 +60,7 @@ export default {
 
       if (payload.isLogin) {
         state.userEmail = payload.userInfo.userEmail;
-        state.userNickname = payload.userInfo.userNickname;
+        state.userNickname = payload.userInfo.userPassword;
         state.userId = payload.userInfo.userId;
       }
     },
@@ -61,6 +88,15 @@ export default {
 
   },
   actions: {
+    async setCookies({commit}) {
+      commit('hashPassword');
+      commit('setCookies');
+    },
+
+    async clearCookies({commit}) {
+      commit('clearCookies');
+    },
+
     async getAuthInfo({commit}) {
       commit('setPageLoadingStatus', true);
       const urlToGetBack = encodeURI(window.location.href);
@@ -78,7 +114,7 @@ export default {
     async addUser({commit, state}) {
       commit('setPageLoadingStatus', true);
       // TODO: hook up URL with the backend
-      axios.post('/api/auth...' , state.registerForm)
+      axios.post('/api/auth')
           .then(response => {
             commit('setAuthInfo', response.data)
           })
