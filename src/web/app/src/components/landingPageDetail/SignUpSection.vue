@@ -16,6 +16,7 @@
         </el-form-item>
       </el-form>
       <div>
+        <el-button round id="login_button" @click="loginUser()"> Login </el-button>
         <el-button round id="register_button" @click="registerUser()"> Register</el-button>
       </div>
     </div>
@@ -38,7 +39,6 @@
         },
       };
     },
-
     computed: {
       isLogin() {
         return this.$store.state.userInfo.isLogin
@@ -52,11 +52,11 @@
 
       registerFormEmail: {
         get() {
-          return this.$store.state.userInfo.registerForm.email
+          return this.$store.state.userInfo.registerForm.userEmail
         },
         set(value) {
           this.$store.commit('setRegisterFormField', {
-            field: 'email',
+            field: 'userEmail',
             value
           })
         },
@@ -64,15 +64,19 @@
 
       registerFormPassword: {
         get() {
-          return this.$store.state.userInfo.registerForm.password
+          return this.$store.state.userInfo.registerForm.userPassword
         },
         set(value) {
           this.$store.commit('setRegisterFormField', {
-            field: 'password',
+            field: 'userPassword',
             value
           })
         },
       },
+    },
+
+    mounted() {
+      this.$store.dispatch('setCookies');
     },
 
     methods: {
@@ -85,12 +89,35 @@
           this.$refs['registerForm'].clearValidate();
           // If not logged in
           if (!this.isLogin) {
+            this.$store.dispatch('setCookies');
             this.$store.dispatch('addUser')
                 .then(() => {
                   if (this.isError) {
                     return
                   }
                 })
+          } else {
+            this.$store.dispatch('setAuthInfoApiRequestFail', "You are currently logged in.")
+          }
+        })
+      },
+
+      loginUser() {
+        this.$refs['registerForm'].validate((valid) => {
+          // If invalid form
+          if (!valid) {
+            return
+          }
+          this.$refs['registerForm'].clearValidate();
+          // If not logged in
+          if (!this.isLogin) {
+            this.$store.dispatch('setCookies');
+            this.$store.dispatch('getAuthInfo')
+                    .then(() => {
+                      if (this.isError) {
+                        return
+                      }
+                    })
           } else {
             this.$store.dispatch('setAuthInfoApiRequestFail', "You are currently logged in.")
           }
