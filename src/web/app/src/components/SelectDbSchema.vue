@@ -46,7 +46,7 @@
   }
 
   .box-card {
-    width: 480px;
+    width: 410px;
     height: 480px;
     margin: auto;
   }

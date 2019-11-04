@@ -80,14 +80,20 @@ export default new Router({
       component: () => import(/*webpackChunkName: "fileData" */ './views/FileData.vue')
     },
     {
-      path: '/PresentationData',
-      name: 'PresentationData',
+      path: '/PresentationCreated',
+      name: 'PresentationCreated',
       meta: {
-        title: 'Presentation Data Page'
+        title: 'Presentation Created Page'
       },
-      component: () => import(/*webpackChunkName: "fileData" */ './views/PresentationData.vue')
+      component: () => import(/*webpackChunkName: "presentationData" */ './views/PresentationCreated.vue')
+    },
+    {
+      path: '/userHome',
+      name: 'userHome',
+      meta: {
+        title: 'User Home'
+      },
+      component: () => import(/*webpackChunkName: "userHome" */ './views/UserHome.vue')
     }
-
-
   ]
 })

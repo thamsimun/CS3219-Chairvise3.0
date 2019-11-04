@@ -1,42 +1,53 @@
 <template>
-  <div class='wrapper'>
+  <el-container>
+    <el-container>
+      <el-aside class="sidebar" width="250px">
+        <DataSideBar/>
+      </el-aside>
+    </el-container>
+    <el-container>
+      <el-col>
+        <div class='wrapper'>
 
-    <div v-if='schemaNotSelected'>
-      <h1>Select your record type:</h1>
-      <SelectDbSchema></SelectDbSchema>
-    </div>
+          <div v-if='schemaNotSelected'>
+            <h1>Select your record type:</h1>
+            <SelectDbSchema></SelectDbSchema>
+          </div>
 
-    <div v-else-if='fileNotUploaded'>
-      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
-      <h1>Please upload your file:</h1>
-      <p> Does your file have headers? </p>
-      <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
-      ></el-switch>
-      <br><br>
-      <el-upload drag action=''
-                 :auto-upload='false'
-                 :show-file-list='false'
-                 :multiple='false'
-                 :on-change='fileUploadHandler'>
-        <i class='el-icon-upload'></i>
-        <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
-        <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
-      </el-upload>
-    </div>
+          <div v-else-if='fileNotUploaded'>
+            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
+            <h1>Please upload your file:</h1>
+            <p> Does your file have headers? </p>
+            <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
+            ></el-switch>
+            <br><br>
+            <el-upload drag action=''
+                       :auto-upload='false'
+                       :show-file-list='false'
+                       :multiple='false'
+                       :on-change='fileUploadHandler'>
+              <i class='el-icon-upload'></i>
+              <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
+              <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
+            </el-upload>
+          </div>
 
-    <div v-else-if='templateNotSelected'>
-      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
-      <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
-      <h1>Choose a template:</h1>
-      <SelectTemplateTable></SelectTemplateTable>
-    </div>
+          <div v-else-if='templateNotSelected'>
+            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
+            <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+            <h1>Choose a template:</h1>
+            <SelectTemplateTable></SelectTemplateTable>
+          </div>
 
-    <div v-else>
-      <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
-      <mapping-tool-new ref='mapTool'></mapping-tool-new>
-    </div>
+          <div v-else>
+            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
+            <mapping-tool-new ref='mapTool'></mapping-tool-new>
+          </div>
 
-  </div>
+        </div>
+      </el-col>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -44,6 +55,7 @@
   import SelectDbSchema from "../components/SelectDbSchema";
   import SelectTemplateTable from '../components/SelectTemplateTable';
   import Papa from 'papaparse';
+  import DataSideBar from "@/components/DataSideBar.vue";
 
   export default {
     name: "ImportDataNew",
@@ -112,7 +124,8 @@
     components: {
       MappingToolNew,
       SelectDbSchema,
-      SelectTemplateTable
+      SelectTemplateTable,
+      DataSideBar,
     }
   }
 </script>
@@ -123,6 +136,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 210px;
   }
 
   h1 {
@@ -150,4 +164,8 @@
     margin: 0;
     padding: 0;
   }
+  .upload{
+    margin-left: 100px;
+  }
+
 </style>
