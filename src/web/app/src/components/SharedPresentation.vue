@@ -65,7 +65,6 @@
         },
         mounted() {
             this.$store.dispatch('getSharedPresentationList');
-            console.log(this.$store.state.presentationShared.sharedPresentationList);
         },
 
 
