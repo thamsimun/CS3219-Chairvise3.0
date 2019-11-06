@@ -2,15 +2,15 @@
   <el-alert v-if="!isLogin" title="Please login to view presentations" type="error" show-icon
             class="errorMsg"/>
   <el-container v-else-if="isLogin">
+    <el-aside class="sidebar" width="250px">
+      <DataSideBar/>
+    </el-aside>
     <el-container>
-      <el-aside class="sidebar" width="250px">
-        <DataSideBar/>
-      </el-aside>
-    </el-container>
-    <el-container>
-      <el-col class="presentationCreatedByMe">
-        <PresentationCreatedByMe/>
-      </el-col>
+      <div class="parent">
+        <el-col class="presentationCreatedByMe">
+          <PresentationCreatedByMe/>
+        </el-col>
+      </div>
     </el-container>
   </el-container>
 
@@ -53,8 +53,14 @@
     margin-top: 5px;
   }
 
+  .parent {
+    text-align: center;
+    width: 100%
+  }
+
   .presentationCreatedByMe {
-    min-width: 300px;
-    padding-left: 150px;
+    display: inline-block;
+    min-width: ;
+    padding-left: 0px;
   }
 </style>
