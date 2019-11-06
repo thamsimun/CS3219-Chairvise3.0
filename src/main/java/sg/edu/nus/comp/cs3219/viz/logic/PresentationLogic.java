@@ -1,6 +1,7 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
+import sg.edu.nus.comp.cs3219.viz.common.datatransfer.PresentationData;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.UserInfo;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.entity.UserDetails;
@@ -88,5 +89,13 @@ public class PresentationLogic {
 
     public void deleteById(Long id) {
         presentationRepository.deleteById(id);
+    }
+
+    public PresentationData getPresentationData(Presentation p) {
+        PresentationData data = new PresentationData();
+        data.setCreatorIdentifier(p.getCreatorIdentifier());
+        data.setId(p.getId());
+        data.setName(p.getName());
+        return data;
     }
 }
