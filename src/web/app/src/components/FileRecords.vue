@@ -4,22 +4,20 @@
             <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
                 <span style="font-size: 30px; font-weight: bold">Files Added</span>
             </div>
-            <div class="container">
-                <div class="row" >
-                    <div class = "column"  v-for="file in fileListInfo"
-                         :key="file.fileNumber">
-                        <el-card :body-style="{ padding: '40px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
-                            <img src="../assets/csvicon.png" class="image">
-                            <div class="text">
+            <el-row>
+                <el-col :span="7" v-for="file in fileListInfo"
+                        :key="file.fileNumber" class="text-item" style="margin-bottom: 30px">
+                    <el-card :body-style="{ padding: '40px'}" style="min-width: 200px" justify="center">
+                        <img src="../assets/csvicon.png" class="image" style="alignment: center">
+                            <div  class="text">
                                 <span>{{file.fileName}}</span>
-                                <div class="bottom-clearfix">
-                                    <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
-                                </div>
+                            <div class="bottom-clearfix">
+                                <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
                             </div>
-                        </el-card>
-                    </div>
-                </div>
-            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
         </el-main>
         <el-dialog
                 title="Success"
@@ -30,6 +28,7 @@
         <el-button type="primary" v-on:click="closeDeleteSuccess">Sure</el-button>
       </span>
         </el-dialog>
+
         <el-dialog
                 title="Failure"
                 :visible.sync="deleteFailure"
@@ -139,24 +138,6 @@
     .image{
         width: 100%;
         display: block;
-    }
-
-    .row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-        padding-left: 20px;
-        margin-bottom: 25px;
-    }
-    .container {
-        margin: 0px;
-        display: flex;
     }
 
 </style>
