@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export default {
   state: {
-
     hasDbSchemaSet: false,
     hasFileUploaded: false,
     hasChosenTemplate: false,
@@ -17,13 +16,17 @@ export default {
       processedResult: [],
       mappingList: [],
       transformations: [],
-      pool: []
+      pool: [],
+      template: null
     },
     error: [],
     messages: []
   },
 
   mutations: {
+    selectTemplate(state, payload) {
+      state.data.template = payload;
+    },
     setHasHeader(state, payload) {
       state.hasHeader = payload;
     },
