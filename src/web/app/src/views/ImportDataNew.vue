@@ -1,10 +1,8 @@
 <template>
   <el-container>
-    <el-container>
-      <el-aside class="sidebar" width="250px">
-        <DataSideBar/>
-      </el-aside>
-    </el-container>
+    <el-aside class="sidebar" width="10%">
+      <DataSideBar/>
+    </el-aside>
     <el-container>
       <el-col>
         <div class='wrapper'>
@@ -15,17 +13,18 @@
           </div>
 
           <div v-else-if='fileNotUploaded'>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
+            <el-button @click='clearSelectedSchema' circle class='back-btn' icon='el-icon-back'
+                       type='warning'></el-button>
             <h1>Please upload your file:</h1>
             <p> Does your file have headers? </p>
-            <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
+            <el-switch active-text="Yes, I have headers" inactive-text="No, I can identify my own" v-model="hasHeader"
             ></el-switch>
             <br><br>
-            <el-upload drag action=''
-                       :auto-upload='false'
+            <el-upload :auto-upload='false' :multiple='false'
+                       :on-change='fileUploadHandler'
                        :show-file-list='false'
-                       :multiple='false'
-                       :on-change='fileUploadHandler'>
+                       action=''
+                       drag>
               <i class='el-icon-upload'></i>
               <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
               <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
@@ -33,14 +32,14 @@
           </div>
 
           <div v-else-if='templateNotSelected'>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
-            <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+            <el-button @click='clearRawData' circle class='back-btn' icon='el-icon-back' type='warning'></el-button>
+            <el-button @click='skipTemplate' circle class='forward-btn' icon='el-icon-right' type='warning'></el-button>
             <h1>Choose a template:</h1>
             <SelectTemplateTable></SelectTemplateTable>
           </div>
 
           <div v-else>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
+            <el-button @click='clearTemplate' circle class='back-btn' icon='el-icon-back' type='warning'></el-button>
             <mapping-tool-new ref='mapTool'></mapping-tool-new>
           </div>
 
@@ -54,8 +53,9 @@
   import MappingToolNew from '../components/MappingToolNew.vue';
   import SelectDbSchema from "../components/SelectDbSchema";
   import SelectTemplateTable from '../components/SelectTemplateTable';
+  import DataSideBar from "../components/DataSideBar.vue";
+  import _ from 'lodash';
   import Papa from 'papaparse';
-  import DataSideBar from "@/components/DataSideBar.vue";
 
   export default {
     name: "ImportDataNew",
@@ -63,8 +63,7 @@
       return {
         headerMode: false,
         pool: [],
-        selected: [],
-        template: '' // to be implemented
+        selected: []
       }
     },
 
@@ -79,13 +78,13 @@
         return this.$store.state.dataMappingNew.data.rawData.length === 0;
       },
       templateNotSelected() {
-        return this.template === '';
+        return _.isEmpty(this.$store.state.dataMappingNew.data.template);
       },
       hasHeader: {
         get() {
           return this.$store.state.dataMappingNew.hasHeader;
         },
-        set (value) {
+        set(value) {
           this.$store.commit('setHasHeader', value)
         },
       }
@@ -114,10 +113,13 @@
         this.$store.commit('setRawData', []);
       },
       skipTemplate() {
-        this.template = 'none';
+        this.$store.commit('selectTemplate', {
+          transformations: [],
+          mappingList: []
+        })
       },
       clearTemplate() {
-        this.template = '';
+        this.$store.commit('selectTemplate', null);
       }
     },
 
@@ -136,7 +138,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 210px;
   }
 
   h1 {
@@ -155,17 +156,14 @@
     right: 25%;
   }
 
-  .pick-col {
-    text-align: center;
-  }
-
   .pick-col ul {
     display: inline-block;
     margin: 0;
     padding: 0;
   }
-  .upload{
-    margin-left: 100px;
+
+  div {
+    width: 100%;
   }
 
 </style>

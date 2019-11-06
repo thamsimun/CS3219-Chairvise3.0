@@ -9,6 +9,7 @@ import dbMetaData from "./modules/dbMetaData";
 import dataMapping from "./modules/dataMapping";
 import fileRecords from "./modules/fileRecords";
 import dataMappingNew from "./modules/dataMappingNew";
+import fileTemplates from './modules/fileTemplates';
 
 Vue.use(Vuex);
 
@@ -32,5 +33,6 @@ export default new Vuex.Store({
     fileRecords,
     dataMappingNew,
     dataMapping,
+    fileTemplates,
   }
 })
