@@ -1,6 +1,6 @@
 <template>
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-active="$route.path" router>
+        <el-menu :default-active="$route.path" v-loading="isLoading" router>
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-menu"></i>Presentations</template>
                 <el-menu-item-group>

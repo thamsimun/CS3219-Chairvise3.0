@@ -9,11 +9,7 @@ import dbMetaData from "./modules/dbMetaData";
 import dataMapping from "./modules/dataMapping";
 import fileRecords from "./modules/fileRecords";
 import dataMappingNew from "./modules/dataMappingNew";
-<<<<<<< HEAD
 import presentationShared from "./modules/presentationShared";
-=======
-import fileTemplates from './modules/fileTemplates';
->>>>>>> 306c8610ea07219d6fc6e98a5ec9436b08611aa8
 
 Vue.use(Vuex);
 
@@ -38,6 +34,5 @@ export default new Vuex.Store({
     dataMappingNew,
     dataMapping,
     presentationShared,
-    fileTemplates
   }
 })
