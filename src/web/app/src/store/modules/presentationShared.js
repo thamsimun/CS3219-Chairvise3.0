@@ -11,9 +11,7 @@ export default {
         sharedPresentation: {
             id: '',
             name: '',
-            description: '',
             creatorIdentifier: '',
-            fileMappings: [],
         },
     },
     mutations: {

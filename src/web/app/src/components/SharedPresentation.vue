@@ -34,6 +34,9 @@
 
     export default {
         name: 'SharedPresentation',
+        data() {
+            return {}
+        },
         watch: {
             'isError'() {
                 if (!this.isError) {
