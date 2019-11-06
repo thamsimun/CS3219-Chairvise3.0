@@ -55,12 +55,11 @@
 
   .parent {
     text-align: center;
-    width: 100%
+    width: 100%;
   }
 
   .presentationCreatedByMe {
     display: inline-block;
-    min-width: ;
     padding-left: 0px;
   }
 </style>
