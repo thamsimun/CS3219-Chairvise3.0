@@ -1,5 +1,5 @@
 <template>
-    <el-alert v-if="!isLogin" title="Please login to view files added" type="error" show-icon
+    <el-alert v-if="!isLogin" title="Please login to view presentations" type="error" show-icon
               class="errorMsg"/>
     <el-container v-else-if="isLogin">
         <el-aside class="sidebar" width="250px">
@@ -7,8 +7,8 @@
         </el-aside>
         <el-container>
             <div class="parent">
-                <el-col class="fileRecords">
-                    <FileRecords/>
+                <el-col class="sharedPresentation">
+                    <SharedPresentation/>
                 </el-col>
             </div>
         </el-container>
@@ -16,11 +16,15 @@
 </template>
 
 <script>
-    import FileRecords from "@/components/FileRecords.vue";
+    import SharedPresentation from "@/components/SharedPresentation.vue";
     import DataSideBar from "@/components/DataSideBar.vue";
 
+
     export default {
-        name: 'FileData',
+        name: 'PresentationShared',
+        props: {
+            id: String,
+        },
         computed: {
             isLogin() {
                 return this.$store.state.userInfo.isLogin
@@ -30,11 +34,10 @@
             }
         },
         components: {
-            DataSideBar,
-            FileRecords
+            SharedPresentation,
+            DataSideBar
         }
     }
-
 </script>
 
 <style>
@@ -49,13 +52,14 @@
         margin-top: 5px;
     }
 
-    .fileRecords {
-        display: inline-block;
-        padding-left: 0px;
-    }
-
     .parent {
         text-align: center;
-        width: 100%
+        width: 100%;
+        height: 100%;
+    }
+
+    .sharedPresentation {
+        display: inline-block;
+        padding-left: 0px;
     }
 </style>

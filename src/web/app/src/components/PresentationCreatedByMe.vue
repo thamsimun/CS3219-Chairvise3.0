@@ -1,23 +1,25 @@
 <template>
     <el-container style="min-width: 200px">
         <el-main>
-            <div style="padding-left: 27px; margin-bottom: 0px; margin-top: 30px">
-                <span style="font-size: 30px; font-weight: bold">Presentations Created By Me</span>
+            <div style="text-align: center; margin-bottom: 0px; margin-top: 30px">
+                <span style="text-align: center; font-size: 30px; font-weight: bold">Presentations Created By Me</span>
             </div>
             <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
-            <el-row>
-                <el-col span="7" v-for="presentation in presentations"
-                        :key="presentation.id" class="text-item" style="margin-bottom: 80px; padding-left: 0px">
-                    <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
-                        <el-card :body-style="{ padding: '0px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
-                            <img src="../assets/test3.png" class="image">
-                                <div class="text">
-                                    <span>{{presentation.name}}</span>
-                                </div>
-                        </el-card>
-                    </el-menu-item>
-                </el-col>
-            </el-row>
+                <div class="container">
+                    <div class="row" >
+                        <div class = "column"  v-for="presentation in presentations"
+                                :key="presentation.id">
+                            <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
+                                <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
+                                    <img src="../assets/test3.png" class="image">
+                                    <div class="text">
+                                        <span>{{presentation.name}}</span>
+                                    </div>
+                                </el-card>
+                            </el-menu-item>
+                        </div>
+                    </div>
+                </div>
             </el-menu>
         </el-main>
     </el-container>
@@ -68,6 +70,25 @@
         font-size: 20px;
         padding-left: 25px;
         text-after-overflow: ellipsis;
+    }
+
+    .container {
+        margin: 0px;
+        display: flex;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        padding-left: 20px;
+        margin-bottom: 25px;
     }
 
     .image{
