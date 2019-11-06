@@ -80,12 +80,6 @@ export default {
             state.fileRecord = payload;
         },
 
-        // resetFileRecordState() {
-        // },
-
-        // setFileRecordField(state, {field, value}) {
-        //     state.FileRecord[field] = value
-        // },
 
     },
 
