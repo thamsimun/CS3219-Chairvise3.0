@@ -13,8 +13,6 @@
       </div>
     </el-container>
   </el-container>
-
-
 </template>
 
 <script>
@@ -56,6 +54,7 @@
   .parent {
     text-align: center;
     width: 100%;
+    height: 100%;
   }
 
   .presentationCreatedByMe {
