@@ -13,7 +13,10 @@
         <td>test2</td>
         <td>description2</td>
       </tr>
-
+      <tr v-for='template in templates'>
+        <td> {{ template.templateId }} </td>
+        <td> test description </td>
+      </tr>
     </table>
   </div>
 </template>

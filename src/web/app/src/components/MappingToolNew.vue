@@ -95,6 +95,9 @@
           this.$store.commit('setMappingError', 'Please ensure all transformations are selected!');
           return;
         }
+
+        this.createTemplate();
+
         // Iterate through each row, combine row and mappingList
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
@@ -105,6 +108,14 @@
         if (this.errors.length === 0) {
           this.$store.dispatch('persistData');
         }
+      },
+
+      createTemplate() {
+        const template = {
+          transformations: _.cloneDeep(this.transformations),
+          mappingList: _.cloneDeep(this.mappingList)
+        };
+        this.$store.dispatch('saveFileTemplate', template);
       },
 
       addToSelected(field) {

@@ -78,7 +78,7 @@
         return this.$store.state.dataMappingNew.data.rawData.length === 0;
       },
       templateNotSelected() {
-        return _.isEmpty(this.$store.state.dataMappingNew.data.template);
+        return _.isEmpty(this.$store.state.fileTemplates.chosenTemplate);
       },
       hasHeader: {
         get() {
