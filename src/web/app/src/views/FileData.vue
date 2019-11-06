@@ -2,15 +2,15 @@
     <el-alert v-if="!isLogin" title="Please login to view files added" type="error" show-icon
               class="errorMsg"/>
     <el-container v-else-if="isLogin">
-        <el-aside class="sidebar" width="250px">
-            <DataSideBar/>
-        </el-aside>
         <el-container>
-            <div class="parent">
-                <el-col class="fileRecords">
-                    <FileRecords/>
-                </el-col>
-            </div>
+            <el-aside class="sidebar" width="250px">
+                <DataSideBar/>
+            </el-aside>
+        </el-container>
+        <el-container>
+            <el-col class="fileRecords">
+                <FileRecords/>
+            </el-col>
         </el-container>
     </el-container>
 </template>
@@ -50,12 +50,7 @@
     }
 
     .fileRecords {
-        display: inline-block;
-        padding-left: 0px;
-    }
-
-    .parent {
-        text-align: center;
-        width: 100%
+        padding-left: 150px;
+        margin-top: 25px;
     }
 </style>

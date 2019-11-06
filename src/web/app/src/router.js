@@ -88,14 +88,6 @@ export default new Router({
       component: () => import(/*webpackChunkName: "presentationData" */ './views/PresentationCreated.vue')
     },
     {
-      path: '/PresentationShared',
-      name: 'PresentationShared',
-      meta: {
-        title: 'Presentation Shared Page'
-      },
-      component: () => import(/*webpackChunkName: "presentationShared" */ './views/PresentationShared.vue')
-    },
-    {
       path: '/userHome',
       name: 'userHome',
       meta: {

@@ -12,7 +12,7 @@
                         <i class="el-icon-edit"></i>
                         <span slot="title">Created By Me</span>
                     </el-menu-item>
-                    <el-menu-item :index="'/presentationShared'">
+                    <el-menu-item :index="'/presentationCreated'">
                         <i class="el-icon-s-custom"></i>
                         <span slot="title">Shared With Me</span>
                     </el-menu-item>
