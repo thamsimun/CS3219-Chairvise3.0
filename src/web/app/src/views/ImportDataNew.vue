@@ -56,6 +56,7 @@
   import SelectTemplateTable from '../components/SelectTemplateTable';
   import Papa from 'papaparse';
   import DataSideBar from "@/components/DataSideBar.vue";
+  import dataMappingNew from "../store/modules/dataMappingNew";
 
   export default {
     name: "ImportDataNew",
@@ -94,7 +95,9 @@
     methods: {
       fileUploadHandler(file) {
         this.$store.commit('setPageLoadingStatus', true);
-        // Parse the raw data
+        // If there is header, papaparse with headers
+        // if (this.$store.state.dataMappingNew.data.hasHeader) {
+          // Parse the raw data
         Papa.parse(file.raw, {
           skipEmptyLines: true,
           header: true, // we take it as there are headers present for now
@@ -106,6 +109,21 @@
             this.$store.commit('setPageLoadingStatus', false);
           }
         })
+        // } else {
+        //   // Parse the raw data
+        //   Papa.parse(file.raw, {
+        //     skipEmptyLines: true,
+        //     header: false, // we take it as there are headers present for now
+        //     complete: result => {
+        //       this.$store.commit('setPool', result.meta.fields);  // Set the headers obtained to Pool
+        //       this.$store.commit('setRawData', result.data);
+        //       // Data is stored as {Col1: data" , Col2: data} objects that represent row
+        //       this.$store.commit('setFileName', file.name);       //  Set the file name
+        //       this.$store.commit('setPageLoadingStatus', false);
+        //     }
+        //   })
+        // }
+
       },
       clearSelectedSchema() {
         this.$store.commit('setDbSchema', {name: '', fieldMetaDataList: []});
