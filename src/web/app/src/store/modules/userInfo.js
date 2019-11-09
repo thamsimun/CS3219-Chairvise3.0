@@ -5,6 +5,8 @@ import {sha256} from "js-sha256";
 
 export default {
   state: {
+    isSignUpFailed: false,
+    isInvalidUserOrPass: false,
     isApiError: false,
     apiErrorMsg: '',
     isLogin: false,
@@ -12,10 +14,10 @@ export default {
     logoutUrl: '',
     userEmail: '',
     userId: '',
-    hashedPassword: '',
     registerForm: {
       userEmail: '',
       userPassword: '',
+      hashedPassword: '',
     },
     registerFormStatus: {
       isLoading: false,
@@ -29,18 +31,32 @@ export default {
   },
 
   mutations: {
+    clearSignUpFailure(state) {
+      state.isSignUpFailed = false;
+    },
+
+    setSignUpFailed(state) {
+      state.registerForm.userPassword = '';
+      state.registerForm.userEmail = '';
+      state.isSignUpFailed = true;
+    },
+
+    clearInvalidCredentials(state) {
+      state.isInvalidUserOrPass = false;
+    },
+
     hashPassword(state) {
       if (state.registerForm.userPassword === '') {
         return;
       }
-      sha256(state.registerForm.userPassword);
       var hash = sha256.create();
-      state.hashedPassword = hash.toString();
+      hash.update(state.registerForm.userPassword);
+      state.registerForm.hashedPassword = hash.hex();
     },
 
     setCookies(state) {
       VueCookies.set('userEmail', state.registerForm.userEmail, '1d', "/");
-      VueCookies.set('userPassword', state.hashedPassword, '1d', "/");
+      VueCookies.set('userPassword', state.registerForm.hashedPassword, '1d', "/");
     },
 
     clearCookies() {
@@ -63,6 +79,12 @@ export default {
         state.userNickname = payload.userInfo.userPassword;
         state.userId = payload.userInfo.userId;
       }
+    },
+
+    invalidCredentialResult(state) {
+      state.registerForm.userPassword = '';
+      state.registerForm.userEmail = '';
+      state.isInvalidUserOrPass = true;
     },
 
     // setRegisterFormApiError(state, msg) {
@@ -113,17 +135,32 @@ export default {
     },
     async addUser({commit, state}) {
       commit('setPageLoadingStatus', true);
+      const urlToGetBack = encodeURI(window.location.href);
       // TODO: hook up URL with the backend
-      axios.post('/api/auth')
+      axios.post('/api/auth?redirectUrl=' + urlToGetBack)
           .then(response => {
             commit('setAuthInfo', response.data)
           })
           .catch(e => {
-            commit('setAuthInfoApiRequestFail', e.toString());
+            commit('setSignUpFailed');
           })
           .finally(() => {
             commit('setPageLoadingStatus', false)
           })
-    }
+    },
+    async logUser({commit}) {
+      commit('setPageLoadingStatus', true);
+      const urlToGetBack = encodeURI(window.location.href);
+      axios.get('/api/auth?redirectUrl=' + urlToGetBack)
+          .then(response => {
+            commit('setAuthInfo', response.data)
+          })
+          .catch(e => {
+            commit('invalidCredentialResult');
+          })
+          .finally(() => {
+            commit('setPageLoadingStatus', false)
+          })
+    },
   }
 };
