@@ -1,52 +1,48 @@
 <template>
   <el-container>
-    <el-container>
-      <el-aside class="sidebar" width="250px">
-        <DataSideBar/>
-      </el-aside>
-    </el-container>
-    <el-container>
-      <el-col>
-        <div class='wrapper'>
+    <el-aside style="width:20%; height:auto; margin-top:1px">
+      <DataSideBar/>
+    </el-aside>
+    <div class="container">
+        <el-col style="padding:10px">
+          <div class='wrapper'>
+            <div v-if='schemaNotSelected'>
+              <h1 class="head">Upload new file</h1>
+              <h1>Select your record type:</h1>
+              <SelectDbSchema></SelectDbSchema>
+            </div>
+            <div v-else-if='fileNotUploaded'>
+              <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
+              <h1>Please upload your file:</h1>
+              <p> Does your file have headers? </p>
+              <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
+              ></el-switch>
+              <br><br>
+              <el-upload drag action=''
+                         :auto-upload='false'
+                         :show-file-list='false'
+                         :multiple='false'
+                         :on-change='fileUploadHandler'>
+                <i class='el-icon-upload'></i>
+                <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
+                <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
+              </el-upload>
+            </div>
 
-          <div v-if='schemaNotSelected'>
-            <h1>Select your record type:</h1>
-            <SelectDbSchema></SelectDbSchema>
+            <div v-else-if='templateNotSelected'>
+              <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
+              <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+              <h1>Choose a template:</h1>
+              <SelectTemplateTable></SelectTemplateTable>
+            </div>
+
+            <div v-else>
+              <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
+              <mapping-tool-new ref='mapTool'></mapping-tool-new>
+            </div>
           </div>
-
-          <div v-else-if='fileNotUploaded'>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
-            <h1>Please upload your file:</h1>
-            <p> Does your file have headers? </p>
-            <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
-            ></el-switch>
-            <br><br>
-            <el-upload drag action=''
-                       :auto-upload='false'
-                       :show-file-list='false'
-                       :multiple='false'
-                       :on-change='fileUploadHandler'>
-              <i class='el-icon-upload'></i>
-              <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
-              <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
-            </el-upload>
-          </div>
-
-          <div v-else-if='templateNotSelected'>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
-            <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
-            <h1>Choose a template:</h1>
-            <SelectTemplateTable></SelectTemplateTable>
-          </div>
-
-          <div v-else>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
-            <mapping-tool-new ref='mapTool'></mapping-tool-new>
-          </div>
-
-        </div>
-      </el-col>
-    </el-container>
+        </el-col>
+    </div>
   </el-container>
 </template>
 
@@ -56,7 +52,7 @@
   import SelectTemplateTable from '../components/SelectTemplateTable';
   import Papa from 'papaparse';
   import DataSideBar from "@/components/DataSideBar.vue";
-  import dataMappingNew from "../store/modules/dataMappingNew";
+  // import dataMappingNew from "../store/modules/dataMappingNew";
 
   export default {
     name: "ImportDataNew",
@@ -149,12 +145,22 @@
 </script>
 
 <style scoped>
+  .container{
+    width: 100%;
+  }
+
+  .head{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
   .wrapper {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 210px;
+
   }
 
   h1 {
