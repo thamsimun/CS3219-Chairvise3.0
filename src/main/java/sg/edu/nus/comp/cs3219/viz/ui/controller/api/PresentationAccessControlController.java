@@ -3,6 +3,7 @@ package sg.edu.nus.comp.cs3219.viz.ui.controller.api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.AccessLevel;
+import sg.edu.nus.comp.cs3219.viz.common.datatransfer.PresentationData;
 import sg.edu.nus.comp.cs3219.viz.common.entity.Presentation;
 import sg.edu.nus.comp.cs3219.viz.common.entity.PresentationAccessControl;
 import sg.edu.nus.comp.cs3219.viz.common.exception.PresentationAccessControlNotFoundException;
@@ -11,8 +12,10 @@ import sg.edu.nus.comp.cs3219.viz.logic.GateKeeper;
 import sg.edu.nus.comp.cs3219.viz.logic.PresentationAccessControlLogic;
 import sg.edu.nus.comp.cs3219.viz.logic.PresentationLogic;
 
+import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +44,32 @@ public class PresentationAccessControlController extends BaseRestController {
 
         return presentationAccessControlLogic.findAllByPresentation(presentation);
     }
-
+/*
     @GetMapping("/presentations/shared")
     public List<Long> sharedPresentations(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
         String userIdentifier = gateKeeper.verifyLoginAccess(email, password).getUserEmail();
         List<PresentationAccessControl> accessControls = presentationAccessControlLogic
             .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
         return accessControls.stream().map(PresentationAccessControl::getId).collect(Collectors.toList());
+    }*/
+
+    @GetMapping("/presentations/shared")
+    public List<PresentationData> sharedPresentations() {
+        String userIdentifier = gateKeeper.verifyLoginAccess().getUserEmail();
+        List<PresentationAccessControl> accessControls = presentationAccessControlLogic
+                .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
+
+        List<PresentationData> presentationList = new ArrayList<>();
+
+        accessControls.stream()
+                .map(PresentationAccessControl::getPresentation)
+                .map(Presentation::getId)
+                .forEach(x -> {
+                    Presentation p = presentationLogic.findById(x).orElseThrow(EntityNotFoundException::new);
+                    PresentationData data = presentationLogic.getPresentationData(p);
+                    presentationList.add(data);
+                });
+        return presentationList;
     }
 
     @PostMapping("/presentations/{presentationId}/accessControl")

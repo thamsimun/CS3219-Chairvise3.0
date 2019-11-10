@@ -3,9 +3,11 @@ import axios from 'axios';
 
 export default {
   state: {
+
     hasDbSchemaSet: false,
     hasFileUploaded: false,
     hasChosenTemplate: false,
+    hasHeader: false,
     data: {
       dbSchemaName: '',
       fieldMetaData: [],
@@ -22,6 +24,9 @@ export default {
   },
 
   mutations: {
+    setHasHeader(state, payload) {
+      state.hasHeader = payload;
+    },
     setDbSchema(state, {name, fieldMetaDataList}) {
       state.data.dbSchemaName = name;
       state.data.fieldMetaData = fieldMetaDataList;
