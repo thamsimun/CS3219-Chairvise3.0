@@ -133,7 +133,7 @@ export default {
           commit('setPageLoadingStatus', false)
         })
     },
-    async addUser({commit, state}) {
+    async addUser({commit}) {
       commit('setPageLoadingStatus', true);
       const urlToGetBack = encodeURI(window.location.href);
       // TODO: hook up URL with the backend
@@ -141,7 +141,7 @@ export default {
           .then(response => {
             commit('setAuthInfo', response.data)
           })
-          .catch(e => {
+          .catch(() => {
             commit('setSignUpFailed');
           })
           .finally(() => {
@@ -155,7 +155,7 @@ export default {
           .then(response => {
             commit('setAuthInfo', response.data)
           })
-          .catch(e => {
+          .catch(() => {
             commit('invalidCredentialResult');
           })
           .finally(() => {
