@@ -34,13 +34,13 @@
       </el-button>
       <el-button type="primary" @click="changeEditMode(true)" v-if="!isInEditMode && isPresentationEditable">Edit
       </el-button>
-      <el-row>
+      <div class="container">
           <div class="row">
               <div class="column" v-for="file in fileInfoList" :key="file.fileNumber">
-                <el-checkbox-button type="primary" @change="addToFileMappings(file)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-checkbox-button>
+                <el-checkbox-button type="info" @change="addToFileMappings(file)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-checkbox-button>
               </div>
           </div>
-      </el-row>
+      </div>
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
       <el-button type="info" @click="changeEditMode(false)" v-if="isInEditMode && !isNewPresentation">Cancel</el-button>
       <el-button type="danger" v-if="!isNewPresentation && isLogin && isPresentationEditable"
@@ -305,4 +305,7 @@
       padding-right: 20px;
       margin-bottom: 25px;
   }
+
+
+
 </style>
