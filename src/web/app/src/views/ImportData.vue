@@ -147,9 +147,9 @@
           // ignoring empty lines in csv file
           skipEmptyLines: true,
           complete: function (result) {
-            var res = result;
+            var res = result;     // Result
             var fileName = [file.name];
-            var res2 = fileName.concat(res.data);
+            var res2 = fileName.concat(res.data);   // [ file.name, res.data]
             /* eslint-disable no-console */
             console.log(res2);
             //console.log((res.data)[0]);
@@ -186,8 +186,10 @@
                 res2 = authorres;
                 //console.log(authorres)
               }
-              //author anonymization - Both formats
+
+              //BOTH author anonymisation
               var convertstring = require("convert-string");
+              // Iterate through res.data
               for (var m = 1; m < res2.length; m++) {
                 var conv1 = convertstring.stringToBytes(res2[m][1]);
                 var conv2 = convertstring.stringToBytes(res2[m][2]);
@@ -232,8 +234,10 @@
               if (this.$store.state.dataMapping.data.formatType == "1") {
                 var convert_string = require("convert-string");
                 for (var index = 1; index < res2.length; index++) {
+                  // Convert the entire author list to byte array
                   var convert = convert_string.stringToBytes(res2[index][3]);
                   var name = "";
+                  // For each element in author list (bytes), + 18 to value and concat to name
                   for (var idx = 0; idx < convert.length; idx++) {
                     name = name.concat(String(convert[idx] + 18));
                   }
@@ -243,7 +247,7 @@
               //console.log(res2);
             }
 
-            //ACL submission file processing
+            //SUBMISSION file processing
             if (this.$store.state.dataMapping.data.tableType == "2") { // submission
               if (this.$store.state.dataMapping.data.formatType == "2") { // soft conf
                 var submissionres = [];
@@ -257,7 +261,7 @@
                   } else {
                     y[6] = "accept";
                   }
-                  //console.log(x);
+                  console.log(x);
                   element = [y[0], "", y[4], y[2], y[3], dt, dt, "", y[13], y[6], "", "", y[9]]; //rest looks fine
                   submissionres.push(element);
                 }
