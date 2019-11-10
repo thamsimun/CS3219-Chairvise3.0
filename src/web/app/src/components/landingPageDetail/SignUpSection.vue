@@ -16,8 +16,27 @@
         </el-form-item>
       </el-form>
       <div>
+        <el-button round id="login_button" @click="loginUser()"> Login </el-button>
         <el-button round id="register_button" @click="registerUser()"> Register</el-button>
       </div>
+      <el-dialog
+              title="Failure"
+              :visible.sync="isInvalidCredentials"
+              width="30%" center>
+        <span>Unable to login! Please ensure your username and password are correct!</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button type="primary" v-on:click="closeInvalidCredentials">Okay</el-button>
+      </span>
+      </el-dialog>
+      <el-dialog
+              title="Failure"
+              :visible.sync="isSignUpFailed"
+              width="30%" center>
+        <span>Unable to sign up! Username has been taken!</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button type="primary" v-on:click="closeInvalidSignUp">Okay</el-button>
+      </span>
+      </el-dialog>
     </div>
     <div class="register" v-if="isLogin">
       <h1>Hello, {{this.$store.state.userInfo.userEmail}}</h1>
@@ -38,8 +57,15 @@
         },
       };
     },
-
     computed: {
+      isSignUpFailed: function () {
+        return this.$store.state.userInfo.isSignUpFailed;
+      },
+
+      isInvalidCredentials: function () {
+        return this.$store.state.userInfo.isInvalidUserOrPass;
+      },
+
       isLogin() {
         return this.$store.state.userInfo.isLogin
       },
@@ -52,11 +78,11 @@
 
       registerFormEmail: {
         get() {
-          return this.$store.state.userInfo.registerForm.email
+          return this.$store.state.userInfo.registerForm.userEmail
         },
         set(value) {
           this.$store.commit('setRegisterFormField', {
-            field: 'email',
+            field: 'userEmail',
             value
           })
         },
@@ -64,18 +90,28 @@
 
       registerFormPassword: {
         get() {
-          return this.$store.state.userInfo.registerForm.password
+          return this.$store.state.userInfo.registerForm.userPassword
         },
         set(value) {
           this.$store.commit('setRegisterFormField', {
-            field: 'password',
+            field: 'userPassword',
             value
           })
         },
       },
     },
 
+    mounted() {
+      this.$store.dispatch('setCookies');
+    },
+
     methods: {
+      closeInvalidSignUp: function () {
+        this.$store.commit('clearSignUpFailure');
+      },
+      closeInvalidCredentials: function() {
+        this.$store.commit('clearInvalidCredentials');
+      },
       registerUser() {
         this.$refs['registerForm'].validate((valid) => {
           // If invalid form
@@ -85,12 +121,35 @@
           this.$refs['registerForm'].clearValidate();
           // If not logged in
           if (!this.isLogin) {
+            this.$store.dispatch('setCookies');
             this.$store.dispatch('addUser')
                 .then(() => {
                   if (this.isError) {
                     return
                   }
                 })
+          } else {
+            this.$store.dispatch('setAuthInfoApiRequestFail', "You are currently logged in.")
+          }
+        })
+      },
+
+      loginUser() {
+        this.$refs['registerForm'].validate((valid) => {
+          // If invalid form
+          if (!valid) {
+            return
+          }
+          this.$refs['registerForm'].clearValidate();
+          // If not logged in
+          if (!this.isLogin) {
+            this.$store.dispatch('setCookies');
+            this.$store.dispatch('logUser')
+                    .then(() => {
+                      if (this.isError) {
+                        return
+                      }
+                    })
           } else {
             this.$store.dispatch('setAuthInfoApiRequestFail', "You are currently logged in.")
           }

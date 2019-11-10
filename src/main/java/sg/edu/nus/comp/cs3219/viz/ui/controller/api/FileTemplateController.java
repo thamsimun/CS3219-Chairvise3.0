@@ -21,21 +21,25 @@ public class FileTemplateController extends BaseRestController {
     }
 
     @PostMapping("/file/mapping")
-    public TemplateMappingList importTemplateMapping(@RequestBody TemplateMappingList templateMappingList) {
-        UserInfo user = gateKeeper.verifyLoginAccess();
+    public TemplateMappingList importTemplateMapping(@RequestBody TemplateMappingList templateMappingList,
+                                                     @CookieValue(value = "userEmail") String email,
+                                                     @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         fileTemplateLogic.saveTemplate(templateMappingList, user.getUserId());
         return templateMappingList;
     }
 
     @GetMapping("/file/mapping")
-    public List<FileTemplateData> getTemplateMapping() {
-        UserInfo user = gateKeeper.verifyLoginAccess();
+    public List<FileTemplateData> getTemplateMapping(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileTemplateLogic.getTemplatesForUser(user.getUserId());
     }
 
     @DeleteMapping("/file/mapping")
-    public List<FileTemplateData> deleteTemplateMapping(long templateId) {
-        UserInfo user = gateKeeper.verifyLoginAccess();
+    public List<FileTemplateData> deleteTemplateMapping(long templateId,
+                                                        @CookieValue(value = "userEmail") String email,
+                                                        @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileTemplateLogic.deleteTemplateForUser(templateId, user.getUserId());
     }
 

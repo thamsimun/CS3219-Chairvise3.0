@@ -8,7 +8,7 @@
                 <div class="row" >
                     <div class = "column"  v-for="file in fileListInfo"
                          :key="file.fileNumber">
-                        <el-card :body-style="{ padding: '40px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
+                        <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
                             <img src="../assets/csvicon.png" class="image">
                             <div class="text">
                                 <span>{{file.fileName}}</span>
