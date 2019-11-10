@@ -18,6 +18,27 @@
         <td> test description </td>
       </tr>
     </table>
+
+    <el-table
+      highlight-current-row
+      @current-change='handleCurrentChange'
+      style='width:100%;'
+      :data='templates'>
+      <el-table-column
+        type="index"
+        width="50">
+      </el-table-column>
+      <el-table-column
+        property="Name"
+        label="Name"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        property="Description"
+        label="Description"
+        width="120">
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -27,6 +48,11 @@
     mounted() {
       this.$store.dispatch('fetchFileTemplates');
     },
+    data() {
+      return {
+        selectedRow: null
+      }
+    },
     computed: {
       templates() {
         return this.$store.state.fileTemplates.templates;
@@ -35,6 +61,9 @@
     methods: {
       select(template) {
         this.$store.commit('selectTemplate', template);
+      },
+      handleCurrentChange(val) {
+        this.selectedRow = val;
       }
     }
   }
