@@ -59,11 +59,13 @@
 
   export default {
     name: "ImportDataNew",
+
     data: function () {
       return {
         headerMode: false,
         pool: [],
-        selected: []
+        selected: [],
+        useNoTemplate: false
       }
     },
 
@@ -78,7 +80,7 @@
         return this.$store.state.dataMappingNew.data.rawData.length === 0;
       },
       templateNotSelected() {
-        return _.isEmpty(this.$store.state.fileTemplates.chosenTemplate);
+        return !this.$data.useNoTemplate && _.isEmpty(this.$store.state.fileTemplates.chosenTemplate);
       },
       hasHeader: {
         get() {
@@ -113,12 +115,10 @@
         this.$store.commit('setRawData', []);
       },
       skipTemplate() {
-        this.$store.commit('selectTemplate', {
-          transformations: [],
-          mappingList: []
-        })
+        this.$data.useNoTemplate = true;
       },
       clearTemplate() {
+        this.$data.useNoTemplate = false;
         this.$store.commit('selectTemplate', null);
       }
     },

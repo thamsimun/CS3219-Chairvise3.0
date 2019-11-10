@@ -1,33 +1,10 @@
 <template>
-  <div style='width: 100%'>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td>test</td>
-        <td>description</td>
-      </tr>
-      <tr>
-        <td>test2</td>
-        <td>description2</td>
-      </tr>
-      <tr v-for='template in templates'>
-        <td> {{ template.templateId }} </td>
-        <td> test description </td>
-      </tr>
-    </table>
-
+  <div style='width:100%;text-align:center;'>
     <el-table
       highlight-current-row
-      @current-change='handleCurrentChange'
-      style='width:100%;'
+      @current-change='select'
+      style='width:50%;margin:auto;'
       :data='templates'>
-      <el-table-column
-        type="index"
-        width="50">
-      </el-table-column>
       <el-table-column
         property="Name"
         label="Name"
@@ -35,8 +12,7 @@
       </el-table-column>
       <el-table-column
         property="Description"
-        label="Description"
-        width="120">
+        label="Description">
       </el-table-column>
     </el-table>
   </div>
@@ -47,6 +23,7 @@
     name: "SelectTemplateTable",
     mounted() {
       this.$store.dispatch('fetchFileTemplates');
+      console.log(this.$store.state.fileTemplates.templates);
     },
     data() {
       return {
@@ -55,41 +32,22 @@
     },
     computed: {
       templates() {
-        return this.$store.state.fileTemplates.templates;
+        return this.$store.state.fileTemplates.templates.map(template => {
+          return {
+            Name: template.templateId,
+            Description: 'description here..',
+            ...template.templateMappingList
+          };
+        });
       }
     },
     methods: {
       select(template) {
         this.$store.commit('selectTemplate', template);
-      },
-      handleCurrentChange(val) {
-        this.selectedRow = val;
       }
     }
   }
 </script>
 
 <style scoped>
-  .template-container {
-    display: inline-block;
-    width: 1000px;
-    height: 480px;
-    border-style: solid;
-    border-width: 10px;
-    border-color: gold;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  table, th, td {
-    border: 1px solid black;
-  }
-
-  th, td {
-    padding: 15px;
-    text-align: left;
-  }
 </style>

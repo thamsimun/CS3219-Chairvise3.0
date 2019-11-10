@@ -32,7 +32,6 @@ export default {
       commit('setTemplatesLoading', true);
       try {
         const response = await axios.get('/api/file/mapping');
-        console.log(response);
         const templates = response.data;
         commit('setTemplates', templates);
       } catch (e) {
