@@ -35,9 +35,11 @@
       <el-button type="primary" @click="changeEditMode(true)" v-if="!isInEditMode && isPresentationEditable">Edit
       </el-button>
       <el-row>
-      <div v-for="file in fileInfoList" :key="file.fileNumber">
-        <el-button type="primary" v-on:click="addToFileMappings(file)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-button>
-      </div>
+          <div class="row">
+              <div class="column" v-for="file in fileInfoList" :key="file.fileNumber">
+                <el-checkbox-button type="primary" @change="addToFileMappings(file)" v-if="isNewPresentation && isLogin">{{file.fileName}}</el-checkbox-button>
+              </div>
+          </div>
       </el-row>
       <el-button type="primary" @click="addPresentation()" v-if="isInEditMode">Save</el-button>
       <el-button type="info" @click="changeEditMode(false)" v-if="isInEditMode && !isNewPresentation">Cancel</el-button>
@@ -268,9 +270,10 @@
 
       addToFileMappings(value) {
         if (this.$store.state.presentation.presentationForm.fileMappings.includes(value)) {
-          return;
+          this.$store.commit('removeFromPresentationFormFileMappings', value);
+        } else{
+            this.$store.commit('appendToPresentationFormFileMappings', value);
         }
-          this.$store.commit('appendToPresentationFormFileMappings', value);
       }
     },
 
@@ -287,5 +290,19 @@
 
   .errorMsg {
     margin-bottom: 18px;
+  }
+
+  .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+  }
+
+  .column {
+      display: flex;
+      flex-direction: column;
+      padding-right: 20px;
+      margin-bottom: 25px;
   }
 </style>
