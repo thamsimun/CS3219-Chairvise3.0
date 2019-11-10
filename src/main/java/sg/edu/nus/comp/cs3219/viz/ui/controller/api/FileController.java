@@ -31,7 +31,7 @@ public class FileController extends BaseRestController {
     }
 
     @GetMapping("/file")
-    public List<FileInfo> getFileRecords(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userNickname") String password) {
+    public List<FileInfo> getFileRecords(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
         UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileLogic.retrieveFileRecordsUsingUserId(user.getUserId());
     }
@@ -40,7 +40,7 @@ public class FileController extends BaseRestController {
     @PostMapping("/file")
     public List<FileInfo> deleteFileRecord(@RequestBody FileInfo fileInfo,
                                            @CookieValue(value = "userEmail") String email,
-                                           @CookieValue(value = "userNickname") String password) throws ForeignKeyViolationException {
+                                           @CookieValue(value = "userPassword") String password) throws ForeignKeyViolationException {
         UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         if (presentationLogic.checkIfPresentationContainsFileNumber(fileInfo.getFileNumber(), user.getUserId())) {
             throw new ForeignKeyViolationException("file_record", "presentation");

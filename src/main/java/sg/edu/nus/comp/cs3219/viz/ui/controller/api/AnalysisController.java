@@ -36,11 +36,11 @@ public class AnalysisController extends BaseRestController {
     @PostMapping("/presentations/{id}/analysis")
     public List<Map<String, Object>> analysis(@PathVariable Long id, @Valid @RequestBody AnalysisRequest analysisRequest,
                                               @CookieValue(value = "userEmail") String email,
-                                              @CookieValue(value = "userNickname") String nickname) {
+                                              @CookieValue(value = "userPassword") String password) {
         // verify access level
         Presentation presentation = presentationLogic.findById(id)
                 .orElseThrow(() -> new PresentationNotFoundException(id));
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, nickname);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, password);
 
         analysisRequest.setMappings(presentation.getFileMappings());
 

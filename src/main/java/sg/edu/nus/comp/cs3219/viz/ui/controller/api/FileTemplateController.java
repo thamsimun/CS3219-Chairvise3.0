@@ -23,23 +23,23 @@ public class FileTemplateController extends BaseRestController {
     @PostMapping("/file/mapping")
     public TemplateMappingList importTemplateMapping(@RequestBody TemplateMappingList templateMappingList,
                                                      @CookieValue(value = "userEmail") String email,
-                                                     @CookieValue(value = "userNickname") String nickname) {
-        UserInfo user = gateKeeper.verifyLoginAccess(email, nickname);
+                                                     @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         fileTemplateLogic.saveTemplate(templateMappingList, user.getUserId());
         return templateMappingList;
     }
 
     @GetMapping("/file/mapping")
-    public List<FileTemplateData> getTemplateMapping(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userNickname") String nickname) {
-        UserInfo user = gateKeeper.verifyLoginAccess(email, nickname);
+    public List<FileTemplateData> getTemplateMapping(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileTemplateLogic.getTemplatesForUser(user.getUserId());
     }
 
     @DeleteMapping("/file/mapping")
     public List<FileTemplateData> deleteTemplateMapping(long templateId,
                                                         @CookieValue(value = "userEmail") String email,
-                                                        @CookieValue(value = "userNickname") String nickname) {
-        UserInfo user = gateKeeper.verifyLoginAccess(email, nickname);
+                                                        @CookieValue(value = "userPassword") String password) {
+        UserInfo user = gateKeeper.verifyLoginAccess(email, password);
         return fileTemplateLogic.deleteTemplateForUser(templateId, user.getUserId());
     }
 

@@ -54,8 +54,8 @@ public class PresentationAccessControlController extends BaseRestController {
     }*/
 
     @GetMapping("/presentations/shared")
-    public List<PresentationData> sharedPresentations() {
-        String userIdentifier = gateKeeper.verifyLoginAccess().getUserEmail();
+    public List<PresentationData> sharedPresentations(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        String userIdentifier = gateKeeper.verifyLoginAccess(email, password).getUserEmail();
         List<PresentationAccessControl> accessControls = presentationAccessControlLogic
                 .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
 

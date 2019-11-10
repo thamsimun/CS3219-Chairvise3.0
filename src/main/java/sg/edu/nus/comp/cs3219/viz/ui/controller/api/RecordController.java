@@ -37,9 +37,9 @@ public class RecordController extends BaseRestController {
     @PostMapping(value = "/record/author", consumes = "application/json")
     public ResponseEntity<?> importAuthorRecord(@RequestBody FileWithAuthorRecordData fileWithAuthorData,
                                                 @CookieValue(value = "userEmail") String email,
-                                                @CookieValue(value = "userNickname") String nickname) throws URISyntaxException {
+                                                @CookieValue(value = "userPassword") String password) throws URISyntaxException {
 
-        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, nickname);
+        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, password);
         List<AuthorRecord> authorRecordList = fileWithAuthorData.records;
         String fileName = getFileNameIfExist(fileWithAuthorData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_AUTHOR);
@@ -52,9 +52,9 @@ public class RecordController extends BaseRestController {
     @PostMapping(value = "/record/review", consumes = "application/json")
     public ResponseEntity<?> importReviewRecord(@RequestBody FileWithReviewRecordData fileWithReviewRecordData,
                                                 @CookieValue(value = "userEmail") String email,
-                                                @CookieValue(value = "userNickname") String nickname) throws URISyntaxException {
+                                                @CookieValue(value = "userPassword") String password) throws URISyntaxException {
 
-        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, nickname);
+        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, password);
         List<ReviewRecord> reviewRecordList = fileWithReviewRecordData.records;
         String fileName = getFileNameIfExist(fileWithReviewRecordData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_REVIEW);
@@ -68,9 +68,9 @@ public class RecordController extends BaseRestController {
     public ResponseEntity<?> importSubmissionRecord(
             @RequestBody FileWithSubmissionRecordData fileWithSubmissionRecordData,
             @CookieValue(value = "userEmail") String email,
-            @CookieValue(value = "userNickname") String nickname) throws URISyntaxException {
+            @CookieValue(value = "userPassword") String password) throws URISyntaxException {
 
-        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, nickname);
+        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, password);
         List<SubmissionRecord> submissionRecordList = fileWithSubmissionRecordData.records;
         String fileName = getFileNameIfExist(fileWithSubmissionRecordData.fileName);
         FileRecord fileRecord = this.fileLogic.createAndSaveFileRecord(userInfo.getUserId(), fileName, FILE_TYPE_SUBMISSION);
