@@ -4,14 +4,14 @@
       <h1>Create an account</h1>
       <h4>It's quick and easy!</h4>
 
-      <el-form ref="registerForm" :model="registerForm">
-        <el-form-item label="Email">
+      <el-form ref="registerForm" :model="registerForm" :rules="rules">
+        <el-form-item label="Email" prop="email">
           <el-input v-model="registerFormEmail"/>
         </el-form-item>
         <!--                <el-form-item label="Username">-->
         <!--                    <el-input v-model="formLabelAlign.region"></el-input>-->
         <!--                </el-form-item>-->
-        <el-form-item label="Password">
+        <el-form-item label="Password" prop="password">
           <el-input v-model="registerFormPassword"/>
         </el-form-item>
       </el-form>
@@ -50,10 +50,16 @@
     name: "SignUpSection",
     data() {
       return {
-        formLabelAlign: {
-          name: '',
-          region: '',
-          type: ''
+        rules: {
+          email: [
+            {required: true, message: 'Please enter email', trigger: 'blur'},
+            {pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+            message: 'Please enter valid email', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: 'Please enter password', trigger: 'blur'},
+            {min: 6, message: 'The password length should be more than 6 character'}
+          ]
         },
       };
     },
@@ -119,6 +125,12 @@
             return
           }
           this.$refs['registerForm'].clearValidate();
+
+          if (!this.registerFormEmail) {
+            this.emptyEmail = true;
+          } else if (!this.reg.test(this.registerFormEmail)) {
+            this.validEmail = false;
+          }
           // If not logged in
           if (!this.isLogin) {
             this.$store.dispatch('setCookies');
@@ -166,7 +178,8 @@
 
       apiErrorMsg() {
         return this.$store.state.presentation.presentationFormStatus.apiErrorMsg
-      }
+      },
+
     }
 
   }

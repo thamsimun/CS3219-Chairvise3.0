@@ -410,7 +410,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Paper Author in Full Papers',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the top accepted papers in the Full Papers track. This tells us the ranking of the authors in each individual track. Users can use the filter function to change to different tracks to view the top accepted authors in that track.',
       selections: [
         {
@@ -469,7 +469,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Acceptance Rate Rank Paper Author',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the percentage of acceptance rate of each author\'s papers in descending order. This tells us which authors has higher acceptance rate than other authors. We have split the authors field in each submission into individual authors and calculate the acceptance rate for each author.',
       selections: [
         {
@@ -539,7 +539,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Accepted Rank Paper Author',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of accepted papers submitted by each author in descending order. This tells us which authors has more accepted papers than other authors. We have split the authors field in each submission into individual authors and aggregate the accepted submissions for each author.',
       selections: [
         {
@@ -608,7 +608,7 @@ export default {
     data: {
       type: 'pie_chart',
       title: 'Submission Rank Country',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the percentage and number of papers submitted from each country. This tells us which country has more submissions than other countries. We have included others to account for all countries involved.',
       selections: [
         {
@@ -652,7 +652,7 @@ export default {
     data: {
       type: 'pie_chart',
       title: 'Submission Rank Organization',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the percentage and number of papers submitted from each organization. This tells us which organization has more submissions than other organizations. We have included others to account for all organizations involved.',
       selections: [
         {
@@ -696,7 +696,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Review Weighted Score Distribution',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the distribution of the weighted review score for all papers. This is calculated by retrieving the overall reviewed score and reviewer\'s confidence score in order to obtain a weighted average of all the scores. This gives us an insight on how the weighted score ranges for each submission in general.',
       selections: [
         {
@@ -818,7 +818,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Review Weighted Evaluation Score Statistic Summary',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the weighted evaluation score statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on the evaluation score given by each reviewer in their review.',
       selections: [
         {
@@ -849,7 +849,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Reviewer Expertise Level Statistic Summary',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the reviewer expertise level statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on how specialized the reviewers are in their review.',
       selections: [
         {
@@ -880,7 +880,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Reviewer Confidence Level Statistic Summary',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows the reviewer confidence level statistics based on the minimum, maximum value, the average, median score and the standard deviation of the weighted evaluation scores. This gives us an insight on how confident the reviewers are in their review.',
       selections: [
         {
@@ -913,7 +913,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Submission Rank Track',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the number of papers submitted in each track. This tells us which track is more popular than other tracks.',
       selections: [
         {
@@ -960,7 +960,7 @@ export default {
     data: {
       type: 'bar_chart',
       title: 'Acceptance Ratio Track',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This bar chart shows the acceptance rate of each paper based on tracks. This tells us which track has higher acceptance rate than others.',
       selections: [
         {
@@ -1007,7 +1007,7 @@ export default {
     data: {
       type: 'line_chart',
       title: 'Acceptance Ratio by Year',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This area under line graph shows the acceptance rate of all submitted papers based on different years. This tells us which year has more papers getting accepted than other years.',
       selections: [
         {
@@ -1052,7 +1052,7 @@ export default {
       type: 'pie_chart',
       title: 'Recommendation for Best Paper Distribution',
 
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This pie chart shows the number and percentage of papers recommended and not recommended for best paper. This tells us how many papers are worthy to be submitted for the best paper. We have plotted into a pie chart as it is clearer to show a binary value.',
       selections: [
         {
@@ -1091,7 +1091,7 @@ export default {
     data: {
       type: 'stats',
       title: 'Review Count Summary for Each Submission',
-      dataSet: '${PLACEHOLDER_USER_ID}',
+      userId: '${PLACEHOLDER_USER_ID}',
       description: 'This table shows a statistic of the number of reviews for each submission based on  the minimum, maximum value, the average and median score. This gives us an insight to how many reviews are provided for each submission.',
       selections: [
         {
