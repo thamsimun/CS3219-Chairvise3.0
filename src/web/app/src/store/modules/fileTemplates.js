@@ -3,23 +3,9 @@ import axios from 'axios';
 export default {
   state: {
     templates: [],
-    templatesStatus: {
-      isLoading: false,
-      isApiError: false,
-      apiErrorMsg: ''
-    },
     chosenTemplate: null
   },
-
   mutations: {
-    setTemplatesLoading(state, isLoading) {
-      state.templatesStatus.isApiError = false;
-      state.templatesStatus.isLoading = isLoading;
-    },
-    setTemplatesApiError(state, payload) {
-      state.templatesStatus.isApiError = true;
-      state.templatesStatus.apiErrorMsg = payload;
-    },
     setTemplates(state, payload) {
       state.templates = payload;
     },
@@ -29,15 +15,15 @@ export default {
   },
   actions: {
     async fetchFileTemplates({commit}) {
-      commit('setTemplatesLoading', true);
+      commit('setPageLoadingStatus', true);
       try {
         const response = await axios.get('/api/file/mapping');
         const templates = response.data;
         commit('setTemplates', templates);
       } catch (e) {
-        commit('setTemplatesApiError', e.toString());
+        commit('setError', e.toString());
       } finally {
-        commit('setTemplatesLoading', false);
+        commit('setPageLoadingStatus', false);
       }
     },
 
@@ -45,7 +31,7 @@ export default {
     async saveFileTemplate({commit}, template) {
       commit('setPageLoadingStatus', true);
       try {
-        await axios.post('/api/file/mapping', template)
+        await axios.post('/api/file/mapping', template);
         commit('notifySuccess', 'Template saved!');
       } catch (e) {
         commit('setError', e.toString());
