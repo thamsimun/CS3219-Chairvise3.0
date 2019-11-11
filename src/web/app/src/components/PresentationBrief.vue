@@ -4,7 +4,7 @@
 
   <el-form v-else label-position="top" ref="presentationForm" label-width="120px" :rules="rules"
            :model="presentationForm" v-loading="isLoading">
-
+    <span class="head">New Presentation</span>
     <el-alert v-if="isError" :title="apiErrorMsg" type="error" show-icon class="errorMsg"/>
 
     <el-form-item label="Name" :prop=" isInEditMode ? 'name' : ''">
@@ -284,7 +284,11 @@
   .share_button_left_margin {
     margin-left: 10px;
   }
-
+  .head{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
   .errorMsg {
     margin-bottom: 18px;
   }

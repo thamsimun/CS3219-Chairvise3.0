@@ -1,8 +1,8 @@
 <template>
     <el-alert v-if="!isLogin" title="Please login to view files added" type="error" show-icon
               class="errorMsg"/>
-    <el-container v-else-if="isLogin">
-        <el-aside class="sidebar" width="250px">
+    <el-container class="file-page" v-else-if="isLogin">
+        <el-aside style="width:200px; height:auto; margin-top:1px">
             <DataSideBar/>
         </el-aside>
         <el-container>
@@ -38,15 +38,18 @@
 </script>
 
 <style>
+    /*.sidebar{*/
+    /*    width:20%;*/
+    /*    height:auto;*/
+    /*    margin-top:1px;*/
+    /*}*/
     .header {
         background-color: lightblue;
         color: #333;
         line-height: 60px;
     }
-
-    .sidebar {
-        padding-left:10px;
-        margin-top: 5px;
+    .file-page {
+        min-height: 500px
     }
 
     .fileRecords {

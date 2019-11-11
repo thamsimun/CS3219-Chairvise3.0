@@ -35,19 +35,24 @@
 
 <style scoped>
   .card-container {
-    display: table;
-    width: 100%;
+    width: auto;
+    display: inline-flex;
     table-layout: fixed;
     align-content: center;
   }
 
   .table-cell {
     display: table-cell;
+    margin: 5px;
   }
 
   .box-card {
-    width: 410px;
-    height: 480px;
-    margin: auto;
+    min-width: 250px;
+    max-width: 300px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
   }
 </style>
