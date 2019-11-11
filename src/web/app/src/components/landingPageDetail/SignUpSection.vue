@@ -53,6 +53,7 @@
         rules: {
           email: [
             {required: true, message: 'Please enter email', trigger: 'blur'},
+            // eslint-disable-next-line
             {pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
             message: 'Please enter valid email', trigger: 'blur'}
           ],
