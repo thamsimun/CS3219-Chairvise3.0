@@ -160,7 +160,7 @@
         }
       },
       messages: function (msgList) {
-        if (msgList.length === 0) {
+        if (msgList.length !== 0) {
           this.$notify.success({
             title: 'Success',
             message: msgList.join('\n')
