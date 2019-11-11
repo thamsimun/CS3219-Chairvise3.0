@@ -45,9 +45,10 @@
         </div>
       </div>
     </div>
-    <el-checkbox v-model='saveTemplate'>Save this template</el-checkbox>
-    <SaveTemplateDialog v-bind:template='currentTemplate'></SaveTemplateDialog>
-    <el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete</el-button>
+    <div id='btns'>
+      <SaveTemplateDialog :isOldTemplate=isOldTemplate v-bind:template='currentTemplate'></SaveTemplateDialog>
+      <el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete import</el-button>
+    </div>
   </div>
 </template>
 
@@ -68,10 +69,9 @@
       const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
 
       return {
-        saveTemplate: false,
         dialogFormVisible: false,
         newTemplateDetails: {
-          name: '', // or null ?
+          name: '',
           description: ''
         },
         options: op,
@@ -111,6 +111,17 @@
           transformations: this.transformations.map(obj => obj.name),
           mappingList: _.clone(this.mappingList)
         }
+      },
+      isOldTemplate() {
+        const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
+
+        if (!chosenTemplate) {
+          // user skipped selecting a template, trivially a new template
+          return false;
+        }
+        // check whether the current template were any different that the chosen template earlier
+        return _.isEqual(chosenTemplate.transformations.map(x => x), this.$data.transformations.map(obj => obj.name)) &&
+          _.isEqual(chosenTemplate.mappingList, this.$data.mappingList);
       }
     },
     methods: {
@@ -127,11 +138,6 @@
         this.$store.commit('setMappingList', _.cloneDeep(this.mappingList));
         this.$store.commit('setTransformations', this.transformations.map(obj => obj.value));
         this.$store.commit('processData', toProcess);
-
-        if (this.errors.length === 0) {
-          if (this.$data.saveTemplate) this.createNewTemplate();
-          this.$store.dispatch('persistData');
-        }
       },
 
       createNewTemplate() {
@@ -211,5 +217,9 @@
   ul {
     height: 500px;
     overflow: auto;
+  }
+
+  #btns {
+    display: flex;
   }
 </style>

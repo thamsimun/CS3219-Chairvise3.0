@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type='text' @click='dialogFormVisible=true'>Save this template</el-button>
+    <el-button class='btn-save-template' :disabled=isOldTemplate type='primary' plain @click='dialogFormVisible=true'>Save this template</el-button>
     <el-dialog :visible.sync='dialogFormVisible' title='Save template'>
       <el-form>
         <el-form-item label='Name' label-width='120px'>
@@ -22,6 +22,7 @@
     name: "SaveTemplateDialog",
     props: {
       template: Object,
+      isOldTemplate: Boolean
     },
     data() {
       return {
@@ -55,5 +56,7 @@
 </script>
 
 <style scoped>
-
+  .btn-save-template {
+    margin: 20px;
+  }
 </style>
