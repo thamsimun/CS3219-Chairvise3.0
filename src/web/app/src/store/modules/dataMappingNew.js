@@ -43,7 +43,7 @@ export default {
     setTransformations(state, transformations) {
       state.data.transformations = transformations;
     },
-    setMappingError(state, err) {
+    setError(state, err) {
       state.error.length = 0;
       state.error.push(err);
     },
@@ -95,9 +95,9 @@ export default {
         .then(() => {
           commit('setPageLoadingStatus', false);
           commit('notifySuccess', 'Upload success!');
-        }).catch(e => {
+        }).catch(e => { // axios can recognise 4xx or 5xx responses
           commit('setPageLoadingStatus', false);
-          commit('setMappingError', e.toString());
+          commit('setError', e.toString());
         })
     }
   }

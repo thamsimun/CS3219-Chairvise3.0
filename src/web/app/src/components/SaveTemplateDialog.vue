@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-button type='text' @click='dialogFormVisible=true'>Save this template</el-button>
+    <el-button type='text' @click='dialogFormVisible=true'>Save this template</el-button>
     <el-dialog :visible.sync='dialogFormVisible' title='Save template'>
       <el-form>
         <el-form-item label='Name' label-width='120px'>
@@ -28,23 +28,29 @@
         name: '',
         description: '',
         dialogFormVisible: false,
-        errors: []
       }
     },
     methods: {
       saveTemplate() {
-        this.errors = [];
-        console.log(this.template);
-        let t = {
+        if (this.$data.name.length < 5) {
+          this.$store.commit('setError', 'Name must be of length greater than 5');
+          return;
+        }
+
+        if (this.$data.description < 5) {
+          this.$store.commit('setError', 'Description must be of length greater than 5');
+          return;
+        }
+
+        this.$store.dispatch('saveFileTemplate', {
           ...this.template,
           name: this.$data.name,
           description: this.$data.description
-        };
-        console.log(t);
-        this.$store.dispatch('saveFileTemplate', t)
-          .then(response => console.log(response));
-     }
-    }
+        }).then(() => {
+            this.$data.dialogFormVisible = false;
+          });
+      }
+    },
   }
 </script>
 

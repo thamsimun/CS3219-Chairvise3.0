@@ -117,7 +117,7 @@
       submit() {
         // make sure that user has picked all transformations
         if (this.transformations.length !== this.mappingList.length) {
-          this.$store.commit('setMappingError', 'Please ensure all transformations are selected!');
+          this.$store.commit('setError', 'Please ensure all transformations are selected!');
           return;
         }
 

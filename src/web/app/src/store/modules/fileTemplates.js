@@ -43,15 +43,14 @@ export default {
 
     // file template to be saved should be a valid template
     async saveFileTemplate({commit}, template) {
-      commit('setTemplatesLoading', true);
+      commit('setPageLoadingStatus', true);
       try {
-        return axios.post('/api/file/mapping', {
-          ...template
-        })
+        await axios.post('/api/file/mapping', template)
+        commit('notifySuccess', 'Template saved!');
       } catch (e) {
-        commit('setTemplatesApiError', e.toString());
+        commit('setError', e.toString());
       } finally {
-        commit('setTemplatesLoading', false);
+        commit('setPageLoadingStatus', false);
       }
     }
   }
