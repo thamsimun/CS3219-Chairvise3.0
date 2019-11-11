@@ -208,6 +208,8 @@
   .wrapper {
     padding: 20px;
     flex-direction: column;
+    height: 100%;
+    width: 100%;
   }
 
   .btn-complete {

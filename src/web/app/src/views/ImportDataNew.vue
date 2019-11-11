@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container style='height:100%;'>
     <el-aside style="width:20%; height:auto; margin-top:1px">
       <DataSideBar/>
     </el-aside>
@@ -7,8 +7,8 @@
         <el-col style="padding:10px">
           <div class='wrapper'>
             <div v-if='schemaNotSelected'>
-              <h1 class="head">Upload new file</h1>
-              <h1>Select your record type:</h1>
+              <h1 class="head">Upload a New File</h1>
+              <h1 style='font-size:28px;'>Select your record type:</h1>
               <SelectDbSchema></SelectDbSchema>
             </div>
             <div v-else-if='fileNotUploaded'>
@@ -155,14 +155,13 @@
   }
   .head{
     text-align: center;
-    font-size: 30px;
+    font-size: 56px;
     font-weight: bold;
   }
   .wrapper {
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
   }
   h1 {
     text-align: center;
