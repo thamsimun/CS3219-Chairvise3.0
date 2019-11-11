@@ -7,7 +7,7 @@ export default {
     hasDbSchemaSet: false,
     hasFileUploaded: false,
     hasChosenTemplate: false,
-    hasHeader: false,
+    hasHeader: true,
     data: {
       dbSchemaName: '',
       fieldMetaData: [],

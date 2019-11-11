@@ -23,17 +23,14 @@
       <el-button type="success" plain>Logout ({{ userEmail }})</el-button>
     </el-menu-item>
 
-    <el-menu-item index="/userHome" :disabled="!isLogin">My Profile</el-menu-item>
+    <el-menu-item index="/userHome" :disabled="!isLogin">My Data</el-menu-item>
 
     <el-menu-item class="no_click" index="/login" style="float:right" v-if="!isLogin" :disabled="isApiError"
                   @click="login"
                   v-loading.fullscreen.lock="isFullscreenLoading">
       <el-button round type="success" plain :disabled="isApiError">Login</el-button>
     </el-menu-item>
-
-
   </el-menu>
-
 </template>
 
 <script>

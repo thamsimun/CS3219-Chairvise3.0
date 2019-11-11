@@ -2,13 +2,14 @@
   <div>
     <!--can change to a better logo next time-->
     <img alt="Vue logo" src="@/assets/logo.png">
-    <h2>Welcome to Conference Data Visualization Management System</h2>
+    <h2>Welcome to ChairVisE3.0</h2>
     <h3>
-      This project is designed to enable conference program chairpersons to visualize and share conference submission
-      statistics.
-      By parsing information in different formats, we aim to assist user to obtain the most valued out of the
-      information uploaded.
-      We also support sharing and exporting of such visualization.
+      ChairVisE3.0 is a Conference Data Visualization Management System that enables conference program
+      chairpersons to visualize and share conference submission statistics.
+
+      We parse information in different formats, assisting the user in obtaining the most value out of the
+      information uploaded through data visualisation.
+      We also support sharing and exporting of such visualizations
     </h3>
   </div>
 </template>
@@ -18,7 +19,7 @@
     name: 'WelcomeMessage',
     props: {
       msg: String
-    }
+    },
   }
 </script>
 

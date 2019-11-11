@@ -18,10 +18,10 @@
 
 <script>
   // @ is an alias to /src
-  import WelcomeMessage from '@/components/homePageDetail/WelcomeMessage.vue'
-  import FeatureGuide from '@/components/homePageDetail/FeatureGuide.vue'
-  import DetailedFeatureGuide from '@/components/homePageDetail/DetailedFeatureGuide.vue'
-  import ListOfGuide from '@/components/homePageDetail/ListOfGuide.vue'
+  import WelcomeMessage from '@/components/guidePageDetail/WelcomeMessage.vue'
+  import FeatureGuide from '@/components/guidePageDetail/FeatureGuide.vue'
+  import DetailedFeatureGuide from '@/components/guidePageDetail/DetailedFeatureGuide.vue'
+  import ListOfGuide from '@/components/guidePageDetail/ListOfGuide.vue'
 
   export default {
     name: 'home',

@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-container>
-        <el-aside class="sidebar" width="250px" v-if="isLogin">
+        <el-aside style="width:20%; height:auto; margin-top:1px" v-if="isLogin">
           <DataSideBar/>
         </el-aside>
         <el-main>
@@ -46,7 +46,5 @@
 </script>
 
 <style>
-  .sidebar {
-    padding-left:10px;
-  }
+
 </style>

@@ -1,18 +1,18 @@
 <template>
     <el-container>
         <el-main>
-            <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
+            <div class="header-text">
                 <span style="font-size: 30px; font-weight: bold">Files Added</span>
             </div>
             <div class="container">
-                <div class="row" >
+                <div class="row">
                     <div class = "column"  v-for="file in fileListInfo"
                          :key="file.fileNumber">
-                        <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
+                        <el-card class="file-tiles">
                             <img src="../assets/csvicon.png" class="image">
                             <div class="text">
-                                <span>{{file.fileName}}</span>
-                                <div class="bottom-clearfix">
+                                <div class="filename">{{file.fileName}}</div>
+                                <div >
                                     <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
                                 </div>
                             </div>
@@ -117,30 +117,35 @@
 </script>
 
 <style>
-    .bottom-clearfix {
-        font-size: 14px;
-        /*padding-left: 25px;*/
-        text-align: center;
+    .header-text{
+        margin-bottom: 27px;
+        margin-top: 10px;
     }
-
+    .file-tiles {
+        width: 100%;
+        height: 100%;
+    }
+    .el-card__body{
+        padding: 15px;
+    }
+    .filename {
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .filename:hover {
+        overflow: visible;
+    }
     .text {
         font-size: 14px;
         text-align: center;
         /*not working*/
-        text-after-overflow: ellipsis;
 
     }
-
-    .text-item {
-        font-size: 18px;
-        padding-left: 60px;
-    }
-
     .image{
         width: 100%;
         display: block;
     }
-
     .row {
         display: flex;
         flex-direction: row;
@@ -155,7 +160,6 @@
         margin-bottom: 25px;
     }
     .container {
-        margin: 0px;
         display: flex;
     }
 
