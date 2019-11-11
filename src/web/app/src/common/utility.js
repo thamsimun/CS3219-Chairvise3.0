@@ -47,6 +47,6 @@ export const removeItem = (xss, colIdx, lstIdx) => {
  */
 export const getTransformations = (fnames, fieldMetaData, options) => {
   return fieldMetaData.map((meta, index) => {
-    return options[meta.type].filter(obj => obj.value.name === fnames[index]).pop();
+    return options[meta.type].filter(obj => obj.name === fnames[index]).pop();
   });
 };

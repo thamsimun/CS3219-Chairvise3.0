@@ -9,6 +9,9 @@
         <el-form-item label='Description' label-width='120px'>
           <el-input v-model='description' autocomplete='off'></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-button @click='saveTemplate'>Save Template</el-button>
+        </el-form-item>
       </el-form>
     </el-dialog>
   </div>
@@ -17,12 +20,30 @@
 <script>
   export default {
     name: "SaveTemplateDialog",
+    props: {
+      template: Object,
+    },
     data() {
       return {
         name: '',
         description: '',
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        errors: []
       }
+    },
+    methods: {
+      saveTemplate() {
+        this.errors = [];
+        console.log(this.template);
+        let t = {
+          ...this.template,
+          name: this.$data.name,
+          description: this.$data.description
+        };
+        console.log(t);
+        this.$store.dispatch('saveFileTemplate', t)
+          .then(response => console.log(response));
+     }
     }
   }
 </script>

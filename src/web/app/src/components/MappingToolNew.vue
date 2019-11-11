@@ -46,7 +46,7 @@
       </div>
     </div>
     <el-checkbox v-model='saveTemplate'>Save this template</el-checkbox>
-    <SaveTemplateDialog></SaveTemplateDialog>
+    <SaveTemplateDialog v-bind:template='currentTemplate'></SaveTemplateDialog>
     <el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete</el-button>
   </div>
 </template>
@@ -105,10 +105,15 @@
       },
       messages() {
         return this.$store.state.dataMappingNew.messages;
+      },
+      currentTemplate() {
+        return {
+          transformations: this.transformations.map(obj => obj.name),
+          mappingList: _.clone(this.mappingList)
+        }
       }
     },
     methods: {
-
       submit() {
         // make sure that user has picked all transformations
         if (this.transformations.length !== this.mappingList.length) {
