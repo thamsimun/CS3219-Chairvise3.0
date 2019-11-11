@@ -37,7 +37,7 @@
           </div>
 
           <div v-else-if='templateNotSelected'>
-            <h1 class="head">Choose a template:</h1>
+            <h1 class="head">Pick a Template</h1>
             <div class="nav-buttons">
               <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearRawData'></el-button>
               <el-button class='forward-btn' type='plain' icon='el-icon-right' circle @click='skipTemplate'></el-button>
@@ -160,6 +160,7 @@
     text-align: center;
     font-size: 56px;
     font-weight: bold;
+    min-width: 800px;
   }
 
   .wrapper {

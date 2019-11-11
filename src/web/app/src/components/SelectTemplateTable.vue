@@ -3,21 +3,31 @@
     <el-table
       highlight-current-row
       @current-change='select'
-      style='width:50%;margin:auto;'
+      style='width:100%;'
       :data='templates'>
       <el-table-column
         property="templateId"
         label="Id"
-        width="100">
+        width="80">
       </el-table-column>
       <el-table-column
         property="name"
         label="Name"
-        width="250">
+        width="300">
       </el-table-column>
       <el-table-column
         property="description"
         label="Description">
+      </el-table-column>
+      <el-table-column align='right'>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="danger"
+            style='float:right;'
+            @click.stop="handleDelete(scope)">Delete
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -25,14 +35,14 @@
 
 <script>
   export default {
-    name: "SelectTemplateTable",
+    name: 'SelectTemplateTable',
     mounted() {
       this.$store.dispatch('fetchFileTemplates');
     },
     data() {
       return {
         selectedRow: null
-      }
+      };
     },
     computed: {
       templates() {
@@ -47,9 +57,12 @@
     methods: {
       select(template) {
         this.$store.commit('selectTemplate', template);
+      },
+      handleDelete({row}) {
+        console.log(row.templateId); // templateId here; make a delete request to backend
       }
     }
-  }
+  };
 </script>
 
 <style scoped>
