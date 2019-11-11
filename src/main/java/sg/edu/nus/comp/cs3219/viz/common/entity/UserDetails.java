@@ -21,9 +21,9 @@ public class UserDetails {
     @Exportable(name = "userId", nameInDB = "user_id")
     private long userId;
 
-    @Column(name = "user_name")
-    @Exportable(name = "userName", nameInDB = "user_name")
-    private String userName;
+    @Column(name = "user_password")
+    @Exportable(name = "userPassword", nameInDB = "user_password")
+    private String userPassword;
 
     @Column(name = "user_email")
     @Exportable(name = "userEmail", nameInDB = "user_email")
@@ -45,12 +45,16 @@ public class UserDetails {
         this.userId = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public boolean isSameUser(UserDetails otherUser) {

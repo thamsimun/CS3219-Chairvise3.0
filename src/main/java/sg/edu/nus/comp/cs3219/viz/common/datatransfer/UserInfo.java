@@ -4,7 +4,7 @@ public class UserInfo {
 
     private String userEmail;
 
-    private String userNickname;
+    private String userPassword;
 
     private long userId;
 
@@ -24,11 +24,11 @@ public class UserInfo {
         this.userEmail = userEmail;
     }
 
-    public String getUserNickname() {
-        return userNickname;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUserNickname(String userNickname) {
-        this.userNickname = userNickname;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }
