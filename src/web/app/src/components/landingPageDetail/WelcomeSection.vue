@@ -9,15 +9,23 @@
             Create and Share beautiful visualisations with your friends.
         </div>
         <br/><br/>
-        <div class="welcome_button">
-            <el-button round id="welcome_button" >Get started</el-button>
+        <div class="welcome_button" >
+                <el-button @click=goGuide index="/guide" round id="welcome_button" >Get started</el-button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "WelcomeSection"
+        name: "WelcomeSection",
+        methods: {
+            goGuide() {
+                let current = window.location.origin;
+                current += ("/guide");
+                window.location.href = current;
+            }
+        }
+
     }
 </script>
 
