@@ -28,15 +28,17 @@ public class PresentationController extends BaseRestController {
     }
 
     @GetMapping("/presentations")
-    public List<Presentation> all() {
-        UserInfo currentUser = gateKeeper.verifyLoginAccess();
+    public List<Presentation> all(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        UserInfo currentUser = gateKeeper.verifyLoginAccess(email, password);
 
         return presentationLogic.findAllForUser(currentUser);
     }
 
     @PostMapping("/presentations")
-    public ResponseEntity<?> newPresentation(@RequestBody Presentation presentation) throws URISyntaxException {
-        UserInfo currentUser = gateKeeper.verifyLoginAccess();
+    public ResponseEntity<?> newPresentation(@RequestBody Presentation presentation,
+                                             @CookieValue(value = "userEmail") String email,
+                                             @CookieValue(value = "userPassword") String password) throws URISyntaxException {
+        UserInfo currentUser = gateKeeper.verifyLoginAccess(email, password);
 
         Presentation newPresentation = presentationLogic.saveForUser(presentation, currentUser);
 
@@ -46,28 +48,31 @@ public class PresentationController extends BaseRestController {
     }
 
     @GetMapping("/presentations/{id}")
-    public Presentation one(@PathVariable Long id) {
+    public Presentation one(@PathVariable Long id, @CookieValue(value = "userEmail") String email,
+                            @CookieValue(value = "userPassword") String password) {
         Presentation presentation = presentationLogic.findById(id)
                 .orElseThrow(() -> new PresentationNotFoundException(id));
 
-        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ);
+        gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, password);
 
         return presentation;
     }
 
     @GetMapping("/presentations/created")
-    public List<Long> createdPresentation() {
-        UserInfo userInfo = gateKeeper.verifyLoginAccess();
+    public List<Long> createdPresentation(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
+        UserInfo userInfo = gateKeeper.verifyLoginAccess(email, password);
         List<Presentation> presentations = presentationLogic.findAllForUser(userInfo);
         return presentations.stream().map(Presentation::getId).collect(Collectors.toList());
     }
 
     @PutMapping("/presentations/{id}")
-    public ResponseEntity<?> updatePresentation(@RequestBody Presentation newPresentation, @PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<?> updatePresentation(@RequestBody Presentation newPresentation, @PathVariable Long id,
+                                                @CookieValue(value = "userEmail") String email,
+                                                @CookieValue(value = "userPassword") String password) throws URISyntaxException {
 
         Presentation oldPresentation = presentationLogic.findById(id)
                 .orElseThrow(() -> new PresentationNotFoundException(id));
-        gateKeeper.verifyAccessForPresentation(oldPresentation, AccessLevel.CAN_WRITE);
+        gateKeeper.verifyAccessForPresentation(oldPresentation, AccessLevel.CAN_WRITE, email, password);
 
         Presentation updatedPresentation = presentationLogic.updatePresentation(oldPresentation, newPresentation);
         return ResponseEntity
@@ -76,10 +81,12 @@ public class PresentationController extends BaseRestController {
     }
 
     @DeleteMapping("/presentations/{id}")
-    public ResponseEntity<?> deletePresentation(@PathVariable Long id) {
+    public ResponseEntity<?> deletePresentation(@PathVariable Long id,
+                                                @CookieValue(value = "userEmail") String email,
+                                                @CookieValue(value = "userPassword") String password) {
         Presentation oldPresentation = presentationLogic.findById(id)
                 .orElseThrow(() -> new PresentationNotFoundException(id));
-        gateKeeper.verifyDeletionAccessForPresentation(oldPresentation);
+        gateKeeper.verifyDeletionAccessForPresentation(oldPresentation, email, password);
 
         presentationLogic.deleteById(id);
 

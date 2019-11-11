@@ -20,20 +20,17 @@
 
     <el-menu-item class="no_click" index="/logout" style="float: right" v-if="isLogin" @click="logout"
                   v-loading.fullscreen.lock="isFullscreenLoading">
-      <el-button type="success" plain>Logout ({{ userNickname }})</el-button>
+      <el-button type="success" plain>Logout ({{ userEmail }})</el-button>
     </el-menu-item>
 
-    <el-menu-item index="/userHome" :disabled="!isLogin">My Profile</el-menu-item>
+    <el-menu-item index="/userHome" :disabled="!isLogin">My Data</el-menu-item>
 
     <el-menu-item class="no_click" index="/login" style="float:right" v-if="!isLogin" :disabled="isApiError"
                   @click="login"
                   v-loading.fullscreen.lock="isFullscreenLoading">
       <el-button round type="success" plain :disabled="isApiError">Login</el-button>
     </el-menu-item>
-
-
   </el-menu>
-
 </template>
 
 <script>
@@ -59,8 +56,8 @@
       isLogin() {
         return this.$store.state.userInfo.isLogin
       },
-      userNickname() {
-        return this.$store.state.userInfo.userNickname
+      userEmail() {
+        return this.$store.state.userInfo.userEmail
       },
       isApiError() {
         return this.$store.state.userInfo.isApiError
@@ -68,11 +65,13 @@
     },
     methods: {
       login() {
+        this.$store.dispatch('setCookies');
         // enter full screen loading and wait browser to redirect to google login page
         this.$data.isFullscreenLoading = true;
         window.location.href = this.$store.state.userInfo.loginUrl
       },
       logout() {
+        this.$store.dispatch('clearCookies');
         // enter full screen loading and wait browser to redirect to google login page
         this.$data.isFullscreenLoading = true;
         window.location.href = this.$store.state.userInfo.logoutUrl

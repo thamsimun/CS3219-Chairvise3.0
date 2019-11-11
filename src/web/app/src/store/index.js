@@ -10,6 +10,7 @@ import dataMapping from "./modules/dataMapping";
 import fileRecords from "./modules/fileRecords";
 import dataMappingNew from "./modules/dataMappingNew";
 import fileTemplates from './modules/fileTemplates';
+import presentationShared from "./modules/presentationShared";
 
 Vue.use(Vuex);
 
@@ -34,5 +35,6 @@ export default new Vuex.Store({
     dataMappingNew,
     dataMapping,
     fileTemplates,
+    presentationShared,
   }
 })

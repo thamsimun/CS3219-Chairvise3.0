@@ -22,6 +22,8 @@ project.pluginManager.apply com.google.cloud.tools.gradle.appengine.standard.App
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+
+
 group = 'sg.edu.nus.comp.viz'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -45,7 +47,8 @@ dependencies {
 
     // Google App Engine
     compile("com.google.appengine:appengine-api-1.0-sdk:1.9.+")
-    providedCompile("javax.servlet:javax.servlet-api:3.1.0")
+    providedCompile("jav" +
+            "ax.servlet:javax.servlet-api:3.1.0")
 
     // Database Access
     runtime("mysql:mysql-connector-java:8.0.12")
@@ -74,6 +77,10 @@ appengine {
         stopPreviousVersion = false
         promote = currentBranch != null ? currentBranch == "master" : false
     }
+}
+
+springBoot {
+    mainClassName = 'sg.edu.nus.comp.cs3219.viz.VizApplication'
 }
 
 task appengineDeployAll {

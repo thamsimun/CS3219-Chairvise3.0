@@ -109,7 +109,7 @@ public class AnalysisLogic {
         strings.add(authorFileNumberFilter);
         strings.add(submissionFileNumberFilter);
         strings.add(reviewFileNumberFilter);
-        String fileNumberFilerStr = combineFileNumber(strings);
+        String fileNumberFilterStr = combineFileNumber(strings);
 
 
 
@@ -126,8 +126,10 @@ public class AnalysisLogic {
             baseSQL += String.format(" AND %s", joinersStr);
         }
 
-        if (!fileNumberFilerStr.isEmpty()) {
-            baseSQL += String.format(" AND %s", fileNumberFilerStr);
+        if (!fileNumberFilterStr.isEmpty()) {
+            baseSQL += String.format(" AND %s", fileNumberFilterStr);
+        } else {
+            baseSQL += " AND false";
         }
 
         if (!filtersStr.isEmpty()) {

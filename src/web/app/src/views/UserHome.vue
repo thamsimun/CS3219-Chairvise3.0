@@ -2,23 +2,18 @@
     <el-alert v-if="!isLogin" title="Please login to view user profile" type="error" show-icon
               class="errorMsg"/>
     <el-container v-else-if="isLogin">
-        <el-container>
-            <el-aside class="sidebar" width="250px">
+            <el-aside class="sidebar">
                 <DataSideBar/>
             </el-aside>
-        </el-container>
-        <el-container>
             <el-col class="welcome" :span="14">
                 <WelcomeSection/>
             </el-col>
-        </el-container>
     </el-container>
 </template>
 
 <script>
     import DataSideBar from "@/components/DataSideBar.vue";
     import WelcomeSection from "@/components/landingPageDetail/WelcomeSection.vue";
-
     export default {
         name: "UserHome",
         computed: {
@@ -37,13 +32,16 @@
 </script>
 
 <style>
+    .el-aside{
+        width:20% !important;
+    }
     .sidebar {
-        padding-left:10px;
-        margin-top: 5px;
+        height:100%;
     }
 
     .welcome {
-        height:600px;
+        height:1000px;
+        width:100%;
         background-color: lightblue;
     }
 

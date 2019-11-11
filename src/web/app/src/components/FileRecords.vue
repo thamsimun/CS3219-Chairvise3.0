@@ -1,23 +1,25 @@
 <template>
     <el-container>
         <el-main>
-            <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
+            <div class="header-text">
                 <span style="font-size: 30px; font-weight: bold">Files Added</span>
             </div>
-            <el-row>
-                <el-col :span="7" v-for="file in fileListInfo"
-                        :key="file.fileNumber" class="text-item" style="margin-bottom: 30px">
-                    <el-card :body-style="{ padding: '40px'}" style="min-width: 200px" justify="center">
-                        <img src="../assets/csvicon.png" class="image" style="alignment: center">
-                            <div  class="text">
-                                <span>{{file.fileName}}</span>
-                            <div class="bottom-clearfix">
-                                <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
+            <div class="container">
+                <div class="row">
+                    <div class = "column"  v-for="file in fileListInfo"
+                         :key="file.fileNumber">
+                        <el-card class="file-tiles">
+                            <img src="../assets/csvicon.png" class="image">
+                            <div class="text">
+                                <div class="filename">{{file.fileName}}</div>
+                                <div >
+                                    <el-button type="text" v-on:click="deleteFile(file)" class="button">Delete</el-button>
+                                </div>
                             </div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+                        </el-card>
+                    </div>
+                </div>
+            </div>
         </el-main>
         <el-dialog
                 title="Success"
@@ -28,7 +30,6 @@
         <el-button type="primary" v-on:click="closeDeleteSuccess">Sure</el-button>
       </span>
         </el-dialog>
-
         <el-dialog
                 title="Failure"
                 :visible.sync="deleteFailure"
@@ -116,28 +117,50 @@
 </script>
 
 <style>
-    .bottom-clearfix {
-        font-size: 14px;
-        /*padding-left: 25px;*/
-        text-align: center;
+    .header-text{
+        margin-bottom: 27px;
+        margin-top: 10px;
     }
-
+    .file-tiles {
+        width: 100%;
+        height: 100%;
+    }
+    .el-card__body{
+        padding: 15px;
+    }
+    .filename {
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .filename:hover {
+        overflow: visible;
+    }
     .text {
         font-size: 14px;
         text-align: center;
         /*not working*/
-        text-after-overflow: ellipsis;
 
     }
-
-    .text-item {
-        font-size: 18px;
-        padding-left: 60px;
-    }
-
     .image{
         width: 100%;
         display: block;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        padding-left: 20px;
+        margin-bottom: 25px;
+    }
+    .container {
+        display: flex;
     }
 
 </style>

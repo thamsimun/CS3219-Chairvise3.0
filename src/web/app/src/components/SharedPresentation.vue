@@ -1,19 +1,22 @@
 <template>
-    <el-container style="min-width: 200px">
+    <el-container>
         <el-main>
-            <div style="text-align: center; margin-bottom: 0px; margin-top: 30px">
-                <span class="head">Presentations Created By Me</span>
+            <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
+                <span class="head">Shared Presentations</span>
             </div>
             <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
                 <div class="container">
                     <div class="row" >
-                        <div class = "column"  v-for="presentation in presentations"
-                                :key="presentation.id">
+                        <div class = "column"  v-for="presentation in sharedPresentationListInfo"
+                             :key="presentation.id">
                             <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
                                 <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
                                     <img src="../assets/test3.png" class="image">
                                     <div class="text">
                                         <span>{{presentation.name}}</span>
+        <!--                                <div class="bottom-clearfix">-->
+        <!--                                    <el-button type="text" v-on:click="deleteFile(file)" class="button">Remove</el-button>-->
+        <!--                                </div>-->
                                     </div>
                                 </el-card>
                             </el-menu-item>
@@ -26,8 +29,11 @@
 </template>
 
 <script>
+    import presentationShared from "../store/modules/presentationShared";
+
+
     export default {
-        name: 'PresentationCreatedByMe',
+        name: 'SharedPresentation',
         data() {
             return {}
         },
@@ -37,50 +43,64 @@
                     return
                 }
                 this.$notify.error({
-                    title: 'Presentation list API request fail',
-                    message: this.$store.state.presentation.presentationListStatus.apiErrorMsg,
+                    title: 'Shared Presentation list API request fail',
+                    message: this.$store.state.presentationShared.sharedPresentationListStatus.apiErrorMsg,
                     duration: 0
                 });
             }
         },
         computed: {
             isLoading() {
-                return this.$store.state.presentation.presentationListStatus.isLoading
-                    || this.$store.state.presentation.presentationFormStatus.isLoading
-                    || this.$store.state.section.sectionListStatus.isLoading
-                    || this.$store.state.section.sectionList.some(s => s.status.isLoading)
+                return this.$store.state.presentationShared.sharedPresentationListStatus.isLoading
             },
-            presentations() {
-                return this.$store.state.presentation.presentationList
+
+            sharedPresentationListInfo() {
+                return this.$store.state.presentationShared.sharedPresentationList;
             },
+
             isError() {
-                return this.$store.state.presentation.presentationListStatus.isApiError
+                return this.$store.state.presentationShared.sharedPresentationListStatus.isApiError
             },
+
         },
         mounted() {
-            this.$store.dispatch('getPresentationList')
+            this.$store.dispatch('getSharedPresentationList');
         },
-        methods: {
+
+
+        components: {
+            presentationShared
         }
     }
 </script>
 
 <style>
-    .text-item {
-        font-size: 20px;
-        padding-left: 25px;
-        text-after-overflow: ellipsis;
-    }
-
     .head{
         text-align: center;
         font-size: 30px;
         font-weight: bold;
     }
+    .bottom-clearfix {
+        font-size: 14px;
+        /*padding-left: 25px;*/
+        text-align: center;
+    }
+    .text {
+        font-size: 14px;
+        text-align: center;
+        /*not working*/
+        text-after-overflow: ellipsis;
 
-    .container {
-        margin: 0px;
-        display: flex;
+    }
+
+    .text-item {
+        font-size: 18px;
+        padding-left: 60px;
+    }
+
+    .image{
+        width: 100%;
+        display: block;
     }
 
     .row {
@@ -96,28 +116,9 @@
         padding-left: 20px;
         margin-bottom: 25px;
     }
-
-    .image{
-        width: 100%;
-        display: block;
-    }
-
-    .menu{
-        height: 450px;
-    }
-    .menu-item{
-        margin-bottom:175px;
-        margin-top: 50px;
-        height: 85px;
-        width: 250px;
-    }
-
-    .text {
-        font-size: 18px;
-        text-align: center;
-        /*not working*/
-        text-after-overflow: ellipsis;
-
+    .container {
+        margin: 0px;
+        display: flex;
     }
 
 </style>
