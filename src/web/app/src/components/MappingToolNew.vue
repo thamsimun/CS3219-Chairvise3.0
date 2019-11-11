@@ -45,7 +45,8 @@
 				</div>
 			</div>
 		</div>
-		<el-checkbox v-model='saveTemplate'>Save this template</el-checkbox>
+		<el-checkbox @click='open' v-model='saveTemplate'>Save this template</el-checkbox>
+		<el-button type='text' @click='open'>Save Template</el-button>
 		<el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete</el-button>
 	</div>
 </template>
@@ -100,6 +101,25 @@
 			}
 		},
 		methods: {
+			open() {
+				this.$prompt('Name', 'Save Template', {
+					confirmButtonText: 'Done',
+					cancelButtonText: 'Cancel'
+				}).
+				then(({ value }) => {
+					this.createNewTemplate();
+
+					this.$message({
+						type: 'success',
+						message: 'Ok'
+					});
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: 'Input canceled'
+					});
+				});
+			},
 			submit() {
 				// make sure that user has picked all transformations
 				if (this.transformations.length !== this.mappingList.length) {
