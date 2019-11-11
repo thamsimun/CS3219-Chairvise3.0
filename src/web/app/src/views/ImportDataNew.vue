@@ -45,7 +45,10 @@
             <SelectTemplateTable></SelectTemplateTable>
           </div>
           <div v-else>
-            <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
+            <h1 class='head'>Map Fields</h1>
+            <div class="nav-buttons">
+              <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearTemplate'></el-button>
+            </div>
             <mapping-tool-new ref='mapTool'></mapping-tool-new>
           </div>
         </div>

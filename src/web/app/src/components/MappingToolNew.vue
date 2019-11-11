@@ -1,13 +1,15 @@
 <template>
   <div class='wrapper'>
     <div>
-      <h1>Pick columns</h1>
-      <!--   List out all the fields in the pool, which is all the headers obtained from the csv    -->
-      <ul>
-        <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
-          {{ field }}
-        </li>
-      </ul>
+      <div id='pick-cols'>
+        <h1>Pick columns</h1>
+        <!--   List out all the fields in the pool, which is all the headers obtained from the csv    -->
+        <ul>
+          <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
+            {{ field }}
+          </li>
+        </ul>
+      </div>
     </div>
     <div>
       <!--    List out all name of fields of the DB Schema obtained from store  -->
@@ -54,13 +56,13 @@
 
 <script>
   import draggable from 'vuedraggable';
-  import SaveTemplateDialog from "./SaveTemplateDialog";
+  import SaveTemplateDialog from './SaveTemplateDialog';
   import _ from 'lodash';
   import op from '../store/data/predefinedTransformations';
   import {distribute, getTransformations, removeItem} from '../common/utility';
 
   export default {
-    name: "MappingToolNew",
+    name: 'MappingToolNew',
     components: {
       draggable,
       SaveTemplateDialog
@@ -85,7 +87,7 @@
         mappingList: !chosenTemplate
           ? this.$store.state.dataMappingNew.data.fieldMetaData.map(() => [])
           : _.cloneDeep(this.$store.state.fileTemplates.chosenTemplate.mappingList)
-      }
+      };
     },
     computed: {
       pool() {
@@ -110,7 +112,7 @@
         return {
           transformations: this.transformations.map(obj => obj.name),
           mappingList: _.clone(this.mappingList)
-        }
+        };
       },
       isOldTemplate() {
         const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
@@ -174,7 +176,7 @@
         }
       }
     }
-  }
+  };
 </script>
 
 <style scoped>
@@ -223,5 +225,10 @@
 
   #controls {
     display: flex;
+  }
+
+  #pick-cols {
+    display: flex;
+    justify-content: center;
   }
 </style>
