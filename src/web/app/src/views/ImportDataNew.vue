@@ -12,10 +12,15 @@
               <SelectDbSchema></SelectDbSchema>
             </div>
             <div v-else-if='fileNotUploaded'>
-              <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearSelectedSchema'></el-button>
-              <h1>Please upload your file:</h1>
-              <p> Does your file have headers? </p>
-              <el-switch v-model="hasHeader" active-text="Yes, I have headers" inactive-text="No, I can identify my own"
+
+              <h1 class="head">File upload</h1>
+              <div class="nav-buttons">
+                <el-button class='back-btn' type='plain' icon='el-icon-back' circle
+                           @click='clearSelectedSchema'></el-button>
+              </div>
+              <h3> Does your file have headers? </h3>
+              <el-switch v-model="hasHeader" active-text="Yes, I have headers"
+                         inactive-text="No, I can identify my own"
               ></el-switch>
               <br><br>
               <el-upload drag action=''
@@ -30,12 +35,13 @@
             </div>
 
             <div v-else-if='templateNotSelected'>
-              <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearRawData'></el-button>
-              <el-button class='forward-btn' type='warning' icon='el-icon-right' circle @click='skipTemplate'></el-button>
-              <h1>Choose a template:</h1>
+              <h1 class="head">Choose a template:</h1>
+              <div class="nav-buttons">
+                <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearRawData'></el-button>
+                <el-button class='forward-btn' type='plain' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+              </div>
               <SelectTemplateTable></SelectTemplateTable>
             </div>
-
             <div v-else>
               <el-button class='back-btn' type='warning' icon='el-icon-back' circle @click='clearTemplate'></el-button>
               <mapping-tool-new ref='mapTool'></mapping-tool-new>
@@ -53,7 +59,6 @@
   import Papa from 'papaparse';
   import DataSideBar from "@/components/DataSideBar.vue";
   // import dataMappingNew from "../store/modules/dataMappingNew";
-
   export default {
     name: "ImportDataNew",
     data: function () {
@@ -64,7 +69,6 @@
         template: '' // to be implemented
       }
     },
-
     computed: {
       dbSchemas() {
         return this.$store.state.dbMetaData.entities;
@@ -87,7 +91,6 @@
         },
       }
     },
-
     methods: {
       fileUploadHandler(file) {
         this.$store.commit('setPageLoadingStatus', true);
@@ -134,7 +137,6 @@
         this.template = '';
       }
     },
-
     components: {
       MappingToolNew,
       SelectDbSchema,
@@ -148,41 +150,35 @@
   .container{
     width: 100%;
   }
-
   .head{
     text-align: center;
     font-size: 30px;
     font-weight: bold;
   }
-
   .wrapper {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
-
   h1 {
     text-align: center;
     padding: 20px;
     margin: 0;
   }
-
+  .nav-buttons {
+    justify-items: center;
+    text-align: center;
+  }
   .back-btn {
-    position: absolute;
-    left: 25%;
+    position: center;
   }
-
   .forward-btn {
-    position: absolute;
-    right: 25%;
+    position: center;
   }
-
   .pick-col {
     text-align: center;
   }
-
   .pick-col ul {
     display: inline-block;
     margin: 0;

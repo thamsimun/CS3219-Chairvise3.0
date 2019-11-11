@@ -2,7 +2,7 @@
     <el-container>
         <el-main>
             <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
-                <span style="font-size: 30px; font-weight: bold">Shared Presentation</span>
+                <span class="head">Shared Presentations</span>
             </div>
             <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
                 <div class="container">
@@ -75,12 +75,16 @@
 </script>
 
 <style>
+    .head{
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+    }
     .bottom-clearfix {
         font-size: 14px;
         /*padding-left: 25px;*/
         text-align: center;
     }
-
     .text {
         font-size: 14px;
         text-align: center;

@@ -2,7 +2,7 @@
     <el-container style="min-width: 200px">
         <el-main>
             <div style="text-align: center; margin-bottom: 0px; margin-top: 30px">
-                <span style="text-align: center; font-size: 30px; font-weight: bold">Presentations Created By Me</span>
+                <span class="head">Presentations Created By Me</span>
             </div>
             <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
                 <div class="container">
@@ -70,6 +70,12 @@
         font-size: 20px;
         padding-left: 25px;
         text-after-overflow: ellipsis;
+    }
+
+    .head{
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
     }
 
     .container {

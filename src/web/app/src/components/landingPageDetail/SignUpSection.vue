@@ -180,6 +180,8 @@
     border-radius: 25px;
     border: 3px solid lightgray;
     background-color: white;
+    min-height: 400px;
+    text-align: center;
   }
 
   #register_button:hover {

@@ -2,7 +2,7 @@
   <el-alert v-if="!isLogin" title="Please login to view presentations" type="error" show-icon
             class="errorMsg"/>
   <el-container v-else-if="isLogin">
-    <el-aside class="sidebar" width="250px">
+    <el-aside style="width:20%; height:auto; margin-top:1px">
       <DataSideBar/>
     </el-aside>
     <el-container>
@@ -44,11 +44,6 @@
     background-color: lightblue;
     color: #333;
     line-height: 60px;
-  }
-
-  .sidebar {
-    padding-left:10px;
-    margin-top: 5px;
   }
 
   .parent {

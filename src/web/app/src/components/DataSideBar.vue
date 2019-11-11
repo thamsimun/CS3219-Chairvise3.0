@@ -1,6 +1,6 @@
 <template>
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-active="$route.path" v-loading="isLoading" router>
+    <div class="sidebar">
+        <el-menu style="height:100%" :default-active="$route.path" v-loading="isLoading" router>
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-menu"></i>Presentations</template>
                 <el-menu-item-group>
@@ -32,12 +32,8 @@
                 </el-menu-item-group>
             </el-submenu>
         </el-menu>
-    </el-aside>
-    
+    </div>
 </template>
-
-
-
 <script>
     export default {
         name: "DataSideBar"
@@ -45,5 +41,9 @@
 </script>
 
 <style scoped>
-
+    .sidebar{
+        position: absolute;
+        min-width: 220px;
+        height: 100%;
+    }
 </style>

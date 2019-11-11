@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h4><i class="el-icon-document"></i> List of Information Available</h4>
-    <el-menu @select="scrollToId($event)" default-active="general-guide">
+  <div class="listGuide">
+    <h4><i class="el-icon-document"></i> Guide Outline </h4>
+    <el-menu style="border-width:0;" @select="scrollToId($event)" default-active="general-guide">
       <el-menu-item index="general-guide">
         <i class="el-icon-question"></i>
         <span>
@@ -50,3 +50,14 @@
     }
   }
 </script>
+
+<style>
+  .listGuide {
+    width: 245px;
+    margin-left: 10px;
+    position: fixed;
+  }
+  .el-menu-item{
+    width: auto;
+  }
+</style>
