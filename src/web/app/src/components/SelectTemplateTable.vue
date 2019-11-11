@@ -6,12 +6,17 @@
       style='width:50%;margin:auto;'
       :data='templates'>
       <el-table-column
-        property="Name"
-        label="Name"
-        width="120">
+        property="templateId"
+        label="Id"
+        width="100">
       </el-table-column>
       <el-table-column
-        property="Description"
+        property="name"
+        label="Name"
+        width="250">
+      </el-table-column>
+      <el-table-column
+        property="description"
         label="Description">
       </el-table-column>
     </el-table>
@@ -23,7 +28,6 @@
     name: "SelectTemplateTable",
     mounted() {
       this.$store.dispatch('fetchFileTemplates');
-      console.log(this.$store.state.fileTemplates.templates);
     },
     data() {
       return {
@@ -32,11 +36,10 @@
     },
     computed: {
       templates() {
-        return this.$store.state.fileTemplates.templates.map(template => {
+        return this.$store.state.fileTemplates.templates.map(({templateId, templateMappingList}) => {
           return {
-            Name: template.templateId,
-            Description: 'description here..',
-            ...template.templateMappingList
+            templateId,
+            ...templateMappingList
           };
         });
       }

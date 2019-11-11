@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div id='btns'>
+    <div id='controls'>
       <SaveTemplateDialog :isOldTemplate=isOldTemplate v-bind:template='currentTemplate'></SaveTemplateDialog>
       <el-button class='btn-complete' plain type='success' v-on:click='submit'>Complete import</el-button>
     </div>
@@ -219,7 +219,7 @@
     overflow: auto;
   }
 
-  #btns {
+  #controls {
     display: flex;
   }
 </style>
