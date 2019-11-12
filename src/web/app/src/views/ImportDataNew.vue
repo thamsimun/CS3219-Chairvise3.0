@@ -99,14 +99,6 @@
 			templateNotSelected() {
 				return !this.$data.useNoTemplate && _.isEmpty(this.$store.state.fileTemplates.chosenTemplate);
 			},
-			// hasHeader: {
-			// 	get() {
-			// 		return this.$store.state.dataMappingNew.hasHeader;
-			// 	},
-			// 	set(value) {
-			// 		this.$store.commit('setHasHeader', value)
-			// 	},
-			// }
 		},
 		methods: {
 			fileUploadHandler(file) {
