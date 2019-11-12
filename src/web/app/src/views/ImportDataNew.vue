@@ -115,11 +115,11 @@
 				// Parse the raw data
 				Papa.parse(file.raw, {
 					skipEmptyLines: true,
-					header: false,
+					header: false, // we do this so that we can add in mock headers if user does not have headers
 					complete: ({data}) => {
 						const headers = this.$data.hasHeaders
-							                 ? data.shift()
-							                 : _.first(data).map((x, index) => `Column ${index + 1}`);
+							                 ? data.shift() // headers is the first row
+							                 : _.first(data).map((x, index) => `Column ${index + 1}`); // mock headers
 						// Set the headers obtained to Pool
 						this.$store.commit('setPool', headers);
 						// Data is stored as {Col1: data" , Col2: data} objects that represent row
