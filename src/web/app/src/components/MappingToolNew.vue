@@ -9,47 +9,11 @@
 				</el-button>
 			</div>
 		</div>
-		<div>
-			<!--    List out all name of fields of the DB Schema obtained from store  -->
-			<div class='table'>
-				<div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
-					<div class='db-field'><p>{{ element.name }}</p></div>
-				</div>
-			</div>
-			<!--    List out all the possible transformations   -->
-			<div class='table'>
-				<div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
-					<!--     Assign transformations    -->
-					<el-select v-model=transformations[index] value-key='name'>
-						<!--       Choose from possible transformations for specific type     -->
-						<el-option
-										v-for='item in options[element.type]'
-										:label='item.name'
-										:key='item.name'
-										:value='item'>
-						</el-option>
-					</el-select>
-				</div>
-			</div>
-
-			<!--   For each element in mappingList, assign it a field from pool  -->
-			<div class='table'>
-				<div class='table-cell' v-for='(list, colIdx) in mappingList' :key='colIdx'>
-					<!--     List of possible fields from pool to map to particular mapping list     -->
-					<draggable :list='list' group='fields'>
-						<div v-for='(item, lstIdx) in list' :key='lstIdx' @dblclick='removeFromSelected(colIdx, lstIdx)'>
-							<div class='user-field'><p>{{ item }}</p></div>
-						</div>
-					</draggable>
-				</div>
-			</div>
-		</div>
-
 		<!-- New -->
 		<div id='map'>
-			<div v-for='(element, index) in fieldMetaData' :key='index'>
-				<div>{{ element.name }}</div>
-				<el-select v-model=transformations[index] value-key='name'>
+			<div class='block' v-for='(element, index) in fieldMetaData' :key='index'>
+				<div class='header'>{{ element.name }}</div>
+				<el-select size='mini' value='name' v-model=transformations[index] value-key='name'>
 					<el-option
 									v-for='item in options[element.type]'
 									:label='item.name'
@@ -57,8 +21,7 @@
 									:value='item'>
 					</el-option>
 				</el-select>
-				<!-- mappingList -->
-				<draggable :list='mappingList[index]' group='fields'>
+				<draggable class='assign' :list='mappingList[index]' group='fields'>
 					<div v-for='(item, listIndex) in mappingList[index]' :key='listIndex' @dblclick='removeFromSelected(index, listIndex)'>
 						<div>{{ item }}</div>
 					</div>
@@ -267,5 +230,23 @@
 	#map {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.header {
+		text-align: center;
+		font-weight: bold;
+		font-size: 24px;
+	}
+
+	.block {
+		margin: 10px;
+		text-align: center;
+		min-height: 100px;
+	}
+
+	.assign {
+		color: #409EFF;
 	}
 </style>
