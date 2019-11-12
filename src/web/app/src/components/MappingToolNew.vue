@@ -22,8 +22,8 @@
 					</el-option>
 				</el-select>
 				<draggable class='assign' :list='mappingList[index]' group='fields'>
-					<div v-for='(item, listIndex) in mappingList[index]' :key='listIndex' @dblclick='removeFromSelected(index, listIndex)'>
-						<div>{{ item }}</div>
+					<div class='item' v-for='(item, listIndex) in mappingList[index]' :key='listIndex' @dblclick='removeFromSelected(index, listIndex)'>
+						{{ item }}
 					</div>
 				</draggable>
 			</div>
@@ -239,15 +239,21 @@
 		text-align: center;
 		font-weight: bold;
 		font-size: 24px;
+		cursor: default;
 	}
 
 	.block {
 		margin: 10px;
 		text-align: center;
 		min-height: 100px;
+		cursor: grabbing;
 	}
 
 	.assign {
 		color: #409EFF;
+	}
+
+	.item {
+		cursor: grab;
 	}
 </style>
