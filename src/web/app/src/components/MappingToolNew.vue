@@ -1,14 +1,10 @@
 <template>
-  <div class='wrapper'>
+  <div>
     <div>
+	    <h1 style='text-align:center;'>Your columns</h1>
       <div id='pick-cols'>
-        <h1>Pick columns</h1>
         <!--   List out all the fields in the pool, which is all the headers obtained from the csv    -->
-        <ul>
-          <li v-for='(field, index) in pool' v-bind:key='index' v-on:click='addToSelected(field)'>
-            {{ field }}
-          </li>
-        </ul>
+	      <el-button class='column-select' type='primary' v-for='(field, index) in pool' :key='index' @click='addToSelected(field)'>{{ field }}</el-button>
       </div>
     </div>
     <div>
@@ -228,7 +224,15 @@
   }
 
   #pick-cols {
+    margin:auto;
     display: flex;
     justify-content: center;
+	  flex-wrap: wrap;
+    padding-bottom: 50px;
+    width: 500px;
+  }
+
+  .column-select {
+    margin: 5px;
   }
 </style>
