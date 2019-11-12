@@ -36,14 +36,6 @@ export default new Router({
       props: true
     },
     {
-      path: '/importData',
-      name: 'importData',
-      meta: {
-        title: 'Import Data Page'
-      },
-      component: () => import(/* webpackChunkName: "importData" */ './views/ImportData.vue')
-    },
-    {
       path: '/landing',
       name: 'landing',
       meta: {
@@ -60,8 +52,8 @@ export default new Router({
       component: () => import(/* webpackChunkName: "guide" */ './views/Guide.vue')
     },
     {
-      path: '/ImportDataNew',
-      name: 'ImportDataNew',
+      path: '/ImportData',
+      name: 'ImportData',
       meta: {
         title: 'Import Data Page'
       },

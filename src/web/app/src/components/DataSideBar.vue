@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <el-menu style="height:100%" :default-active="$route.path" v-loading="isLoading" router>
+        <el-menu style="height:100%" :default-active="$route.path" router>
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-menu"></i>Presentations</template>
                 <el-menu-item-group>
@@ -21,7 +21,7 @@
             <el-submenu index="2">
                 <template slot="title"><i class="el-icon-menu"></i>Files</template>
                 <el-menu-item-group>
-                    <el-menu-item :index="'/importDataNew'">
+                    <el-menu-item :index="'/importData'">
                         <i class="el-icon-upload"></i>
                         <span slot="title">Upload New</span>
                     </el-menu-item>
@@ -44,6 +44,7 @@
     .sidebar{
         position: absolute;
         min-width: 220px;
+        max-width: 220px;
         height: 100%;
     }
 </style>

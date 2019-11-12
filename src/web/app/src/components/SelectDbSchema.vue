@@ -1,16 +1,13 @@
 <template>
   <div class='card-container'>
-    <div class='table-cell' v-for='dbSchema in dbSchemas' v-bind:key='dbSchema.tableName'
-         v-on:click='select(dbSchema)'>
-      <el-card class='box-card' shadow='hover'>
-        <h1>{{ dbSchema.name }}</h1>
-        <ul>
-          <li v-for='field in dbSchema.fieldMetaDataList' v-bind:key='field.name'>
-            {{ field.name }}
-          </li>
-        </ul>
-      </el-card>
+    <div v-for='dbSchema in dbSchemas' :key='dbSchema.name'>
+      <div @click='select(dbSchema)'>
+        <el-card class='box-card' shadow='hover'>
+          <h1>{{ dbSchema.name }}</h1>
+        </el-card>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -34,25 +31,23 @@
 </script>
 
 <style scoped>
-  .card-container {
-    width: auto;
-    display: inline-flex;
-    table-layout: fixed;
-    align-content: center;
-  }
-
-  .table-cell {
-    display: table-cell;
-    margin: 5px;
-  }
-
   .box-card {
-    min-width: 250px;
-    max-width: 300px;
+    min-width: 500px;
     width: auto;
     height: auto;
-    overflow: hidden;
+    margin: 10px;
     text-overflow: ellipsis;
+    text-align: center;
+    color: #409EFF;
+    background-color: #EBEEF5;
+    cursor: pointer;
+  }
 
+  .card-container {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
 </style>

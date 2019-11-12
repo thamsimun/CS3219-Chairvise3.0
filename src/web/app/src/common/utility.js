@@ -39,3 +39,14 @@ export const distribute = (xss, item) => {
 export const removeItem = (xss, colIdx, lstIdx) => {
   return xss.map((xs, idx) => idx !== colIdx ? xs : xs.filter((x, idx) => idx !== lstIdx));
 };
+
+/*
+  from a list of names of functions (fnames), return a list of functions corresponding to the original list,
+  based on the options available and the meta data of the field.
+  this method does not mutate fnames, fieldMetaData, options
+ */
+export const getTransformations = (fnames, fieldMetaData, options) => {
+  return fieldMetaData.map((meta, index) => {
+    return options[meta.type].filter(obj => obj.name === fnames[index]).pop();
+  });
+};
