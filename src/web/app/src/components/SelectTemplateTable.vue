@@ -59,7 +59,6 @@
 				this.$store.commit('selectTemplate', template);
 			},
 			handleDelete({row}) {
-				console.log(row.templateId);
 				this.$store.dispatch('deleteFileTemplate', row.templateId)
 					.then(() => this.$store.dispatch('fetchFileTemplates'));
 			},

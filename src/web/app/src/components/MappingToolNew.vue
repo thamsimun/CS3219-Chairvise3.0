@@ -5,7 +5,7 @@
 			<div id='pick-cols'>
 				<!--   List out all the fields in the pool, which is all the headers obtained from the csv    -->
 				<el-button class='column-select' type='primary' v-for='(field, index) in pool' :key='index'
-				           @click='addToSelected(field)'>{{ field }}
+                   @click='addToSelected(field)'>{{ field }}
 				</el-button>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 				</el-select>
 				<draggable class='assign' :list='mappingList[index]' group='fields'>
 					<div class='item' v-for='(item, listIndex) in mappingList[index]' :key='listIndex'
-					     @dblclick='removeFromSelected(index, listIndex)'>
+               @dblclick='removeFromSelected(index, listIndex)'>
 						{{ item }}
 					</div>
 				</draggable>
@@ -93,9 +93,6 @@
 			},
 			isOldTemplate() {
 				const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
-				console.log(chosenTemplate);
-				console.log(this.$data.transformations);
-				console.log(this.$data.mappingList);
 
 				if (!chosenTemplate) {
 					// user skipped selecting a template, trivially a new template
@@ -115,7 +112,6 @@
 				}
 
 				// Iterate through each row, combine row and mappingList
-				console.log('in submit');
 				let toProcess = [];
 				this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
 				this.$store.commit('setMappingList', _.cloneDeep(this.mappingList));

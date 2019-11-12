@@ -15,22 +15,19 @@
 						<h1 class="head">File Upload</h1>
 						<div class="nav-buttons">
 							<div class='btn-div'>
-							  <el-button class='back-btn' type='plain' icon='el-icon-back' circle
-							             @click='clearSelectedSchema'></el-button>
-							  <el-button style='visibility:hidden;'></el-button>
+								<el-button class='back-btn' type='plain' icon='el-icon-back' circle
+                           @click='clearSelectedSchema'></el-button>
+								<el-button style='visibility:hidden;'></el-button>
 							</div>
 						</div>
 						<div style='text-align:center;'>
 							<h3 style='margin-bottom: 10px;'> Does your file have headers? </h3>
 							<el-switch v-model="hasHeader" active-text="Yes, I have headers"
-							           inactive-text="No, I can identify my own"
-							           style='margin-bottom: 50px;'
+                         inactive-text="No, I can identify my own"
+                         style='margin-bottom: 50px;'
 							></el-switch>
-							<el-upload drag action=''
-							           :auto-upload='false'
-							           :show-file-list='false'
-							           :multiple='false'
-							           :on-change='fileUploadHandler'>
+							<el-upload drag action='' :auto-upload='false' :show-file-list='false' :multiple='false'
+                         on-change='fileUploadHandler'>
 								<i class='el-icon-upload'></i>
 								<div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
 								<div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
@@ -41,8 +38,9 @@
 						<h1 class="head">Pick a Template</h1>
 						<div class="nav-buttons">
 							<div class='btn-div'>
-							  <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearRawData'></el-button>
-							  <el-button class='forward-btn' type='plain' icon='el-icon-right' circle @click='skipTemplate'></el-button>
+								<el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearRawData'></el-button>
+								<el-button class='forward-btn' type='plain' icon='el-icon-right' circle
+                           @click='skipTemplate'></el-button>
 							</div>
 						</div>
 						<SelectTemplateTable></SelectTemplateTable>
@@ -69,6 +67,7 @@
 	import DataSideBar from "../components/DataSideBar.vue";
 	import _ from 'lodash';
 	import Papa from 'papaparse';
+
 	export default {
 		name: "ImportDataNew",
 

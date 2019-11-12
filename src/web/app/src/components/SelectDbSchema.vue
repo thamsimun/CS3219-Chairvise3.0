@@ -35,7 +35,7 @@
     min-width: 500px;
     width: auto;
     height: auto;
-	  margin: 10px;
+    margin: 10px;
     text-overflow: ellipsis;
     text-align: center;
     color: #409EFF;
