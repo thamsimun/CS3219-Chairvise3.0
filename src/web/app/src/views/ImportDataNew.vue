@@ -27,7 +27,7 @@
                          style='margin-bottom: 50px;'
 							></el-switch>
 							<el-upload drag action='' :auto-upload='false' :show-file-list='false' :multiple='false'
-                         on-change='fileUploadHandler'>
+                         :on-change='fileUploadHandler'>
 								<i class='el-icon-upload'></i>
 								<div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
 								<div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
