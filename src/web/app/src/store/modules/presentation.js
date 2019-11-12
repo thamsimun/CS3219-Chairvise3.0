@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {deepCopy} from "@/common/utility"
+import _ from 'lodash'
 
 export default {
   state: {
@@ -88,6 +89,12 @@ export default {
 
     appendToPresentationFormFileMappings(state, value) {
         state.presentationForm.fileMappings.push(value);
+    },
+
+    removeFromPresentationFormFileMappings(state, value) {
+      _.remove(state.presentationForm.fileMappings, function(x) {
+        return x === value;
+      })
     },
 
     setIsPresentationEditable(state, isPresentationEditable) {

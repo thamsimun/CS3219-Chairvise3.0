@@ -42,6 +42,7 @@ public class AnalysisController extends BaseRestController {
                 .orElseThrow(() -> new PresentationNotFoundException(id));
         gateKeeper.verifyAccessForPresentation(presentation, AccessLevel.CAN_READ, email, password);
 
+        System.out.println(analysisRequest.getUserId() + "Hellooooooo");
         analysisRequest.setMappings(presentation.getFileMappings());
 
         List<Map<String, Object>> result = analysisLogic.analyse(analysisRequest);

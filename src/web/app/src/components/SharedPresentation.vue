@@ -10,7 +10,7 @@
                         <div class = "column"  v-for="presentation in sharedPresentationListInfo"
                              :key="presentation.id">
                             <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
-                                <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
+                                <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; max-width: 250px; min-height: 200px">
                                     <img src="../assets/test3.png" class="image">
                                     <div class="text">
                                         <span>{{presentation.name}}</span>
