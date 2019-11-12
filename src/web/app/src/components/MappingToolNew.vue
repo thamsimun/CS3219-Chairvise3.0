@@ -12,7 +12,7 @@
 		<!-- New -->
 		<div id='map'>
 			<div class='block' v-for='(element, index) in fieldMetaData' :key='index'>
-				<div class='header'>{{ element.name }}</div>
+				<div class='db-header'>{{ element.name }}</div>
 				<el-select size='mini' value='name' v-model=transformations[index] value-key='name'>
 					<el-option
 									v-for='item in options[element.type]'
@@ -73,6 +73,9 @@
 			};
 		},
 		computed: {
+			errors() {
+				return this.$store.state.dataMappingNew.error;
+			},
 			pool() {
 				return _.cloneDeep(this.$store.state.dataMappingNew.data.pool); // Pool data
 			},
@@ -168,7 +171,7 @@
 		justify-content: center;
 	}
 
-	.header {
+	.db-header {
 		text-align: center;
 		font-weight: bold;
 		font-size: 24px;
