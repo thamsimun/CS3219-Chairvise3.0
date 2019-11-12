@@ -38,6 +38,20 @@ export default {
       } finally {
         commit('setPageLoadingStatus', false);
       }
+    },
+
+    async deleteFileTemplate({commit}, templateId) {
+    	console.log(templateId);
+      commit('setPageLoadingStatus', true);
+      try {
+        await axios.delete('/api/file/mapping', templateId);
+        commit('notifySuccess', 'Template deleted!');
+      } catch (e) {
+        console.log(e);
+        commit('setError', e.toString());
+      } finally {
+        commit('setPageLoadingStatus', false);
+      }
     }
   }
 }

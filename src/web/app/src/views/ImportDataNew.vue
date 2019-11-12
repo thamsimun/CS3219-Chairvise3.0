@@ -69,7 +69,6 @@
 	import DataSideBar from "../components/DataSideBar.vue";
 	import _ from 'lodash';
 	import Papa from 'papaparse';
-	// import dataMappingNew from "../store/modules/dataMappingNew";
 	export default {
 		name: "ImportDataNew",
 
@@ -78,10 +77,16 @@
 				headerMode: false,
 				pool: [],
 				selected: [],
-				useNoTemplate: false
+				useNoTemplate: false,
 			}
 		},
 		computed: {
+			errors() {
+				return this.$store.state.dataMappingNew.error;
+			},
+			messages() {
+				return this.$store.state.dataMappingNew.messages;
+			},
 			dbSchemas() {
 				return this.$store.state.dbMetaData.entities;
 			},
@@ -148,6 +153,24 @@
 			clearTemplate() {
 				this.$data.useNoTemplate = false;
 				this.$store.commit('selectTemplate', null);
+			},
+		},
+		watch: {
+			errors: function (errList) {
+				if (errList.length !== 0) {
+					this.$notify.error({
+						title: 'Error',
+						message: errList.join('\n')
+					});
+				}
+			},
+			messages: function (msgList) {
+				if (msgList.length !== 0) {
+					this.$notify.success({
+						title: 'Success',
+						message: msgList.join('\n')
+					});
+				}
 			}
 		},
 		components: {

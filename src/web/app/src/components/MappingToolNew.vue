@@ -22,7 +22,8 @@
 					</el-option>
 				</el-select>
 				<draggable class='assign' :list='mappingList[index]' group='fields'>
-					<div class='item' v-for='(item, listIndex) in mappingList[index]' :key='listIndex' @dblclick='removeFromSelected(index, listIndex)'>
+					<div class='item' v-for='(item, listIndex) in mappingList[index]' :key='listIndex'
+					     @dblclick='removeFromSelected(index, listIndex)'>
 						{{ item }}
 					</div>
 				</draggable>
@@ -84,12 +85,6 @@
 			dbSchemaName() {
 				return _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName); // Schema name
 			},
-			errors() {
-				return this.$store.state.dataMappingNew.error;
-			},
-			messages() {
-				return this.$store.state.dataMappingNew.messages;
-			},
 			currentTemplate() {
 				return {
 					transformations: this.transformations.map(obj => !obj ? undefined : obj.name),
@@ -131,15 +126,6 @@
 					this.$store.dispatch('persistData');
 				}
 			},
-
-			createNewTemplate() {
-				const template = {
-					transformations: this.$data.transformations.map(f => f.name),
-					mappingList: _.cloneDeep(this.$data.mappingList),
-				};
-				this.$store.dispatch('saveFileTemplate', template);
-			},
-
 			addToSelected(field) {
 				distribute(this.mappingList, field);
 			},
@@ -148,62 +134,10 @@
 				this.mappingList = removeItem(this.mappingList, colIdx, lstIdx);
 			}
 		},
-		watch: {
-			errors: function (errList) {
-				if (errList.length !== 0) {
-					this.$notify.error({
-						title: 'Error',
-						message: errList.join('\n')
-					});
-				}
-			},
-			messages: function (msgList) {
-				if (msgList.length !== 0) {
-					this.$notify.success({
-						title: 'Success',
-						message: msgList.join('\n')
-					});
-				}
-			}
-		}
 	};
 </script>
 
 <style scoped>
-	.db-field {
-		border-style: solid;
-		border-width: 5px;
-		border-color: gold;
-		margin: 5px;
-		padding: 5px;
-	}
-
-	.user-field {
-		border-style: solid;
-		border-width: 5px;
-		border-color: orange;
-		margin: 5px;
-		padding: 5px;
-	}
-
-	.table {
-		display: table;
-		width: 100%;
-		table-layout: fixed;
-		margin-top: 10px;
-	}
-
-	.table-cell {
-		display: table-cell;
-	}
-
-	.wrapper {
-		padding: 20px;
-		flex-direction: column;
-		height: 100%;
-		width: 100%;
-	}
-
 	.btn-complete {
 		margin: 20px;
 	}
