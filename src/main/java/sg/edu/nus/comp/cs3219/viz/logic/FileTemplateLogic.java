@@ -1,6 +1,8 @@
 package sg.edu.nus.comp.cs3219.viz.logic;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import sg.edu.nus.comp.cs3219.viz.common.datatransfer.FileTemplateData;
 import sg.edu.nus.comp.cs3219.viz.common.entity.FileTemplate;
 import sg.edu.nus.comp.cs3219.viz.common.exception.EntityNotFoundException;
@@ -34,6 +36,7 @@ public class FileTemplateLogic {
         return templateData;
     }
 
+    @Transactional
     public List<FileTemplateData> deleteTemplateForUser(long templateId, long userId) {
         Optional<FileTemplate> template = fileTemplateRepository.findByCreatorIdentifierAndIdEquals(String.valueOf(userId), templateId);
         if (!template.isPresent()) {

@@ -35,8 +35,8 @@ public class FileTemplateController extends BaseRestController {
         return fileTemplateLogic.getTemplatesForUser(user.getUserId());
     }
 
-    @DeleteMapping("/file/mapping")
-    public List<FileTemplateData> deleteTemplateMapping(long templateId,
+    @DeleteMapping("/file/mapping/{templateId}")
+    public List<FileTemplateData> deleteTemplateMapping(@PathVariable Long templateId,
                                                         @CookieValue(value = "userEmail") String email,
                                                         @CookieValue(value = "userPassword") String password) {
         UserInfo user = gateKeeper.verifyLoginAccess(email, password);
