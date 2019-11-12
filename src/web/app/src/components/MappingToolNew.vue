@@ -92,19 +92,22 @@
 			},
 			currentTemplate() {
 				return {
-					transformations: this.transformations.map(obj => obj.name),
+					transformations: this.transformations.map(obj => !obj ? undefined : obj.name),
 					mappingList: _.clone(this.mappingList)
 				};
 			},
 			isOldTemplate() {
 				const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
+				console.log(chosenTemplate);
+				console.log(this.$data.transformations);
+				console.log(this.$data.mappingList);
 
 				if (!chosenTemplate) {
 					// user skipped selecting a template, trivially a new template
 					return false;
 				}
 				// check whether the current template were any different that the chosen template earlier
-				return _.isEqual(chosenTemplate.transformations.map(x => x), this.$data.transformations.map(obj => obj.name)) &&
+				return _.isEqual(chosenTemplate.transformations.map(x => x), this.$data.transformations.map(obj => !obj ? undefined : obj.name)) &&
 					_.isEqual(chosenTemplate.mappingList, this.$data.mappingList);
 			}
 		},
