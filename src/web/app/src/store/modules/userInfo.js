@@ -55,13 +55,13 @@ export default {
     },
 
     setCookies(state) {
-      VueCookies.set('userEmail', state.registerForm.userEmail, '1d', "/");
-      VueCookies.set('userPassword', state.registerForm.hashedPassword, '1d', "/");
+      VueCookies.set('userEmail', state.registerForm.userEmail, "/");
+      VueCookies.set('userPassword', state.registerForm.hashedPassword, "/");
     },
 
     clearCookies() {
-      VueCookies.set('userEmail', "", '1d', "/");
-      VueCookies.set('userPassword', "", '1d', "/");
+      VueCookies.set('userEmail', "", "/");
+      VueCookies.set('userPassword', "", "/");
     },
 
     setAuthInfoApiRequestFail(state, payload) {
