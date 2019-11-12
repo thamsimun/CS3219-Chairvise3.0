@@ -212,6 +212,7 @@
 
 	#controls {
 		display: flex;
+		justify-content: center;
 	}
 
 	#pick-cols {
