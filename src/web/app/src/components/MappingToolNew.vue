@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-	    <h1 style='text-align:center;'>Your columns</h1>
+	    <h1 style='text-align:center;font-size:28px;margin:0 0 1% 0;'>Your columns</h1>
       <div id='pick-cols'>
         <!--   List out all the fields in the pool, which is all the headers obtained from the csv    -->
 	      <el-button class='column-select' type='primary' v-for='(field, index) in pool' :key='index' @click='addToSelected(field)'>{{ field }}</el-button>
@@ -11,7 +11,6 @@
       <!--    List out all name of fields of the DB Schema obtained from store  -->
       <div class='table'>
         <div class='table-cell' v-for='(element, index) in fieldMetaData' :key='index'>
-
           <div class='db-field'><p>{{ element.name }}</p></div>
         </div>
       </div>
@@ -131,11 +130,16 @@
         }
 
         // Iterate through each row, combine row and mappingList
+        console.log('in submit');
         let toProcess = [];
         this.rawData.forEach(row => toProcess.push(_.pick(row, this.mappingList.flat())));
         this.$store.commit('setMappingList', _.cloneDeep(this.mappingList));
         this.$store.commit('setTransformations', this.transformations.map(obj => obj.value));
         this.$store.commit('processData', toProcess);
+
+        if (this.errors.length === 0) {
+          this.$store.dispatch('persistData');
+        }
       },
 
       createNewTemplate() {
