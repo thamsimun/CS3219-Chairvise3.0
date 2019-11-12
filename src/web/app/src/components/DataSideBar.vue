@@ -21,7 +21,7 @@
             <el-submenu index="2">
                 <template slot="title"><i class="el-icon-menu"></i>Files</template>
                 <el-menu-item-group>
-                    <el-menu-item :index="'/importDataNew'">
+                    <el-menu-item :index="'/importData'">
                         <i class="el-icon-upload"></i>
                         <span slot="title">Upload New</span>
                     </el-menu-item>
