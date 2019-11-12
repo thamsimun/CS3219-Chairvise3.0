@@ -59,11 +59,11 @@ export const getTransformations = (fnames, fieldMetaData, options) => {
 export const formDataWithHeaders = (headers, data) => {
   let transformedData = [];
   data.forEach(row => {
-  	let obj = {};
-  	headers.forEach((header, index) => {
-  	  obj[header] = row[index];
+    let obj = {};
+    headers.forEach((header, index) => {
+      obj[header] = row[index];
     });
-  	transformedData.push(obj);
+    transformedData.push(obj);
   });
   return transformedData;
 };
