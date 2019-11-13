@@ -22,7 +22,7 @@
 						</div>
 						<div style='text-align:center;'>
 							<h3 style='margin-bottom: 10px;'> Does your file have headers? </h3>
-							<el-switch v-model="hasHeader" active-text="Yes, I have headers"
+							<el-switch v-model="hasHeaders" active-text="Yes, I have headers"
                          inactive-text="No, I can identify my own"
                          style='margin-bottom: 50px;'
 							></el-switch>
@@ -67,16 +67,17 @@
 	import DataSideBar from "../components/DataSideBar.vue";
 	import _ from 'lodash';
 	import Papa from 'papaparse';
+	import {formDataWithHeaders} from "../common/utility";
 
 	export default {
 		name: "ImportDataNew",
 
 		data: function () {
 			return {
-				headerMode: false,
 				pool: [],
 				selected: [],
 				useNoTemplate: false,
+				hasHeaders: true,
 			}
 		},
 		computed: {
@@ -98,47 +99,27 @@
 			templateNotSelected() {
 				return !this.$data.useNoTemplate && _.isEmpty(this.$store.state.fileTemplates.chosenTemplate);
 			},
-			hasHeader: {
-				get() {
-					return this.$store.state.dataMappingNew.hasHeader;
-				},
-				set(value) {
-					this.$store.commit('setHasHeader', value)
-				},
-			}
 		},
 		methods: {
 			fileUploadHandler(file) {
 				this.$store.commit('setPageLoadingStatus', true);
-				// If there is header, papaparse with headers
-				// if (this.$store.state.dataMappingNew.data.hasHeader) {
+
 				// Parse the raw data
 				Papa.parse(file.raw, {
 					skipEmptyLines: true,
-					header: true, // we take it as there are headers present for now
-					complete: result => {
-						this.$store.commit('setPool', result.meta.fields);  // Set the headers obtained to Pool
-						this.$store.commit('setRawData', result.data);
+					header: false, // we do this so that we can add in mock headers if user does not have headers
+					complete: ({data}) => {
+						const headers = this.$data.hasHeaders
+                               ? data.shift() // headers is the first row
+                               : _.first(data).map((x, index) => `Column ${index + 1}`); // mock headers
+						// Set the headers obtained to Pool
+						this.$store.commit('setPool', headers);
 						// Data is stored as {Col1: data" , Col2: data} objects that represent row
-						this.$store.commit('setFileName', file.name);       //  Set the file name
+						this.$store.commit('setRawData', formDataWithHeaders(headers, data));
+						this.$store.commit('setFileName', file.name);
 						this.$store.commit('setPageLoadingStatus', false);
 					}
 				})
-				// } else {
-				//   // Parse the raw data
-				//   Papa.parse(file.raw, {
-				//     skipEmptyLines: true,
-				//     header: false, // we take it as there are headers present for now
-				//     complete: result => {
-				//       this.$store.commit('setPool', result.meta.fields);  // Set the headers obtained to Pool
-				//       this.$store.commit('setRawData', result.data);
-				//       // Data is stored as {Col1: data" , Col2: data} objects that represent row
-				//       this.$store.commit('setFileName', file.name);       //  Set the file name
-				//       this.$store.commit('setPageLoadingStatus', false);
-				//     }
-				//   })
-				// }
-
 			},
 			clearSelectedSchema() {
 				this.$store.commit('setDbSchema', {name: '', fieldMetaDataList: []});

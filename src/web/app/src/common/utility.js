@@ -50,3 +50,20 @@ export const getTransformations = (fnames, fieldMetaData, options) => {
     return options[meta.type].filter(obj => obj.name === fnames[index]).pop();
   });
 };
+
+/*
+  takes in a list of headers and the Data, creates a list of objects with a header as the field and some data in Data
+  as the value.
+  this function return exactly the format of data that the functions later on uses.
+ */
+export const formDataWithHeaders = (headers, data) => {
+  let transformedData = [];
+  data.forEach(row => {
+    let obj = {};
+    headers.forEach((header, index) => {
+      obj[header] = row[index];
+    });
+    transformedData.push(obj);
+  });
+  return transformedData;
+};
