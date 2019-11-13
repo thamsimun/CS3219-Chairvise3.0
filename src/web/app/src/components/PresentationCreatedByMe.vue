@@ -10,10 +10,11 @@
                         <div class = "column"  v-for="presentation in presentations"
                                 :key="presentation.id">
                             <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
-                                <el-card :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px">
+                                <el-card class="present-tiles">
+<!--                                    body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px"-->
                                     <img src="../assets/test3.png" class="image">
                                     <div class="text">
-                                        <span>{{presentation.name}}</span>
+                                        <div class="presentationname">{{presentation.name}}</div>
                                     </div>
                                 </el-card>
                             </el-menu-item>
@@ -83,11 +84,25 @@
         display: flex;
     }
 
+    .present-tiles {
+        width: 100%;
+        height: 100%;
+    }
+
     .row {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         width: 100%;
+    }
+
+    .presentationname {
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .presentationname:hover {
+        overflow: visible;
     }
 
     .column {
