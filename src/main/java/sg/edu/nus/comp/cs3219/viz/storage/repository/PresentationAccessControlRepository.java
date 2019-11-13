@@ -15,5 +15,4 @@ public interface PresentationAccessControlRepository extends JpaRepository<Prese
 
     List<PresentationAccessControl> findAllByUserIdentifierEqualsAndAccessLevelEquals(String userIdentifier, AccessLevel accessLevel);
 
-
 }
