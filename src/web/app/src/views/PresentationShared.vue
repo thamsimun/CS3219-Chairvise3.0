@@ -5,13 +5,7 @@
         <el-aside style="width:20%; height:auto; margin-top:1px">
             <DataSideBar/>
         </el-aside>
-        <el-container>
-            <div class="parent">
-                <el-col class="sharedPresentation">
-                    <SharedPresentation/>
-                </el-col>
-            </div>
-        </el-container>
+        <SharedPresentation/>
     </el-container>
 </template>
 

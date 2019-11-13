@@ -1,11 +1,26 @@
 <template>
-    <el-container style="min-width: 200px">
-        <el-main>
+<!--    <el-container style="min-width: 200px">-->
+        <div style="display:flex; flex-direction: column;">
+<!--        <el-main>-->
             <div style="text-align: center; margin-bottom: 0px; margin-top: 30px">
                 <span class="head">Presentations Created By Me</span>
             </div>
             <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
                 <div class="container">
+<!--                    <div style="display: flex; flex-wrap: wrap;">-->
+<!--                        <div class = ""  v-for="presentation in presentations"-->
+<!--                             :key="presentation.id">-->
+<!--                            <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">-->
+<!--                                <el-card class="present-tiles">-->
+<!--                                    &lt;!&ndash;                                    body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <img width='' src="../assets/test3.png" class="image">&ndash;&gt;-->
+<!--                                    <div class="text">-->
+<!--                                        <div class="presentationname">{{presentation.name}}</div>-->
+<!--                                    </div>-->
+<!--                                </el-card>-->
+<!--                            </el-menu-item>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="row" >
                         <div class = "column"  v-for="presentation in presentations"
                                 :key="presentation.id">
@@ -22,8 +37,9 @@
                     </div>
                 </div>
             </el-menu>
-        </el-main>
-    </el-container>
+<!--        </el-main>-->
+        </div>
+<!--    </el-container>-->
 </template>
 
 <script>
@@ -121,10 +137,12 @@
         height: 450px;
     }
     .menu-item{
-        margin-bottom:175px;
         margin-top: 50px;
-        height: 85px;
-        width: 250px;
+        /*height: 85px;*/
+        /*width: 250px;*/
+        width: 100%;
+        height: 100%;
+
     }
 
     .text {
