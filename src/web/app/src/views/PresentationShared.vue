@@ -5,7 +5,11 @@
         <el-aside style="width:200px; height:auto; margin-top:1px">
             <DataSideBar/>
         </el-aside>
-        <SharedPresentation/>
+        <el-container>
+            <div class="parent">
+                <SharedPresentation/>
+            </div>
+        </el-container>
     </el-container>
 </template>
 
