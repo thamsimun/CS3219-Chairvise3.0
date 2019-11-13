@@ -127,11 +127,6 @@
           }
           this.$refs['registerForm'].clearValidate();
 
-          if (!this.registerFormEmail) {
-            this.emptyEmail = true;
-          } else if (!this.reg.test(this.registerFormEmail)) {
-            this.validEmail = false;
-          }
           // If not logged in
           if (!this.isLogin) {
             this.$store.dispatch('setCookies');
