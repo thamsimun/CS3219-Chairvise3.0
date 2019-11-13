@@ -38,25 +38,13 @@
 </script>
 
 <style>
-    /*.sidebar{*/
-    /*    width:20%;*/
-    /*    height:auto;*/
-    /*    margin-top:1px;*/
-    /*}*/
-    .header {
-        background-color: lightblue;
-        color: #333;
-        line-height: 60px;
-    }
     .file-page {
         min-height: 500px
     }
-
     .fileRecords {
         display: inline-block;
         padding-left: 0px;
     }
-
     .parent {
         text-align: center;
         width: 100%

@@ -6,15 +6,11 @@
     <el-main id="main">
       <router-view/>
     </el-main>
-    <el-footer id="footer">
-<!--      <footer/>-->
-    </el-footer>
   </el-container>
 </template>
 
 <script>
   import MenuBar from '@/components/MenuBar_v2.vue'
-  // import Footer from '@/components/FooterBar.vue'
 
   export default {
     watch: {

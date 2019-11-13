@@ -70,11 +70,18 @@
         this.$data.isFullscreenLoading = true;
         window.location.href = this.$store.state.userInfo.loginUrl
       },
-      logout() {
-        this.$store.dispatch('clearCookies');
+      async logout() {
+        await this.$store.dispatch('clearCookies');
         // enter full screen loading and wait browser to redirect to google login page
         this.$data.isFullscreenLoading = true;
-        window.location.href = this.$store.state.userInfo.logoutUrl
+        await this.setLogout();
+        this.returnToHome();
+      },
+      returnToHome() {
+        window.location.href = ('/');
+      },
+      setLogout() {
+          window.location.href = this.$store.state.userInfo.logoutUrl;
       }
     }
   }

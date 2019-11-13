@@ -52,6 +52,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "guide" */ './views/Guide.vue')
     },
     {
+      path: '/explore',
+      name: 'explore',
+      meta: {
+        title: 'Explore Page'
+      },
+      component: () => import(/* webpackChunkName: "landing" */ './views/Explore.vue')
+    },
+    {
       path: '/ImportData',
       name: 'ImportData',
       meta: {

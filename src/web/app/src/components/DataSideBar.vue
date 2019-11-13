@@ -42,9 +42,6 @@
 
 <style scoped>
     .sidebar{
-        position: absolute;
-        min-width: 220px;
-        max-width: 220px;
         height: 100%;
     }
 </style>

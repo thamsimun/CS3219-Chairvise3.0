@@ -124,6 +124,7 @@
     .file-tiles {
         width: 100%;
         height: 100%;
+        margin:auto;
     }
     .el-card__body{
         padding: 15px;

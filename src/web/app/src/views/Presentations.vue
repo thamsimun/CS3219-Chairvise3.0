@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-container>
-        <el-aside width="250px" v-if="isLogin">
+        <el-aside min-width="200px" v-if="isLogin">
           <list-of-presentation/>
         </el-aside>
         <el-main>
