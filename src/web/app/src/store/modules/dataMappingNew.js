@@ -6,7 +6,6 @@ export default {
     hasDbSchemaSet: false,
     hasFileUploaded: false,
     hasChosenTemplate: false,
-    hasHeader: true,
     data: {
       dbSchemaName: '',
       fieldMetaData: [],
@@ -23,9 +22,6 @@ export default {
   },
 
   mutations: {
-    setHasHeader(state, payload) {
-      state.hasHeader = payload;
-    },
     setDbSchema(state, {name, fieldMetaDataList}) {
       state.data.dbSchemaName = name;
       state.data.fieldMetaData = fieldMetaDataList;
