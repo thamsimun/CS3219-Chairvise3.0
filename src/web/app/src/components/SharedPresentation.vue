@@ -1,32 +1,30 @@
 <template>
-    <el-container>
-        <el-main>
-            <div style="padding-left: 55px; margin-bottom: 27px; margin-top: 20px">
-                <span class="head">Shared Presentations</span>
-            </div>
-            <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
-                <div class="container">
-                    <div class="row" >
-                        <div class = "column"  v-for="presentation in sharedPresentationListInfo"
-                             :key="presentation.id">
-                            <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
-                                <el-card class="present-tiles">
+    <div style="display:flex; flex-direction: column;">
+        <div style="text-align:center; margin-bottom: 0px; margin-top: 30px">
+            <span class="head">Shared Presentations</span>
+        </div>
+        <el-menu :default-active="$route.path" class="menu" v-loading="isLoading" router>
+            <div class="container">
+                <div class="row" >
+                    <div class = "column"  v-for="presentation in sharedPresentationListInfo"
+                         :key="presentation.id">
+                        <el-menu-item :index="`/analyze/${presentation.id}`" class="menu-item">
+                            <el-card class="present-tiles">
 <!--                                    :body-style="{ padding: '10px'}" style="text-after-overflow: ellipsis; min-width: 250px; min-height: 200px"-->
-                                    <img src="../assets/test3.png" class="image">
-                                    <div class="text">
-                                        <div class="presentationname">{{presentation.name}}</div>
-        <!--                                <div class="bottom-clearfix">-->
-        <!--                                    <el-button type="text" v-on:click="deleteFile(file)" class="button">Remove</el-button>-->
-        <!--                                </div>-->
-                                    </div>
-                                </el-card>
-                            </el-menu-item>
-                        </div>
+                                <img src="../assets/test3.png" class="image">
+                                <div class="text">
+                                    <div class="presentationname">{{presentation.name}}</div>
+    <!--                                <div class="bottom-clearfix">-->
+    <!--                                    <el-button type="text" v-on:click="deleteFile(file)" class="button">Remove</el-button>-->
+    <!--                                </div>-->
+                                </div>
+                            </el-card>
+                        </el-menu-item>
                     </div>
                 </div>
-            </el-menu>
-        </el-main>
-    </el-container>
+            </div>
+        </el-menu>
+    </div>
 </template>
 
 <script>
@@ -134,6 +132,15 @@
     }
     .presentationname:hover {
         overflow: visible;
+    }
+
+    .menu-item{
+        margin-top: 50px;
+        /*height: 85px;*/
+        /*width: 250px;*/
+        width: 100%;
+        height: 100%;
+
     }
 
 

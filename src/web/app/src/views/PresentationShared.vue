@@ -7,9 +7,7 @@
         </el-aside>
         <el-container>
             <div class="parent">
-                <el-col class="sharedPresentation">
-                    <SharedPresentation/>
-                </el-col>
+                <SharedPresentation/>
             </div>
         </el-container>
     </el-container>

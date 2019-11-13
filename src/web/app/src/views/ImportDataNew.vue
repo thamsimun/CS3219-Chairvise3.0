@@ -218,7 +218,7 @@
 
 	.head {
 		text-align: center;
-		font-size: 56px;
+		font-size: 40px;
 		font-weight: bold;
 		min-width: 800px;
 	}
