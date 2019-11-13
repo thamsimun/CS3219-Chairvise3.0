@@ -74,7 +74,12 @@
         this.$store.dispatch('clearCookies');
         // enter full screen loading and wait browser to redirect to google login page
         this.$data.isFullscreenLoading = true;
-        window.location.href = this.$store.state.userInfo.logoutUrl
+        window.location.href = this.$store.state.userInfo.logoutUrl;
+
+        this.returnToHome();
+      },
+      returnToHome() {
+        window.location.href = ('/');
       }
     }
   }
