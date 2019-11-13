@@ -51,7 +51,17 @@
 			SaveTemplateDialog
 		},
 		data() {
-			const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
+			const chosenTemplate = _.cloneDeep(this.$store.state.fileTemplates.chosenTemplate);
+			const defaultMappingList = this.$store.state.dataMappingNew.data.fieldMetaData.map(() => []);
+			let mappings;
+			if (chosenTemplate && chosenTemplate.mappingList.length < defaultMappingList) {
+				let fill = Array(defaultMappingList.length - chosenTemplate.mappingList.length).fill([]);
+				mappings = chosenTemplate.mappingList.concat(fill);
+			} else if (chosenTemplate) {
+				mappings = chosenTemplate.mappingList.slice(0, defaultMappingList.length);
+			} else {
+				mappings = defaultMappingList;
+			}
 
 			return {
 				dialogFormVisible: false,
@@ -67,9 +77,7 @@
 						this.$store.state.dataMappingNew.data.fieldMetaData,
 						op
 					),
-				mappingList: !chosenTemplate
-					? this.$store.state.dataMappingNew.data.fieldMetaData.map(() => [])
-					: _.cloneDeep(this.$store.state.fileTemplates.chosenTemplate.mappingList)
+				mappingList: mappings,
 			};
 		},
 		computed: {
@@ -89,6 +97,7 @@
 				return _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName); // Schema name
 			},
 			currentTemplate() {
+				console.log(this.$data.mappingList);
 				return {
 					transformations: this.transformations.map(obj => !obj ? undefined : obj.name),
 					mappingList: _.clone(this.mappingList)
@@ -109,7 +118,7 @@
 		methods: {
 			submit() {
 				// make sure that user has picked all transformations
-				if (this.transformations.length !== this.mappingList.length) {
+				if (this.transformations.length !== this.mappingList.length || this.transformations.some(f => !f)) { // or at least 1 f is undefined
 					this.$store.commit('setError', 'Please ensure all transformations are selected!');
 					return;
 				}
@@ -126,7 +135,7 @@
 				}
 			},
 			addToSelected(field) {
-				distribute(this.mappingList, field);
+				distribute(this.$data.mappingList, field);
 			},
 
 			removeFromSelected: function (colIdx, lstIdx) {
