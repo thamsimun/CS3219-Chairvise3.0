@@ -51,7 +51,20 @@
 			SaveTemplateDialog
 		},
 		data() {
-			const chosenTemplate = this.$store.state.fileTemplates.chosenTemplate;
+			const chosenTemplate = _.cloneDeep(this.$store.state.fileTemplates.chosenTemplate);
+			const defaultMappingList = this.$store.state.dataMappingNew.data.fieldMetaData.map(() => []);
+			let mappings;
+			if (chosenTemplate && chosenTemplate.mappingList.length < defaultMappingList) {
+				let fill = Array(defaultMappingList.length - chosenTemplate.mappingList.length).fill([]);
+				mappings = chosenTemplate.mappingList.concat(fill);
+			} else if (chosenTemplate) {
+				mappings = chosenTemplate.mappingList.slice(0, defaultMappingList.length);
+			} else {
+				mappings = defaultMappingList;
+			}
+
+			// only keep those headers that is present from the user's data
+			mappings = mappings.map(mapping => _.compact(mapping.map(col => this.$store.state.dataMappingNew.data.pool.includes(col) ? col : undefined)));
 
 			return {
 				dialogFormVisible: false,
@@ -67,9 +80,7 @@
 						this.$store.state.dataMappingNew.data.fieldMetaData,
 						op
 					),
-				mappingList: !chosenTemplate
-					? this.$store.state.dataMappingNew.data.fieldMetaData.map(() => [])
-					: _.cloneDeep(this.$store.state.fileTemplates.chosenTemplate.mappingList)
+				mappingList: mappings,
 			};
 		},
 		computed: {
@@ -109,7 +120,7 @@
 		methods: {
 			submit() {
 				// make sure that user has picked all transformations
-				if (this.transformations.length !== this.mappingList.length) {
+				if (this.transformations.length !== this.mappingList.length || this.transformations.some(f => !f)) { // or at least 1 f is undefined
 					this.$store.commit('setError', 'Please ensure all transformations are selected!');
 					return;
 				}
@@ -126,7 +137,7 @@
 				}
 			},
 			addToSelected(field) {
-				distribute(this.mappingList, field);
+				distribute(this.$data.mappingList, field);
 			},
 
 			removeFromSelected: function (colIdx, lstIdx) {
@@ -181,12 +192,17 @@
 	.block {
 		margin: 10px;
 		text-align: center;
-		min-height: 100px;
+		min-height: 35px;
 		cursor: grabbing;
 	}
 
 	.assign {
+		margin-top: 1px;
 		color: #409EFF;
+		border-style: solid;
+		border-color: #409EFF;
+		border-width: 0 1px 1px 1px;
+		min-height: 35px;
 	}
 
 	.item {

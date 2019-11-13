@@ -23,7 +23,12 @@ public class PresentationAccessControlLogic {
         return presentationAccessControlRepository.findAllByPresentation(presentation);
     }
 
-    public List<PresentationAccessControl> findSharedPresentations(String userIdentifier, AccessLevel access) {
+    public List<PresentationAccessControl> findSharedPresentationsRead(String userIdentifier, AccessLevel access) {
+        return presentationAccessControlRepository.findAllByUserIdentifierEqualsAndAccessLevelEquals(userIdentifier, access);
+
+    }
+
+    public List<PresentationAccessControl> findSharedPresentationsEdit(String userIdentifier, AccessLevel access) {
         return presentationAccessControlRepository.findAllByUserIdentifierEqualsAndAccessLevelEquals(userIdentifier, access);
 
     }
