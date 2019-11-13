@@ -2,7 +2,7 @@
   <el-alert v-if="!isLogin" title="Please login to view presentations" type="error" show-icon
             class="errorMsg"/>
   <el-container v-else-if="isLogin">
-    <el-aside style="width:20%; height:auto; margin-top:1px">
+    <el-aside style="min-width:200px; height:auto; margin-top:1px">
       <DataSideBar/>
     </el-aside>
     <el-container>

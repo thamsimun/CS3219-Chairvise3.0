@@ -11,7 +11,6 @@
 
 <script>
   import MenuBar from '@/components/MenuBar_v2.vue'
-  // import Footer from '@/components/FooterBar.vue'
 
   export default {
     watch: {

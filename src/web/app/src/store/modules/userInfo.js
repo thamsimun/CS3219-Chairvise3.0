@@ -12,6 +12,7 @@ export default {
     isLogin: false,
     loginUrl: '',
     logoutUrl: '',
+    homeUrl: '/',
     userEmail: '',
     userId: '',
     registerForm: {
@@ -117,6 +118,10 @@ export default {
 
     async clearCookies({commit}) {
       commit('clearCookies');
+    },
+
+    async returnToHome({commit}) {
+      commit('')
     },
 
     async getAuthInfo({commit}) {
