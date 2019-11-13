@@ -1,7 +1,7 @@
 <template>
 <!--<<<<<<< Updated upstream-->
 	<el-container style='height:100%;'>
-		<el-aside style="width:20%; height:auto; margin-top:1px">
+		<el-aside style="width:200px; height:auto; margin-top:1px">
 			<DataSideBar/>
 		</el-aside>
 		<div class="container">

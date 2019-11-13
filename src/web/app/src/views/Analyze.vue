@@ -2,7 +2,7 @@
   <div>
     <div>
       <el-container>
-        <el-aside style="width:220px; height:auto; margin-top:1px" v-if="isLogin">
+        <el-aside style="width:200px; height:auto; margin-top:1px" v-if="isLogin">
           <DataSideBar/>
         </el-aside>
         <el-main>
