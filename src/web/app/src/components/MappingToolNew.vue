@@ -100,7 +100,6 @@
 				return _.cloneDeep(this.$store.state.dataMappingNew.data.dbSchemaName); // Schema name
 			},
 			currentTemplate() {
-				console.log(this.$data.mappingList);
 				return {
 					transformations: this.transformations.map(obj => !obj ? undefined : obj.name),
 					mappingList: _.clone(this.mappingList)
