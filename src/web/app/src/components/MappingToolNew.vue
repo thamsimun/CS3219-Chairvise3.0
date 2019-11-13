@@ -63,6 +63,9 @@
 				mappings = defaultMappingList;
 			}
 
+			// only keep those headers that is present from the user's data
+			mappings = mappings.map(mapping => _.compact(mapping.map(col => this.$store.state.dataMappingNew.data.pool.includes(col) ? col : undefined)));
+
 			return {
 				dialogFormVisible: false,
 				newTemplateDetails: {
