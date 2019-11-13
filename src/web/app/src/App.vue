@@ -6,9 +6,6 @@
     <el-main id="main">
       <router-view/>
     </el-main>
-    <el-footer id="footer">
-<!--      <footer/>-->
-    </el-footer>
   </el-container>
 </template>
 
