@@ -192,12 +192,17 @@
 	.block {
 		margin: 10px;
 		text-align: center;
-		min-height: 100px;
+		min-height: 35px;
 		cursor: grabbing;
 	}
 
 	.assign {
+		margin-top: 1px;
 		color: #409EFF;
+		border-style: solid;
+		border-color: #409EFF;
+		border-width: 0 1px 1px 1px;
+		min-height: 35px;
 	}
 
 	.item {
