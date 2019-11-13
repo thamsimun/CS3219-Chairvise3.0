@@ -1,4 +1,5 @@
 <template>
+<!--<<<<<<< Updated upstream-->
 	<el-container style='height:100%;'>
 		<el-aside style="width:20%; height:auto; margin-top:1px">
 			<DataSideBar/>
@@ -15,8 +16,27 @@
 						<h1 class="head">File Upload</h1>
 						<div class="nav-buttons">
 							<div class='btn-div'>
-								<el-button class='back-btn' type='plain' icon='el-icon-back' circle
-                           @click='clearSelectedSchema'></el-button>
+								<el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearSelectedSchema'>
+								</el-button>
+<!--=======-->
+<!--  <el-container>-->
+<!--    <el-aside style="width:20%; height:auto; margin-top:1px">-->
+<!--      <DataSideBar/>-->
+<!--    </el-aside>-->
+<!--    <div class="container">-->
+<!--        <el-col>-->
+<!--          <div class='wrapper'>-->
+<!--            <div v-if='schemaNotSelected'>-->
+<!--              <h1 class="head">Upload new file</h1>-->
+<!--              <h1>Select your record type:</h1>-->
+<!--              <SelectDbSchema></SelectDbSchema>-->
+<!--            </div>-->
+<!--            <div v-else-if='fileNotUploaded'>-->
+
+<!--              <h1 class="head">File upload</h1>-->
+<!--              <div class="nav-buttons">-->
+<!--                <el-button class='back-btn' type='plain' icon='el-icon-back' circle-->
+<!--&gt;>>>>>> Stashed changes-->
 								<el-button style='visibility:hidden;'></el-button>
 							</div>
 						</div>
@@ -28,6 +48,7 @@
 							></el-switch>
 							<el-upload drag action='' :auto-upload='false' :show-file-list='false' :multiple='false'
                          :on-change='fileUploadHandler'>
+<!--<<<<<<< Updated upstream-->
 								<i class='el-icon-upload'></i>
 								<div class='el-upload__text'>Drop file here or <em>click to upload</em></div>
 								<div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>
@@ -58,6 +79,33 @@
 			</el-col>
 		</div>
 	</el-container>
+<!--=======-->
+<!--                <i class='el-icon-upload'></i>-->
+<!--                <div class='el-upload__text'>Drop file here or <em>click to upload</em></div>-->
+<!--                <div class='el-upload__tip' slot='tip'>Please upload .csv files with filed names.</div>-->
+<!--              </el-upload>-->
+<!--            </div>-->
+<!--            <div v-else-if='templateNotSelected'>-->
+<!--              <h1 class="head">Choose a template:</h1>-->
+<!--              <div class="nav-buttons">-->
+<!--                <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearRawData'></el-button>-->
+<!--                <el-button class='forward-btn' type='plain' icon='el-icon-right' circle @click='skipTemplate'></el-button>-->
+<!--              </div>-->
+<!--              <SelectTemplateTable></SelectTemplateTable>-->
+<!--            </div>-->
+<!--            <div v-else>-->
+<!--              <h1 class="head">Map your data</h1>-->
+<!--              <p class="body">ChairVisE is able to map data from your columns to our predefined fields.</p>-->
+<!--              <div class="nav-buttons">-->
+<!--                <el-button class='back-btn' type='plain' icon='el-icon-back' circle @click='clearTemplate'></el-button>-->
+<!--              </div>-->
+<!--              <mapping-tool-new ref='mapTool'></mapping-tool-new>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </el-col>-->
+<!--    </div>-->
+<!--  </el-container>-->
+<!--&gt;>>>>>> Stashed changes-->
 </template>
 
 <script>
@@ -163,6 +211,7 @@
 </script>
 
 <style scoped>
+/*<<<<<<< Updated upstream*/
 	.container {
 		width: 100%;
 	}
@@ -207,5 +256,50 @@
 	.btn-div {
 		width: 600px;
 	}
+/*=======*/
+/*  .container{*/
+/*    width: 100%;*/
+/*  }*/
+/*  .head{*/
+/*    text-align: center;*/
+/*    font-size: 30px;*/
+/*    font-weight: bold;*/
+/*  }*/
+/*  .wrapper {*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*  }*/
+/*  .body {*/
+/*    text-align: center;*/
+/*  }*/
+/*  h1 {*/
+/*    text-align: center;*/
+/*    padding: 20px;*/
+/*    margin: 0;*/
+/*  }*/
+/*  .nav-buttons {*/
+/*    justify-items: center;*/
+/*    text-align: center;*/
+/*  }*/
+/*  .back-btn {*/
+/*    position: center;*/
+/*  }*/
+/*  .forward-btn {*/
+/*    position: center;*/
+/*  }*/
+/*  .pick-col {*/
+/*    text-align: center;*/
+/*  }*/
+/*  .pick-col ul {*/
+/*    display: inline-block;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*  }*/
+/*  .upload{*/
+/*    margin-left: 100px;*/
+/*  }*/
+/*>>>>>>> Stashed changes*/
 
 </style>

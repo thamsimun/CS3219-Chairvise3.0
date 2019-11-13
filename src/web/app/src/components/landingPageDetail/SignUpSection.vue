@@ -12,7 +12,7 @@
         <!--                    <el-input v-model="formLabelAlign.region"></el-input>-->
         <!--                </el-form-item>-->
         <el-form-item label="Password" prop="password">
-          <el-input v-model="registerFormPassword"/>
+          <el-input type="password" v-model="registerFormPassword"/>
         </el-form-item>
       </el-form>
       <div>
