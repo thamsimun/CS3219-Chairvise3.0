@@ -57,8 +57,8 @@ public class PresentationAccessControlController extends BaseRestController {
     public List<PresentationData> sharedPresentations(@CookieValue(value = "userEmail") String email, @CookieValue(value = "userPassword") String password) {
         String userIdentifier = gateKeeper.verifyLoginAccess(email, password).getUserEmail();
         List<PresentationAccessControl> accessControls = presentationAccessControlLogic
-                .findSharedPresentations(userIdentifier, AccessLevel.CAN_READ);
-
+                .findSharedPresentationsRead(userIdentifier, AccessLevel.CAN_READ);
+        accessControls.addAll(presentationAccessControlLogic.findSharedPresentationsEdit(userIdentifier, AccessLevel.CAN_WRITE));
         List<PresentationData> presentationList = new ArrayList<>();
 
         accessControls.stream()
@@ -69,6 +69,12 @@ public class PresentationAccessControlController extends BaseRestController {
                     PresentationData data = presentationLogic.getPresentationData(p);
                     presentationList.add(data);
                 });
+
+        for(PresentationData presentationData : presentationList) {
+            if(presentationData.getCreatorIdentifier().equals(userIdentifier)) {
+                presentationList.remove(presentationData);
+            }
+        }
         return presentationList;
     }
 
